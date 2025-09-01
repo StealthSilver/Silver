@@ -31,7 +31,7 @@ export default function Navbar() {
             />
           </Link>
 
-          <div className="hidden md:flex space-x-14 border border-white rounded-full py-1 px-12">
+          <div className="hidden md:flex space-x-14 border border-white rounded-full py-1 px-8 mt-1 font-mono">
             {navItems.map((item) => (
               <Link
                 key={item.name}
@@ -43,7 +43,7 @@ export default function Navbar() {
             ))}
           </div>
 
-          <div className="text-l hidden md:flex gap-2">
+          <div className="text-l hidden md:flex gap-2 mt-1 font-mono">
             <a
               href="#footer"
               className="bg-white text-black border border-white rounded-full px-6 py-1 transition duration-300 hover:bg-black hover:text-white cursor-pointer"
