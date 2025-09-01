@@ -7,4 +7,4 @@ Steps:
 5. use the primary and secondary font and import them from next/fonts
 6. write the light and darktheme background and foreground colors
 7. write all the dependencies in the metadata ina site.config.ts inside config and import from there
-8.
+8. import the og image and store it in public
