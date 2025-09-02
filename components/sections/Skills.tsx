@@ -10,7 +10,6 @@ export default function Skills() {
       id="skills"
       className="relative px-6 mt-[200px] bg-white/70 dark:bg-black/70 backdrop-blur-md overflow-hidden"
     >
-      {/* Heading */}
       <motion.h2
         initial={{ opacity: 0, y: 40 }}
         animate={{ opacity: 1, y: 0 }}
@@ -23,7 +22,6 @@ export default function Skills() {
         STACK
       </motion.h2>
 
-      {/* Grid of Tech Stack */}
       <div className="max-w-7xl mx-auto grid grid-cols-4 sm:grid-cols-6 md:grid-cols-8 lg:grid-cols-12 gap-4">
         {TECH_STACK.map((tech, index) => (
           <motion.a
@@ -36,7 +34,6 @@ export default function Skills() {
             transition={{ duration: 0.5, delay: index * 0.05 }}
             className="relative flex flex-col items-center group"
           >
-            {/* Label on hover (now above) */}
             <span
               className="
                 absolute -top-6 opacity-0 
@@ -49,7 +46,6 @@ export default function Skills() {
               {tech.title}
             </span>
 
-            {/* Icon */}
             <div
               className="
                 relative w-14 h-14 md:w-16 md:h-16 rounded-xl overflow-hidden 
