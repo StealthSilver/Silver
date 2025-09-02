@@ -1,4 +1,3 @@
-// data/experience.data.ts
 export type ExperienceItem = {
   company: string;
   position: string;

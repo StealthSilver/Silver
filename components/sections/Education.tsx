@@ -10,7 +10,7 @@ export default function Education() {
 
   return (
     <section
-      id="experience"
+      id="education"
       className="relative px-6 mt-[150px] bg-white/70 dark:bg-black/70 backdrop-blur-md overflow-hidden"
     >
       <motion.h2
