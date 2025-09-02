@@ -47,7 +47,7 @@ export default function Footer() {
         {/* Social Icons */}
         <div className="flex gap-12 mt-10 mb-10">
           <a
-            href="https://linkedin.com/in/YOUR_PROFILE"
+            href="https://www.linkedin.com/in/rajat-saraswat-0491a3259/"
             target="_blank"
             rel="noopener noreferrer"
             className="
@@ -61,7 +61,7 @@ export default function Footer() {
           </a>
 
           <a
-            href="https://github.com/YOUR_PROFILE"
+            href="https://github.com/StealthSilver"
             target="_blank"
             rel="noopener noreferrer"
             className="
@@ -75,7 +75,7 @@ export default function Footer() {
           </a>
 
           <a
-            href="https://twitter.com/YOUR_PROFILE"
+            href="https://x.com/Rajat_0409"
             target="_blank"
             rel="noopener noreferrer"
             className="
