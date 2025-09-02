@@ -4,7 +4,7 @@ import "./globals.css";
 import { SITE } from "../config/site.config";
 import { ThemeProvider } from "next-themes";
 import ThemeHeadIcons from "../components/ui/ThemeHeadIcon";
-
+import ClientWrapper from "../components/ui/ClientWrapper";
 const ibmPlexSans = IBM_Plex_Sans({
   variable: "--font-plex-sans",
   subsets: ["latin"],
@@ -73,7 +73,7 @@ export default function RootLayout({
           enableSystem
           value={{ light: "light", dark: "dark" }}
         >
-          <main>{children}</main>
+          <ClientWrapper>{children}</ClientWrapper>
         </ThemeProvider>
       </body>
     </html>

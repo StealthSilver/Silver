@@ -2,8 +2,8 @@
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ChevronDown, ChevronUp, Code } from "lucide-react";
-import { EXPERIENCES } from "../../data/experience.data";
+import { ChevronDown, ChevronUp, GraduationCap } from "lucide-react";
+import { EDUCATION } from "../../data/education.data";
 
 export default function Education() {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
@@ -23,7 +23,7 @@ export default function Education() {
       </motion.h2>
 
       <div className="max-w-5xl mx-auto flex flex-col gap-8 ">
-        {EXPERIENCES.map((exp, index) => (
+        {EDUCATION.map((exp, index) => (
           <motion.div
             key={index}
             initial={{ opacity: 0, y: 40 }}
@@ -48,10 +48,11 @@ export default function Education() {
             >
               <div className="flex flex-col">
                 <div className="flex items-center gap-2">
-                  <Code
+                  <GraduationCap
                     size={18}
                     className="text-gray-700 dark:text-gray-300"
                   />
+
                   <p className="text-lg font-semibold text-gray-800 dark:text-gray-200">
                     {exp.position}
                   </p>
