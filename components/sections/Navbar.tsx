@@ -12,18 +12,17 @@ export default function Navbar() {
   const [hovered, setHovered] = useState<string | null>(null);
   const { theme } = useTheme();
 
-  // Prevent hydration mismatch
   const [mounted, setMounted] = useState(false);
   useEffect(() => setMounted(true), []);
 
   const toggleMenu = () => setIsOpen(!isOpen);
 
   const navItems = [
-    { name: "About", href: "/about" },
-    { name: "Experience", href: "/experience" },
-    { name: "Education", href: "/education" },
-    { name: "Projects", href: "/project" },
-    { name: "Certificates", href: "/certificates" },
+    { name: "About", href: "#about" },
+    { name: "Experience", href: "#experience" },
+    { name: "Education", href: "#education" },
+    { name: "Projects", href: "#project" },
+    { name: "Certificates", href: "#certificates" },
   ];
 
   return (
@@ -36,13 +35,12 @@ export default function Navbar() {
       "
     >
       <div className="flex items-center justify-between max-w-7xl mx-auto">
-        {/* Logo */}
         <Link href="/" className="flex items-center cursor-pointer">
           <motion.img
-            key={mounted ? theme : "default"} // animate when theme changes
+            key={mounted ? theme : "default"}
             src={
               !mounted
-                ? "/logo_light.svg" // SSR safe fallback
+                ? "/logo_light.svg"
                 : theme === "dark"
                 ? "/logo_dark.svg"
                 : "/logo_light.svg"
@@ -56,7 +54,6 @@ export default function Navbar() {
           />
         </Link>
 
-        {/* Desktop Navigation */}
         <div
           className="hidden md:flex items-center px-2 font-mono relative gap-4"
           onMouseLeave={() => setHovered(null)}
@@ -97,9 +94,7 @@ export default function Navbar() {
           ))}
         </div>
 
-        {/* Right Section - Icons + Buttons */}
         <div className="hidden md:flex items-center gap-6 font-mono">
-          {/* Github Button */}
           <a
             href="https://github.com/StealthSilver"
             target="_blank"
@@ -129,7 +124,6 @@ export default function Navbar() {
           </a>
         </div>
 
-        {/* Mobile Menu Button */}
         <div className="md:hidden">
           <button onClick={toggleMenu} aria-label="Toggle Menu">
             {isOpen ? <X size={28} /> : <Menu size={28} />}
@@ -137,7 +131,6 @@ export default function Navbar() {
         </div>
       </div>
 
-      {/* Mobile Menu */}
       {isOpen && (
         <div className="md:hidden bg-white/90 dark:bg-black/90 backdrop-blur-md shadow-lg border-t border-gray-200 dark:border-gray-700 transition-colors duration-300">
           <div className="flex flex-col items-center space-y-4 py-4">

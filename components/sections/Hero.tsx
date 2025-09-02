@@ -7,7 +7,7 @@ import { Download, MoveRight } from "lucide-react";
 
 export default function Hero() {
   return (
-    <section className="relative px-6 pt-[180px] bg-white/70 dark:bg-black/70 backdrop-blur-md overflow-hidden">
+    <section className="relative px-6 pt-[200px] bg-white/70 dark:bg-black/70 backdrop-blur-md overflow-hidden">
       <div className="max-w-7xl mx-auto flex flex-col items-center text-center space-y-4">
         <motion.h1
           initial={{ opacity: 0, y: 40 }}
