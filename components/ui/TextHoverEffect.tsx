@@ -36,7 +36,6 @@ export const TextHoverEffect = ({
       className="select-none"
     >
       <defs>
-        {/* Animated shimmer gradient */}
         <motion.linearGradient
           id="silverShimmer"
           gradientUnits="userSpaceOnUse"
@@ -52,7 +51,6 @@ export const TextHoverEffect = ({
           <stop offset="100%" stopColor="#d4d4d8" />
         </motion.linearGradient>
 
-        {/* Hover mask */}
         <motion.radialGradient
           id="revealMask"
           gradientUnits="userSpaceOnUse"
@@ -77,9 +75,9 @@ export const TextHoverEffect = ({
         dominantBaseline="middle"
         strokeWidth="0.6"
         className="
-          fill-white/15 stroke-neutral-400
+          fill-neutral-200 stroke-neutral-600
           font-[helvetica] text-8xl font-extrabold
-          dark:stroke-neutral-500
+          dark:stroke-neutral-400 dark:fill-neutral-800
         "
         style={{ opacity: 0.6 }}
       >
