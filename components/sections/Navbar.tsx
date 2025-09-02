@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Menu, X, Github } from "lucide-react";
 import Link from "next/link";
 import { motion } from "framer-motion";
@@ -11,6 +11,10 @@ export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [hovered, setHovered] = useState<string | null>(null);
   const { theme } = useTheme();
+
+  // Prevent hydration mismatch
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
 
   const toggleMenu = () => setIsOpen(!isOpen);
 
@@ -32,15 +36,27 @@ export default function Navbar() {
       "
     >
       <div className="flex items-center justify-between max-w-7xl mx-auto">
+        {/* Logo */}
         <Link href="/" className="flex items-center cursor-pointer">
-          <img
-            src={theme === "dark" ? "/logo_dark.svg" : "/logo_light.svg"}
+          <motion.img
+            key={mounted ? theme : "default"} // animate when theme changes
+            src={
+              !mounted
+                ? "/logo_light.svg" // SSR safe fallback
+                : theme === "dark"
+                ? "/logo_dark.svg"
+                : "/logo_light.svg"
+            }
             alt="Silver logo"
             width={120}
             height={120}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.3 }}
           />
         </Link>
 
+        {/* Desktop Navigation */}
         <div
           className="hidden md:flex items-center px-2 font-mono relative gap-4"
           onMouseLeave={() => setHovered(null)}
@@ -81,7 +97,9 @@ export default function Navbar() {
           ))}
         </div>
 
+        {/* Right Section - Icons + Buttons */}
         <div className="hidden md:flex items-center gap-6 font-mono">
+          {/* Github Button */}
           <a
             href="https://github.com/StealthSilver"
             target="_blank"
@@ -111,6 +129,7 @@ export default function Navbar() {
           </a>
         </div>
 
+        {/* Mobile Menu Button */}
         <div className="md:hidden">
           <button onClick={toggleMenu} aria-label="Toggle Menu">
             {isOpen ? <X size={28} /> : <Menu size={28} />}
@@ -118,6 +137,7 @@ export default function Navbar() {
         </div>
       </div>
 
+      {/* Mobile Menu */}
       {isOpen && (
         <div className="md:hidden bg-white/90 dark:bg-black/90 backdrop-blur-md shadow-lg border-t border-gray-200 dark:border-gray-700 transition-colors duration-300">
           <div className="flex flex-col items-center space-y-4 py-4">

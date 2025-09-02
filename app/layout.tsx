@@ -3,6 +3,7 @@ import { IBM_Plex_Sans, IBM_Plex_Mono } from "next/font/google";
 import "./globals.css";
 import { SITE } from "../config/site.config";
 import { ThemeProvider } from "next-themes";
+import ThemeHeadIcons from "../components/ui/ThemeHeadIcon";
 
 const ibmPlexSans = IBM_Plex_Sans({
   variable: "--font-plex-sans",
@@ -57,8 +58,15 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
-      <body className={`bg-white dark:bg-black`}>
+    <html
+      lang="en"
+      suppressHydrationWarning
+      className={`${ibmPlexSans.variable} ${ibmPlexMono.variable}`}
+    >
+      <head>
+        <ThemeHeadIcons />
+      </head>
+      <body>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           <main>{children}</main>
         </ThemeProvider>

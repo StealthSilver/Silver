@@ -2,10 +2,10 @@
 
 html {
   scroll-behavior: smooth;
-  @apply bg-white text-black dark:bg-black dark:text-white;
 }
 
 body {
+  @apply bg-white text-black dark:bg-black dark:text-white;
   font-family: var(--font-plex-sans), sans-serif;
 }
 
