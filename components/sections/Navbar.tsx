@@ -1,11 +1,16 @@
 "use client";
 
 import { useState } from "react";
-import { Menu, X } from "lucide-react";
+import { Menu, X, Github } from "lucide-react";
 import Link from "next/link";
+import { motion } from "framer-motion";
+import ThemeToggle from "../ui/ThemeToggle";
+import { useTheme } from "next-themes";
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
+  const [hovered, setHovered] = useState<string | null>(null);
+  const { theme } = useTheme();
 
   const toggleMenu = () => setIsOpen(!isOpen);
 
@@ -18,61 +23,122 @@ export default function Navbar() {
   ];
 
   return (
-    <nav className="max-w-6xl mx-auto bg-black sticky top-4 z-50">
-      <div>
-        <div className="flex items-center justify-between h-16">
-          <Link href="/" className="flex items-center cursor-pointer">
-            <img
-              src="/logo_dark.svg"
-              alt="MeshSpire Logo"
-              width={100}
-              height={100}
-              className="object-contain"
-            />
-          </Link>
+    <nav
+      className="
+        w-full sticky top-0 z-50 px-10 py-4
+        border-b border-black/10 dark:border-gray-700
+        bg-white/70 dark:bg-black/70 backdrop-blur-md
+        transition-colors duration-300
+      "
+    >
+      <div className="flex items-center justify-between max-w-7xl mx-auto">
+        <Link href="/" className="flex items-center cursor-pointer">
+          <img
+            src={theme === "dark" ? "/logo_dark.svg" : "/logo_light.svg"}
+            alt="Silver logo"
+            width={120}
+            height={120}
+          />
+        </Link>
 
-          <div className="hidden md:flex space-x-14 border border-white rounded-full py-1 px-8 mt-1 font-mono">
-            {navItems.map((item) => (
+        <div
+          className="hidden md:flex items-center px-2 font-mono relative gap-4"
+          onMouseLeave={() => setHovered(null)}
+        >
+          {navItems.map((item) => (
+            <div key={item.name} className="relative px-4 py-1.5 select-none">
+              {hovered === item.name && (
+                <motion.span
+                  layoutId="hoverBg"
+                  className="
+                    absolute inset-0 rounded-full backdrop-blur-sm
+                    bg-gray-200/70 border border-gray-300
+                    dark:bg-gray-700/70 dark:border-gray-600
+                  "
+                  transition={{
+                    type: "spring",
+                    stiffness: 500,
+                    damping: 40,
+                    mass: 0.6,
+                  }}
+                  initial={false}
+                />
+              )}
+
               <Link
-                key={item.name}
                 href={item.href}
-                className="text-gray-300 hover:text-white transition-colors "
+                onMouseEnter={() => setHovered(item.name)}
+                onFocus={() => setHovered(item.name)}
+                className="
+                  relative z-10 transition-colors
+                  text-gray-700 hover:text-black
+                  dark:text-gray-300 dark:hover:text-white
+                "
               >
                 {item.name}
               </Link>
-            ))}
-          </div>
+            </div>
+          ))}
+        </div>
 
-          <div className="text-l hidden md:flex gap-2 mt-1 font-mono">
-            <a
-              href="#footer"
-              className="bg-white text-black border border-white rounded-full px-6 py-1 transition duration-300 hover:bg-black hover:text-white cursor-pointer"
-            >
-              Connect
-            </a>
-          </div>
+        <div className="hidden md:flex items-center gap-6 font-mono">
+          <a
+            href="https://github.com/StealthSilver"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="
+              rounded-full border p-2
+              bg-white text-black border-black hover:bg-black hover:text-white
+              dark:bg-black dark:text-white dark:border-white dark:hover:bg-white dark:hover:text-black
+              transition-colors
+            "
+          >
+            <Github size={18} />
+          </a>
 
-          <div className="md:hidden">
-            <button onClick={toggleMenu} aria-label="Toggle Menu">
-              {isOpen ? <X size={28} /> : <Menu size={28} />}
-            </button>
-          </div>
+          <ThemeToggle />
+
+          <a
+            href="#footer"
+            className="
+              bg-gray-900 text-white border border-gray-900 rounded-full px-6 py-1.5
+              transition duration-300 hover:bg-white hover:text-black
+              dark:bg-gray-100 dark:text-black dark:border-gray-100
+              dark:hover:bg-black dark:hover:text-white
+            "
+          >
+            Connect
+          </a>
+        </div>
+
+        <div className="md:hidden">
+          <button onClick={toggleMenu} aria-label="Toggle Menu">
+            {isOpen ? <X size={28} /> : <Menu size={28} />}
+          </button>
         </div>
       </div>
 
       {isOpen && (
-        <div className="md:hidden bg-black shadow-lg border-t border-white">
+        <div className="md:hidden bg-white/90 dark:bg-black/90 backdrop-blur-md shadow-lg border-t border-gray-200 dark:border-gray-700 transition-colors duration-300">
           <div className="flex flex-col items-center space-y-4 py-4">
             {navItems.map((item) => (
               <Link
                 key={item.name}
                 href={item.href}
-                className="text-gray-300 hover:text-white transition-colors"
+                className="transition-colors text-gray-700 hover:text-black dark:text-gray-300 dark:hover:text-white"
                 onClick={() => setIsOpen(false)}
               >
                 {item.name}
               </Link>
             ))}
+            <a
+              href="#footer"
+              className="rounded-full border px-6 py-1.5 transition-colors bg-gray-900 text-white border-gray-900 hover:bg-white hover:text-black dark:bg-gray-100 dark:text-black dark:border-gray-100 dark:hover:bg-black dark:hover:text-white"
+              onClick={() => setIsOpen(false)}
+            >
+              Connect
+            </a>
+            <ThemeToggle />
           </div>
         </div>
       )}
