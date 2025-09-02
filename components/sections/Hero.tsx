@@ -72,8 +72,10 @@ export default function Hero() {
           </a>
 
           <a
-            href="/resume.pdf"
-            download
+            href="/Resume1.pdf"
+            target="_blank"
+            rel="noopener noreferrer"
+            // download="Rajat-Saraswat-Resume.pdf"
             className="
               flex items-center gap-6 px-10 py-2 rounded-full border
               bg-black text-white border-white
