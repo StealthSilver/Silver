@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import Image from "next/image";
-import { Briefcase, MapPin, Phone } from "lucide-react";
+import { Code, MapPin, Phone } from "lucide-react";
 
 export default function About() {
   return (
@@ -52,7 +52,7 @@ export default function About() {
                   transition-colors
                 "
               >
-                <Briefcase size={18} />
+                <Code size={18} />
               </span>
               Software Engineer
             </div>
