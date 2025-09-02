@@ -1,7 +1,116 @@
+"use client";
+import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { Github, Globe, Figma, ChevronDown, ChevronUp } from "lucide-react";
+import Image from "next/image";
+import { PROJECTS } from "../../data/project.data";
+import {
+  HoverEffect,
+  Card,
+  CardTitle,
+  CardDescription,
+} from "@/components/ui/CardHover";
+
 export default function Projects() {
+  const [showAll, setShowAll] = useState(false);
+
   return (
-    <nav>
-      <h1>Projects</h1>
-    </nav>
+    <section
+      id="projects"
+      className="relative px-6 mt-[150px] bg-white/70 dark:bg-black/70 backdrop-blur-md overflow-hidden"
+    >
+      <motion.h2
+        initial={{ opacity: 0, y: 40 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 1, delay: 0.3 }}
+        className="text-3xl md:text-4xl flex items-center justify-center text-gray-900 dark:text-gray-100 mb-20"
+      >
+        PROJECTS
+      </motion.h2>
+
+      <HoverEffect className="max-w-6xl mx-auto font-mono gap-4">
+        <AnimatePresence>
+          {(showAll ? PROJECTS : PROJECTS.slice(0, 6)).map((project, idx) => (
+            <motion.div
+              key={project.title + idx}
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: 30 }}
+              transition={{ duration: 0.5 }}
+              layout
+              className="h-full"
+            >
+              <Card className="relative w-full group overflow-hidden">
+                <Image
+                  src={project.image}
+                  alt={project.title}
+                  fill
+                  className="object-cover opacity-20 group-hover:blur-0 group-hover:opacity-80 transition-all duration-700"
+                />
+                <div className="absolute inset-0 bg-black/60 group-hover:bg-black/30 transition-all duration-700"></div>
+
+                <div className="relative z-20 flex flex-col justify-between h-full text-center px-6 py-6">
+                  <div className="transition-opacity duration-500 group-hover:opacity-0 text-xl font-bold">
+                    <CardTitle>{project.title}</CardTitle>
+                    <CardDescription>{project.description}</CardDescription>
+                  </div>
+
+                  <div className="flex gap-4 justify-center mt-12">
+                    {project.live && (
+                      <a
+                        href={project.live}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="rounded-full border p-2 bg-white text-black border-black hover:bg-black hover:text-white 
+                                dark:bg-black dark:text-white dark:border-white dark:hover:bg-white dark:hover:text-black transition-colors"
+                      >
+                        <Globe size={18} />
+                      </a>
+                    )}
+                    {project.github && (
+                      <a
+                        href={project.github}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="rounded-full border p-2 bg-white text-black border-black hover:bg-black hover:text-white 
+                                dark:bg-black dark:text-white dark:border-white dark:hover:bg-white dark:hover:text-black transition-colors"
+                      >
+                        <Github size={18} />
+                      </a>
+                    )}
+                    {project.figma && (
+                      <a
+                        href={project.figma}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="rounded-full border p-2 bg-white text-black border-black hover:bg-black hover:text-white 
+                                dark:bg-black dark:text-white dark:border-white dark:hover:bg-white dark:hover:text-black transition-colors"
+                      >
+                        <Figma size={18} />
+                      </a>
+                    )}
+                  </div>
+                </div>
+              </Card>
+            </motion.div>
+          ))}
+        </AnimatePresence>
+      </HoverEffect>
+
+      {/* Show More / Show Less Button */}
+      {PROJECTS.length > 6 && (
+        <div className="flex justify-center mt-10">
+          <button
+            onClick={() => setShowAll(!showAll)}
+            className="flex items-center gap-2 px-6 py-3 border border-gray-700 dark:border-gray-300 rounded-full 
+                       text-gray-900 dark:text-gray-100 hover:bg-gray-900 hover:text-white dark:hover:bg-white dark:hover:text-black 
+                       transition-colors"
+          >
+            {showAll ? "Show Less" : "Show More"}
+            {showAll ? <ChevronUp size={18} /> : <ChevronDown size={18} />}
+          </button>
+        </div>
+      )}
+    </section>
   );
 }
