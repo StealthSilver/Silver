@@ -141,6 +141,7 @@ export const TECH_STACK: TechStack[] = [
     href: "https://ui.shadcn.com/",
     categories: ["Library", "Component Library"],
     theme: true,
+    lightIcon: "shadcn_light.svg",
   },
   {
     key: "radixui",
@@ -148,6 +149,7 @@ export const TECH_STACK: TechStack[] = [
     href: "https://www.radix-ui.com/",
     categories: ["Library", "Component Library"],
     theme: true,
+    lightIcon: "radix_light.svg",
   },
   {
     key: "motion",

@@ -55,13 +55,33 @@ export default function Skills() {
                 group-hover:scale-110
               "
             >
-              <Image
-                src={`/icons/${tech.key}.svg`}
-                alt={tech.title}
-                width={40}
-                height={40}
-                className="object-contain"
-              />
+              {/* Show light icon in light mode if available */}
+              {tech.lightIcon ? (
+                <>
+                  <Image
+                    src={`/icons/${tech.lightIcon}`}
+                    alt={tech.title}
+                    width={40}
+                    height={40}
+                    className="object-contain block dark:hidden"
+                  />
+                  <Image
+                    src={`/icons/${tech.key}.svg`}
+                    alt={tech.title}
+                    width={40}
+                    height={40}
+                    className="object-contain hidden dark:block"
+                  />
+                </>
+              ) : (
+                <Image
+                  src={`/icons/${tech.key}.svg`}
+                  alt={tech.title}
+                  width={40}
+                  height={40}
+                  className="object-contain"
+                />
+              )}
             </div>
           </motion.a>
         ))}
