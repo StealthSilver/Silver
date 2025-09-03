@@ -6,25 +6,47 @@ type SpotlightProps = {
   gradientFirst?: string;
   gradientSecond?: string;
   gradientThird?: string;
+  lightGradientFirst?: string;
+  lightGradientSecond?: string;
+  lightGradientThird?: string;
   translateY?: number;
   width?: number;
   height?: number;
   smallWidth?: number;
   duration?: number;
   xOffset?: number;
+  theme?: "light" | "dark" | "auto";
 };
 
 export const Spotlight = ({
-  gradientFirst = "radial-gradient(68.54% 68.72% at 55.02% 31.46%, hsla(0, 0, 90%, .08) 0, hsla(0, 0, 70%, .08) 50%, hsla(0, 0%, 45%, 0) 80%)",
-  gradientSecond = "radial-gradient(50% 50% at 50% 50%, hsla(0, 0%, 85%, 0.12) 0, hsla(0, 0%, 65%, 0.06) 80%, transparent 100%)",
-  gradientThird = "radial-gradient(50% 50% at 50% 50%, hsla(210, 100%, 85%, .02) 0, hsla(210, 100%, 45%, .01) 80%, transparent 100%)",
+  // Dark mode gradients
+  gradientFirst = "radial-gradient(68.54% 68.72% at 55.02% 31.46%, hsla(0, 0%, 100%, .08) 0, hsla(0, 0%, 70%, .02) 50%, hsla(0, 0%, 40%, 0) 80%)",
+  gradientSecond = "radial-gradient(50% 50% at 50% 50%, hsla(0, 0%, 100%, .06) 0, hsla(0, 0%, 70%, .02) 80%, transparent 100%)",
+  gradientThird = "radial-gradient(50% 50% at 50% 50%, hsla(0, 0%, 100%, .04) 0, hsla(0, 0%, 40%, .02) 80%, transparent 100%)",
+  // Light mode gradients
+  lightGradientFirst = "radial-gradient(68.54% 68.72% at 55.02% 31.46%, hsla(0, 0%, 80%, .12) 0, hsla(0, 0%, 55%, .05) 50%, hsla(0, 0%, 35%, 0) 80%)",
+  lightGradientSecond = "radial-gradient(50% 50% at 50% 50%, hsla(0, 0%, 78%, .10) 0, hsla(0, 0%, 50%, .04) 80%, transparent 100%)",
+  lightGradientThird = "radial-gradient(50% 50% at 50% 50%, hsla(0, 0%, 75%, .08) 0, hsla(0, 0%, 40%, .03) 80%, transparent 100%)",
+
   translateY = -250,
-  width = 400,
-  height = 1000,
-  smallWidth = 200,
+  width = 500,
+  height = 1200,
+  smallWidth = 250,
   duration = 7,
   xOffset = 60,
+  theme = "auto",
 }: SpotlightProps = {}) => {
+  // Detect theme
+  const isDark =
+    theme === "dark" ||
+    (theme === "auto" &&
+      typeof window !== "undefined" &&
+      window.matchMedia("(prefers-color-scheme: dark)").matches);
+
+  const first = isDark ? gradientFirst : lightGradientFirst;
+  const second = isDark ? gradientSecond : lightGradientSecond;
+  const third = isDark ? gradientThird : lightGradientThird;
+
   return (
     <motion.div
       initial={{ opacity: 0 }}
@@ -45,7 +67,7 @@ export const Spotlight = ({
         <div
           style={{
             transform: `translateY(${translateY}px) rotate(-45deg)`,
-            background: gradientFirst,
+            background: first,
             width: `${width}px`,
             height: `${height}px`,
           }}
@@ -54,7 +76,7 @@ export const Spotlight = ({
         <div
           style={{
             transform: "rotate(-45deg) translate(5%, -50%)",
-            background: gradientSecond,
+            background: second,
             width: `${smallWidth}px`,
             height: `${height}px`,
           }}
@@ -63,7 +85,7 @@ export const Spotlight = ({
         <div
           style={{
             transform: "rotate(-45deg) translate(-180%, -70%)",
-            background: gradientThird,
+            background: third,
             width: `${smallWidth}px`,
             height: `${height}px`,
           }}
@@ -84,7 +106,7 @@ export const Spotlight = ({
         <div
           style={{
             transform: `translateY(${translateY}px) rotate(45deg)`,
-            background: gradientFirst,
+            background: first,
             width: `${width}px`,
             height: `${height}px`,
           }}
@@ -93,7 +115,7 @@ export const Spotlight = ({
         <div
           style={{
             transform: "rotate(45deg) translate(-5%, -50%)",
-            background: gradientSecond,
+            background: second,
             width: `${smallWidth}px`,
             height: `${height}px`,
           }}
@@ -102,7 +124,7 @@ export const Spotlight = ({
         <div
           style={{
             transform: "rotate(45deg) translate(180%, -70%)",
-            background: gradientThird,
+            background: third,
             width: `${smallWidth}px`,
             height: `${height}px`,
           }}

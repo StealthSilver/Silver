@@ -8,7 +8,7 @@ export default function About() {
   return (
     <section
       id="about"
-      className="relative px-6 mt-[310px] bg-white/70 dark:bg-black/70 backdrop-blur-md overflow-hidden"
+      className="relative px-6 mt-[330px] bg-white/70 dark:bg-black/70 backdrop-blur-md overflow-hidden"
     >
       <motion.h2
         initial={{ opacity: 0, y: 40 }}
