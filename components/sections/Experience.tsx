@@ -19,7 +19,6 @@ export default function Experience() {
         overflow-x-hidden
       "
     >
-      {/* Section Title */}
       <motion.h2
         initial={{ opacity: 0, y: 40 }}
         animate={{ opacity: 1, y: 0 }}
@@ -34,7 +33,6 @@ export default function Experience() {
         EXPERIENCE
       </motion.h2>
 
-      {/* Experience Cards */}
       <div className="max-w-5xl mx-auto flex flex-col gap-6 sm:gap-8">
         {EXPERIENCES.map((exp, index) => (
           <motion.div
@@ -49,7 +47,6 @@ export default function Experience() {
               hover:shadow-lg transition-all duration-300
             "
           >
-            {/* Company Name */}
             <div className="flex justify-between items-center">
               <a
                 href={exp.link}
@@ -65,7 +62,6 @@ export default function Experience() {
               </a>
             </div>
 
-            {/* Position + Toggle */}
             <div
               onClick={() => setOpenIndex(openIndex === index ? null : index)}
               className="
@@ -109,7 +105,6 @@ export default function Experience() {
               </button>
             </div>
 
-            {/* Expandable Details */}
             <AnimatePresence initial={false}>
               {openIndex === index && (
                 <motion.ul

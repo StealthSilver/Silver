@@ -19,7 +19,6 @@ export default function CTA() {
       <BackgroundRippleEffect />
 
       <div className="relative z-10 max-w-3xl sm:max-w-4xl mx-auto flex flex-col items-center text-center space-y-4 sm:space-y-6">
-        {/* Subheading */}
         <motion.p
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -30,7 +29,6 @@ export default function CTA() {
           Let’s connect amazing stuff together
         </motion.p>
 
-        {/* Main Heading */}
         <motion.h2
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -45,7 +43,6 @@ export default function CTA() {
           Get in Touch
         </motion.h2>
 
-        {/* CTA Button */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}

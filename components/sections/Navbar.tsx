@@ -35,7 +35,6 @@ export default function Navbar() {
       "
     >
       <div className="flex items-center justify-between max-w-7xl mx-auto w-full">
-        {/* Logo */}
         <Link href="/" className="flex items-center cursor-pointer">
           <motion.img
             key={mounted ? theme : "default"}
@@ -54,7 +53,6 @@ export default function Navbar() {
           />
         </Link>
 
-        {/* Desktop nav items */}
         <div
           className="hidden md:flex items-center px-2 font-mono relative gap-6"
           onMouseLeave={() => setHovered(null)}
@@ -95,7 +93,6 @@ export default function Navbar() {
           ))}
         </div>
 
-        {/* Desktop right-side icons */}
         <div className="hidden md:flex items-center gap-6 font-mono">
           <a
             href="https://github.com/StealthSilver"
@@ -126,14 +123,11 @@ export default function Navbar() {
           </a>
         </div>
 
-        {/* Mobile controls */}
         <div className="md:hidden flex items-center gap-3">
-          {/* Smaller theme toggle */}
           <div className="scale-90">
             <ThemeToggle />
           </div>
 
-          {/* Smaller hamburger */}
           <button
             onClick={toggleMenu}
             aria-label={isOpen ? "Close menu" : "Open menu"}
@@ -144,7 +138,6 @@ export default function Navbar() {
         </div>
       </div>
 
-      {/* Mobile dropdown menu */}
       {isOpen && (
         <div className="md:hidden bg-white/95 dark:bg-black/95 backdrop-blur-md shadow-lg border-t border-gray-200 dark:border-gray-700 transition-colors duration-300">
           <div className="flex flex-col items-center space-y-5 py-10">

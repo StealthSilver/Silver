@@ -19,7 +19,6 @@ export default function Certificates() {
         overflow-x-hidden
       "
     >
-      {/* Section Title */}
       <motion.h2
         initial={{ opacity: 0, y: 40 }}
         animate={{ opacity: 1, y: 0 }}
@@ -34,7 +33,6 @@ export default function Certificates() {
         CERTIFICATES
       </motion.h2>
 
-      {/* Certificate List */}
       <div className="max-w-5xl mx-auto flex flex-col gap-3 sm:gap-4 font-mono">
         {CERTIFICATE.map((exp, index) => (
           <motion.div

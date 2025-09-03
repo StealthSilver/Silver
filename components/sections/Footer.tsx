@@ -28,7 +28,6 @@ export default function Footer() {
           flex flex-col items-center text-center space-y-6
         "
       >
-        {/* Logo */}
         <motion.img
           key={mounted ? theme : "default"}
           src={
@@ -47,7 +46,6 @@ export default function Footer() {
           className="mt-6 sm:mt-10 w-32 sm:w-40 h-auto"
         />
 
-        {/* Social Icons */}
         <div className="flex flex-wrap justify-center gap-6 sm:gap-10 mt-6 mb-6">
           <a
             href="https://www.linkedin.com/in/rajat-saraswat-0491a3259/"
@@ -104,10 +102,8 @@ export default function Footer() {
           </a>
         </div>
 
-        {/* Divider */}
         <div className="w-full max-w-5xl border-t border-gray-300 dark:border-gray-700" />
 
-        {/* Copyright */}
         <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-400 mt-4">
           © {year} Silver. All rights reserved.
         </p>

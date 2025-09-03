@@ -25,7 +25,6 @@ export default function Projects() {
         overflow-x-hidden
       "
     >
-      {/* Section Title */}
       <motion.h2
         initial={{ opacity: 0, y: 40 }}
         animate={{ opacity: 1, y: 0 }}
@@ -40,7 +39,6 @@ export default function Projects() {
         PROJECTS
       </motion.h2>
 
-      {/* Projects Grid */}
       <HoverEffect className="max-w-6xl mx-auto font-mono gap-3 sm:gap-4">
         <AnimatePresence>
           {(showAll ? PROJECTS : PROJECTS.slice(0, 6)).map((project, idx) => (
@@ -62,7 +60,6 @@ export default function Projects() {
                 <div className="absolute inset-0 bg-black/50 group-hover:bg-black/30 transition-all duration-700"></div>
                 <div className="absolute inset-0 bg-white/70 dark:bg-black/60 group-hover:bg-white/30 dark:group-hover:bg-black/30 transition-all duration-700"></div>
 
-                {/* Card Content */}
                 <div className="relative z-20 flex flex-col justify-between h-full text-center px-4 sm:px-6 py-4 sm:py-6">
                   <div className="transition-opacity duration-500 group-hover:opacity-0">
                     <CardTitle className="text-base sm:text-lg md:text-xl font-bold text-black dark:text-white">
@@ -73,7 +70,6 @@ export default function Projects() {
                     </CardDescription>
                   </div>
 
-                  {/* Links */}
                   <div className="flex gap-3 sm:gap-4 justify-center mt-6 sm:mt-12">
                     {project.live && (
                       <a
@@ -116,7 +112,6 @@ export default function Projects() {
         </AnimatePresence>
       </HoverEffect>
 
-      {/* Show More / Show Less */}
       {PROJECTS.length > 6 && (
         <div className="flex justify-center mt-8 sm:mt-10">
           <button

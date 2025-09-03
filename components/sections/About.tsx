@@ -10,7 +10,7 @@ export default function About() {
       id="about"
       className="
         relative px-4 sm:px-6 md:px-12 
-        mt-20 sm:mt-28 md:mt-36 
+        mt-20 sm:mt-28 md:mt-40 lg:mt-84
         bg-white/70 dark:bg-black/70 backdrop-blur-md 
         overflow-x-hidden
       "
@@ -56,48 +56,51 @@ export default function About() {
             </div>
 
             {/* Role */}
-            <div className="flex items-center gap-2 sm:gap-3 text-base sm:text-lg md:text-xl text-gray-600 dark:text-gray-400">
+            <div className="flex items-center gap-2 sm:gap-3 text-base sm:text-lg md:text-xl text-gray-600 dark:text-gray-400 text-left w-full">
               <span
                 className="
-                  rounded-full border p-2
-                  bg-white text-black border-black
-                  dark:bg-black dark:text-white dark:border-white
-                  transition-colors
-                "
+      rounded-full border p-2
+      bg-white text-black border-black
+      dark:bg-black dark:text-white dark:border-white
+      transition-colors
+      shrink-0
+    "
               >
                 <Code size={18} />
               </span>
-              Software Engineer
+              <span className="flex-1">Software Engineer</span>
             </div>
 
             {/* Location */}
-            <div className="flex items-center gap-2 sm:gap-3 text-base sm:text-lg text-gray-600 dark:text-gray-400">
+            <div className="flex items-center gap-2 sm:gap-3 text-base sm:text-lg text-gray-600 dark:text-gray-400 text-left w-full">
               <span
                 className="
-                  rounded-full border p-2
-                  bg-white text-black border-black
-                  dark:bg-black dark:text-white dark:border-white
-                  transition-colors
-                "
+      rounded-full border p-2
+      bg-white text-black border-black
+      dark:bg-black dark:text-white dark:border-white
+      transition-colors
+      shrink-0
+    "
               >
                 <MapPin size={18} />
               </span>
-              Bengaluru, Karnataka, India
+              <span className="flex-1">Bengaluru, Karnataka, India</span>
             </div>
 
             {/* Phone */}
-            <div className="flex items-center gap-2 sm:gap-3 text-base sm:text-lg text-gray-600 dark:text-gray-400">
+            <div className="flex items-center gap-2 sm:gap-3 text-base sm:text-lg text-gray-600 dark:text-gray-400 text-left w-full">
               <span
                 className="
-                  rounded-full border p-2
-                  bg-white text-black border-black
-                  dark:bg-black dark:text-white dark:border-white
-                  transition-colors
-                "
+      rounded-full border p-2
+      bg-white text-black border-black
+      dark:bg-black dark:text-white dark:border-white
+      transition-colors
+      shrink-0
+    "
               >
                 <Phone size={18} />
               </span>
-              +91 85339 22485
+              <span className="flex-1">+91 85339 22485</span>
             </div>
           </motion.div>
         </div>

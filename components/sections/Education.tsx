@@ -19,7 +19,6 @@ export default function Education() {
         overflow-x-hidden
       "
     >
-      {/* Section Title */}
       <motion.h2
         initial={{ opacity: 0, y: 40 }}
         animate={{ opacity: 1, y: 0 }}
@@ -34,7 +33,6 @@ export default function Education() {
         EDUCATION
       </motion.h2>
 
-      {/* Education Cards */}
       <div className="max-w-5xl mx-auto flex flex-col gap-6 sm:gap-8">
         {EDUCATION.map((exp, index) => (
           <motion.div
@@ -49,7 +47,6 @@ export default function Education() {
               hover:shadow-lg transition-all duration-300
             "
           >
-            {/* Institution */}
             <div className="flex justify-between items-center">
               <a
                 href={exp.link}
@@ -65,7 +62,6 @@ export default function Education() {
               </a>
             </div>
 
-            {/* Degree + Toggle */}
             <div
               onClick={() => setOpenIndex(openIndex === index ? null : index)}
               className="
@@ -110,7 +106,6 @@ export default function Education() {
               </button>
             </div>
 
-            {/* Expandable Details */}
             <AnimatePresence initial={false}>
               {openIndex === index && (
                 <motion.ul

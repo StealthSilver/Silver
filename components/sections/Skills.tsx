@@ -15,7 +15,6 @@ export default function Skills() {
         overflow-x-hidden
       "
     >
-      {/* Section Title */}
       <motion.h2
         initial={{ opacity: 0, y: 40 }}
         animate={{ opacity: 1, y: 0 }}
@@ -30,11 +29,11 @@ export default function Skills() {
         STACK
       </motion.h2>
 
-      {/* Tech Grid */}
       <div
         className="
           max-w-7xl mx-auto pb-6 
-          grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 xl:grid-cols-10 
+          grid grid-cols-4 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 xl:grid-cols-10 
+
           gap-4 sm:gap-6 md:gap-8
         "
       >
@@ -49,7 +48,6 @@ export default function Skills() {
             transition={{ duration: 0.5, delay: index * 0.05 }}
             className="relative flex flex-col items-center group"
           >
-            {/* Tooltip */}
             <span
               className="
                 absolute -top-7 sm:-top-8 opacity-0 
@@ -63,7 +61,6 @@ export default function Skills() {
               {tech.title}
             </span>
 
-            {/* Icon Container */}
             <div
               className="
                 relative w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 

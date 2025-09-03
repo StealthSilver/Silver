@@ -15,7 +15,6 @@ export default function Hero() {
       "
     >
       <div className="max-w-7xl mx-auto flex flex-col items-center text-center space-y-6 sm:space-y-8">
-        {/* Heading */}
         <motion.h1
           initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}
@@ -34,7 +33,6 @@ export default function Hero() {
           </div>
         </motion.h1>
 
-        {/* Subheading */}
         <motion.h2
           initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}
@@ -47,7 +45,6 @@ export default function Hero() {
           Software Developer based in Bengaluru
         </motion.h2>
 
-        {/* Paragraph */}
         <motion.p
           initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}
@@ -60,7 +57,6 @@ export default function Hero() {
           Enjoying and elevating the developer experience
         </motion.p>
 
-        {/* Buttons */}
         <motion.div
           initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}
