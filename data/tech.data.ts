@@ -21,13 +21,13 @@ export const TECH_STACK: TechStack[] = [
     lightIcon: "Python-Light.svg",
   },
   {
-    key: "c",
+    key: "C",
     title: "C",
     href: "https://www.c-language.org/",
     categories: ["Language"],
   },
   {
-    key: "cpp",
+    key: "CPP",
     title: "CPP",
     href: "https://isocpp.org/",
     categories: ["Language"],
