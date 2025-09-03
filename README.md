@@ -33,3 +33,6 @@ TODO :
 19. highlight the key points in experience
 20. optimize the loading time
 21. the show more for hte projects must animate tehm top-down not fade
+22. click sound on the theme toggle
+23. name pronountiation
+24. designation switch
