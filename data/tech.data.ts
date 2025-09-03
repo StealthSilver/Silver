@@ -227,7 +227,7 @@ export const TECH_STACK: TechStack[] = [
     categories: ["Containerization"],
   },
   {
-    key: "kafka",
+    key: "Kafka",
     title: "Kafka",
     href: "https://www.docker.com/",
     categories: ["Containerization"],
