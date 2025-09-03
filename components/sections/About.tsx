@@ -8,29 +8,40 @@ export default function About() {
   return (
     <section
       id="about"
-      className="relative px-6 mt-[330px] bg-white/70 dark:bg-black/70 backdrop-blur-md overflow-hidden"
+      className="
+        relative px-4 sm:px-6 md:px-12 
+        mt-20 sm:mt-28 md:mt-36 
+        bg-white/70 dark:bg-black/70 backdrop-blur-md 
+        overflow-x-hidden
+      "
     >
+      {/* Section Title */}
       <motion.h2
         initial={{ opacity: 0, y: 40 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 1, delay: 0.3 }}
         className="
-          text-3xl md:text-4xl flex items-center justify-center
-          text-gray-900 dark:text-gray-100 mb-20
+          text-2xl sm:text-3xl md:text-4xl 
+          flex items-center justify-center 
+          text-gray-900 dark:text-gray-100 
+          mb-10 sm:mb-16
         "
       >
         ABOUT ME
       </motion.h2>
 
-      <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 items-start gap-16">
-        <div className="flex justify-center">
+      {/* Grid Layout */}
+      <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 items-start gap-10 sm:gap-14 md:gap-16">
+        {/* Left Column */}
+        <div className="flex justify-center md:justify-start">
           <motion.div
             initial={{ opacity: 0, x: -40 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 1 }}
-            className="flex flex-col items-start space-y-6"
+            className="flex flex-col items-center md:items-start space-y-6"
           >
-            <div className="relative w-64 h-64 md:w-80 md:h-80 rounded-2xl overflow-hidden shadow-lg">
+            {/* Profile Image */}
+            <div className="relative w-48 h-48 sm:w-64 sm:h-64 md:w-80 md:h-80 rounded-2xl overflow-hidden shadow-lg">
               <Image
                 src="/profile_pic.png"
                 alt="About Me"
@@ -39,11 +50,13 @@ export default function About() {
               />
             </div>
 
-            <div className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-gray-100">
+            {/* Name */}
+            <div className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 dark:text-gray-100">
               Silver
             </div>
 
-            <div className="flex items-center gap-3 text-lg md:text-xl text-gray-600 dark:text-gray-400">
+            {/* Role */}
+            <div className="flex items-center gap-2 sm:gap-3 text-base sm:text-lg md:text-xl text-gray-600 dark:text-gray-400">
               <span
                 className="
                   rounded-full border p-2
@@ -57,7 +70,8 @@ export default function About() {
               Software Engineer
             </div>
 
-            <div className="flex items-center gap-3 text-lg text-gray-600 dark:text-gray-400">
+            {/* Location */}
+            <div className="flex items-center gap-2 sm:gap-3 text-base sm:text-lg text-gray-600 dark:text-gray-400">
               <span
                 className="
                   rounded-full border p-2
@@ -71,7 +85,8 @@ export default function About() {
               Bengaluru, Karnataka, India
             </div>
 
-            <div className="flex items-center gap-3 text-lg text-gray-600 dark:text-gray-400">
+            {/* Phone */}
+            <div className="flex items-center gap-2 sm:gap-3 text-base sm:text-lg text-gray-600 dark:text-gray-400">
               <span
                 className="
                   rounded-full border p-2
@@ -87,18 +102,19 @@ export default function About() {
           </motion.div>
         </div>
 
+        {/* Right Column */}
         <motion.div
           initial={{ opacity: 0, x: 40 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 1, delay: 0.2 }}
-          className="flex flex-col space-y-6 text-left"
+          className="flex flex-col space-y-6 text-center md:text-left"
         >
           <motion.p
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1, delay: 0.4 }}
             className="
-              text-lg md:text-xl font-mono leading-relaxed
+              text-base sm:text-lg md:text-xl font-mono leading-relaxed
               text-gray-700 dark:text-gray-300
             "
           >
@@ -115,7 +131,7 @@ export default function About() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1, delay: 0.5 }}
             className="
-              text-lg md:text-xl font-mono leading-relaxed
+              text-base sm:text-lg md:text-xl font-mono leading-relaxed
               text-gray-700 dark:text-gray-300
             "
           >
@@ -132,7 +148,7 @@ export default function About() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1, delay: 0.6 }}
             className="
-              text-xl md:text-2xl font-bold
+              text-lg sm:text-xl md:text-2xl font-bold
               text-gray-900 dark:text-gray-100 tracking-wide
             "
           >
