@@ -11,7 +11,7 @@ export default function Experience() {
   return (
     <section
       id="experience"
-      className="relative px-6 mt-[150px] bg-white/70 dark:bg-black/70 backdrop-blur-md overflow-hidden"
+      className="relative px-6 py-6 mt-[150px] bg-white/70 dark:bg-black/70 backdrop-blur-md overflow-hidden"
     >
       <motion.h2
         initial={{ opacity: 0, y: 40 }}

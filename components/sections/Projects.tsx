@@ -38,16 +38,15 @@ export default function Projects() {
               exit={{ opacity: 0, y: 30 }}
               transition={{ duration: 0.5 }}
               layout
-              className="h-full"
             >
-              <Card className="relative w-full group overflow-hidden">
+              <Card className="relative w-full h-full group overflow-hidden">
                 <Image
                   src={project.image}
                   alt={project.title}
                   fill
-                  className="object-cover opacity-20 group-hover:opacity-80 group-hover:blur-0 transition-all duration-700"
+                  className="object-cover opacity-20 group-hover:blur-0 group-hover:opacity-80 transition-all duration-700"
                 />
-
+                <div className="absolute inset-0 bg-black/60 group-hover:bg-black/30 transition-all duration-700"></div>
                 <div className="absolute inset-0 bg-white/80 dark:bg-black/60 group-hover:bg-white/30 dark:group-hover:bg-black/30 transition-all duration-700"></div>
 
                 <div className="relative z-20 flex flex-col justify-between h-full text-center px-6 py-6">
@@ -67,7 +66,7 @@ export default function Projects() {
                         target="_blank"
                         rel="noopener noreferrer"
                         className="rounded-full border p-2 bg-white text-black border-black hover:bg-black hover:text-white 
-                          dark:bg-black dark:text-white dark:border-white dark:hover:bg-white dark:hover:text-black transition-colors"
+                                dark:bg-black dark:text-white dark:border-white dark:hover:bg-white dark:hover:text-black transition-colors"
                       >
                         <Globe size={18} />
                       </a>
@@ -78,7 +77,7 @@ export default function Projects() {
                         target="_blank"
                         rel="noopener noreferrer"
                         className="rounded-full border p-2 bg-white text-black border-black hover:bg-black hover:text-white 
-                          dark:bg-black dark:text-white dark:border-white dark:hover:bg-white dark:hover:text-black transition-colors"
+                                dark:bg-black dark:text-white dark:border-white dark:hover:bg-white dark:hover:text-black transition-colors"
                       >
                         <Github size={18} />
                       </a>
@@ -89,7 +88,7 @@ export default function Projects() {
                         target="_blank"
                         rel="noopener noreferrer"
                         className="rounded-full border p-2 bg-white text-black border-black hover:bg-black hover:text-white 
-                          dark:bg-black dark:text-white dark:border-white dark:hover:bg-white dark:hover:text-black transition-colors"
+                                dark:bg-black dark:text-white dark:border-white dark:hover:bg-white dark:hover:text-black transition-colors"
                       >
                         <Figma size={18} />
                       </a>
@@ -102,13 +101,14 @@ export default function Projects() {
         </AnimatePresence>
       </HoverEffect>
 
+      {/* Show More / Show Less Button */}
       {PROJECTS.length > 6 && (
         <div className="flex justify-center mt-10">
           <button
             onClick={() => setShowAll(!showAll)}
             className="flex items-center gap-2 px-6 py-3 border border-gray-700 dark:border-gray-300 rounded-full 
-              text-gray-900 dark:text-gray-100 hover:bg-gray-900 hover:text-white dark:hover:bg-white dark:hover:text-black 
-              transition-colors"
+                       text-gray-900 dark:text-gray-100 hover:bg-gray-900 hover:text-white dark:hover:bg-white dark:hover:text-black 
+                       transition-colors"
           >
             {showAll ? "Show Less" : "Show More"}
             {showAll ? <ChevronUp size={18} /> : <ChevronDown size={18} />}

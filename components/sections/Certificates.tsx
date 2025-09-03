@@ -1,3 +1,58 @@
-export default function Certificates() {
-  return <></>;
+"use client";
+
+import { useState } from "react";
+import { motion } from "framer-motion";
+import { Link2 } from "lucide-react";
+import { CERTIFICATE } from "../../data/certificate.data";
+
+export default function Education() {
+  const [openIndex, setOpenIndex] = useState<number | null>(null);
+
+  return (
+    <section
+      id="certificates"
+      className="relative px-6 mt-[150px] bg-white/70 dark:bg-black/70 backdrop-blur-md overflow-hidden"
+    >
+      <motion.h2
+        initial={{ opacity: 0, y: 40 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 1, delay: 0.3 }}
+        className="text-3xl md:text-4xl flex items-center justify-center text-gray-900 dark:text-gray-100 mb-20"
+      >
+        CERTIFICATES
+      </motion.h2>
+
+      <div className="max-w-5xl mx-auto flex flex-col gap-4 font-mono">
+        {CERTIFICATE.map((exp, index) => (
+          <motion.div
+            key={index}
+            initial={{ opacity: 0, y: 40 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: index * 0.2 }}
+            className="p-4 rounded-2xl border border-gray-300/30 dark:border-gray-700/50 bg-white/60 dark:bg-black/60 backdrop-blur-md transition-all duration-300"
+          >
+            <div className="flex justify-between items-center">
+              <a
+                href={exp.link}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-xl font-bold text-gray-900 dark:text-gray-100 cursor-pointer"
+              >
+                {exp.company}
+              </a>
+
+              <a
+                href={exp.link}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-gray-600 dark:text-gray-300 transition-colors"
+              >
+                <Link2 size={22} />
+              </a>
+            </div>
+          </motion.div>
+        ))}
+      </div>
+    </section>
+  );
 }
