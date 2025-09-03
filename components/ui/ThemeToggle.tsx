@@ -1,15 +1,22 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { useTheme } from "next-themes";
 import { Sun, Moon } from "lucide-react";
 import { AnimatePresence, motion } from "framer-motion";
+import soundManager from "@/lib/sound-mamager";
 
 export default function ThemeToggle() {
   const { resolvedTheme, setTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => setMounted(true), []);
+
+  const handleToggle = useCallback(() => {
+    soundManager.playClick();
+    setTheme(resolvedTheme === "dark" ? "light" : "dark");
+  }, [resolvedTheme, setTheme]);
+
   if (!mounted) {
     return (
       <button
@@ -24,7 +31,7 @@ export default function ThemeToggle() {
 
   return (
     <button
-      onClick={() => setTheme(isDark ? "light" : "dark")}
+      onClick={handleToggle}
       aria-label={`Switch to ${isDark ? "light" : "dark"} theme`}
       title={`Switch to ${isDark ? "light" : "dark"} theme`}
       className="
@@ -36,25 +43,11 @@ export default function ThemeToggle() {
     >
       <AnimatePresence mode="wait" initial={false}>
         {isDark ? (
-          <motion.span
-            key="moon"
-            initial={{ opacity: 0, rotate: -90 }}
-            animate={{ opacity: 1, rotate: 0 }}
-            exit={{ opacity: 0, rotate: 90 }}
-            transition={{ type: "spring", stiffness: 300, damping: 20 }}
-            className="inline-flex items-center gap-2"
-          >
+          <motion.span className="inline-flex items-center gap-2">
             <Moon size={16} />
           </motion.span>
         ) : (
-          <motion.span
-            key="sun"
-            initial={{ opacity: 0, rotate: 90 }}
-            animate={{ opacity: 1, rotate: 0 }}
-            exit={{ opacity: 0, rotate: -90 }}
-            transition={{ type: "spring", stiffness: 300, damping: 20 }}
-            className="inline-flex items-center gap-2"
-          >
+          <motion.span key="sun" className="inline-flex items-center gap-2">
             <Sun size={16} />
           </motion.span>
         )}
