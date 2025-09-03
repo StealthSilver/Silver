@@ -33,7 +33,7 @@ export const TECH_STACK: TechStack[] = [
     categories: ["Language"],
   },
   {
-    key: "java",
+    key: "Java",
     title: "Java",
     href: "https://www.java.com/",
     categories: ["Language"],
@@ -46,13 +46,13 @@ export const TECH_STACK: TechStack[] = [
     categories: ["Runtime Environment"],
   },
   {
-    key: "css",
+    key: "CSS",
     title: "CSS",
     href: "https://nodejs.org/",
     categories: ["Runtime Environment"],
   },
   {
-    key: "sass",
+    key: "Sass",
     title: "Sass",
     href: "https://nodejs.org/",
     categories: ["Runtime Environment"],
@@ -170,7 +170,7 @@ export const TECH_STACK: TechStack[] = [
     categories: ["Library", "Animation"],
   },
   {
-    key: "redux",
+    key: "Redux",
     title: "Redux",
     href: "https://redux.js.org/",
     categories: ["State Management"],
@@ -195,27 +195,27 @@ export const TECH_STACK: TechStack[] = [
     lightIcon: "MaterialUI-Light.svg",
   },
   {
-    key: "jest",
+    key: "Jest",
     title: "Jest",
     href: "https://git-scm.com/",
     categories: ["Version Control"],
   },
 
   {
-    key: "git",
+    key: "Git",
     title: "Git",
     href: "https://git-scm.com/",
     categories: ["Version Control"],
   },
   {
-    key: "github",
+    key: "Github",
     title: "GitHub",
     href: "https://github.com/",
     categories: ["Version Control"],
     lightIcon: "GitHub-Light.svg",
   },
   {
-    key: "docker",
+    key: "Docker",
     title: "Docker",
     href: "https://www.docker.com/",
     categories: ["Containerization"],
