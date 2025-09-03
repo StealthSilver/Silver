@@ -75,7 +75,7 @@ export const TextHoverEffect = ({
         dominantBaseline="middle"
         strokeWidth="0.6"
         className="
-          fill-neutral-200 stroke-neutral-600
+          fill-neutral-300 stroke-neutral-700
           font-[helvetica] text-8xl font-extrabold
           dark:stroke-neutral-400 dark:fill-neutral-800
         "

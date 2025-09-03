@@ -60,8 +60,8 @@ export default function Hero() {
             href="#footer"
             className="
               px-10 py-2 flex items-center gap-6 rounded-full border
-              bg-white text-black border-black
-              hover:bg-black hover:text-white
+              bg-black text-white border-black
+              hover:bg-white hover:text-black
               dark:bg-white dark:text-black dark:border-white
               dark:hover:bg-black dark:hover:text-white
               transition-colors duration-300
@@ -78,8 +78,10 @@ export default function Hero() {
             // download="Rajat-Saraswat-Resume.pdf"
             className="
               flex items-center gap-6 px-10 py-2 rounded-full border
-              bg-black text-white border-white
-              hover:bg-white hover:text-black hover:border-black
+              bg-white text-black border-black
+              hover:bg-black hover:text-white hover:border-white
+               dark:bg-black dark:text-white dark:border-white
+              dark:hover:bg-white dark:hover:text-black
               transition-colors duration-300
             "
           >
