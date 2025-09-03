@@ -103,11 +103,11 @@ export default function About() {
             "
           >
             Hello, World! I’m a passionate{" "}
-            <span className="font-semibold">Full Stack Developer</span> with 4
-            years of industry experience building robust, scalable, and
+            <span className="font-semibold">Full Stack Developer</span> with
+            proven industry experience building robust, scalable, and
             user-friendly web applications. I bring a problem-solving mindset to
-            every project, thriving in fast-paced environments where innovation
-            and efficiency matter.
+            every project, thriving in cutting-edge environments where
+            innovation and performance matter.
           </motion.p>
 
           <motion.p
@@ -119,12 +119,12 @@ export default function About() {
               text-gray-700 dark:text-gray-300
             "
           >
-            From designing responsive frontends to architecting efficient
-            backend systems, I specialize in delivering end-to-end solutions
-            that solve real-world problems and create meaningful digital
-            experiences. I’m constantly learning, pushing and innovating —
-            ensuring that every project I work on is not just functional, but
-            also intuitive, reliable, and impactful.
+            From crafting seamless frontends to architecting intelligent backend
+            systems, I specialize in delivering end-to-end solutions that solve
+            complex problems and create transformative digital experiences. I'm
+            constantly evolving, experimenting and pioneering — ensuring that
+            every project I work on is not just functional, but also elegant,
+            performant, and game-changing.
           </motion.p>
 
           <motion.h3
