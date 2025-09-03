@@ -15,7 +15,7 @@ export default function Navbar() {
   const [mounted, setMounted] = useState(false);
   useEffect(() => setMounted(true), []);
 
-  const toggleMenu = () => setIsOpen(!isOpen);
+  const toggleMenu = () => setIsOpen((v) => !v);
 
   const navItems = [
     { name: "About", href: "#about" },
@@ -28,13 +28,14 @@ export default function Navbar() {
   return (
     <nav
       className="
-        w-full sticky top-0 z-50 px-10 py-4
+        w-full sticky top-0 z-50 px-4 sm:px-6 py-3
         border-b border-black/10 dark:border-gray-700
         bg-white/70 dark:bg-black/70 backdrop-blur-md
         transition-colors duration-300
       "
     >
-      <div className="flex items-center justify-between max-w-7xl mx-auto">
+      <div className="flex items-center justify-between max-w-7xl mx-auto w-full">
+        {/* Logo */}
         <Link href="/" className="flex items-center cursor-pointer">
           <motion.img
             key={mounted ? theme : "default"}
@@ -46,20 +47,20 @@ export default function Navbar() {
                 : "/logo_light.svg"
             }
             alt="Silver logo"
-            width={120}
-            height={120}
+            className="w-28 h-auto sm:w-32 md:w-36"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.3 }}
           />
         </Link>
 
+        {/* Desktop nav items */}
         <div
-          className="hidden md:flex items-center px-2 font-mono relative gap-4"
+          className="hidden md:flex items-center px-2 font-mono relative gap-6"
           onMouseLeave={() => setHovered(null)}
         >
           {navItems.map((item) => (
-            <div key={item.name} className="relative px-4 py-1.5 select-none">
+            <div key={item.name} className="relative px-3 py-1.5 select-none">
               {hovered === item.name && (
                 <motion.span
                   layoutId="hoverBg"
@@ -94,6 +95,7 @@ export default function Navbar() {
           ))}
         </div>
 
+        {/* Desktop right-side icons */}
         <div className="hidden md:flex items-center gap-6 font-mono">
           <a
             href="https://github.com/StealthSilver"
@@ -124,16 +126,28 @@ export default function Navbar() {
           </a>
         </div>
 
-        <div className="md:hidden">
-          <button onClick={toggleMenu} aria-label="Toggle Menu">
-            {isOpen ? <X size={28} /> : <Menu size={28} />}
+        {/* Mobile controls */}
+        <div className="md:hidden flex items-center gap-3">
+          {/* Smaller theme toggle */}
+          <div className="scale-90">
+            <ThemeToggle />
+          </div>
+
+          {/* Smaller hamburger */}
+          <button
+            onClick={toggleMenu}
+            aria-label={isOpen ? "Close menu" : "Open menu"}
+            className="p-1.5 rounded-md"
+          >
+            {isOpen ? <X size={24} /> : <Menu size={24} />}
           </button>
         </div>
       </div>
 
+      {/* Mobile dropdown menu */}
       {isOpen && (
-        <div className="md:hidden bg-white/90 dark:bg-black/90 backdrop-blur-md shadow-lg border-t border-gray-200 dark:border-gray-700 transition-colors duration-300">
-          <div className="flex flex-col items-center space-y-4 py-4">
+        <div className="md:hidden bg-white/95 dark:bg-black/95 backdrop-blur-md shadow-lg border-t border-gray-200 dark:border-gray-700 transition-colors duration-300">
+          <div className="flex flex-col items-center space-y-5 py-10">
             {navItems.map((item) => (
               <Link
                 key={item.name}
@@ -151,7 +165,6 @@ export default function Navbar() {
             >
               Connect
             </a>
-            <ThemeToggle />
           </div>
         </div>
       )}
