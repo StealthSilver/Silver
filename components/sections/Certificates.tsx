@@ -6,7 +6,7 @@ import { Link2 } from "lucide-react";
 import { CERTIFICATE } from "../../data/certificate.data";
 
 export default function Certificates() {
-  const [openIndex, setOpenIndex] = useState<number | null>(null);
+  const [_openIndex, _setOpenIndex] = useState<number | null>(null);
 
   return (
     <section

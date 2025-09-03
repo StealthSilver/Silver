@@ -59,12 +59,11 @@ export default function About() {
             <div className="flex items-center gap-2 sm:gap-3 text-base sm:text-lg md:text-xl text-gray-600 dark:text-gray-400 text-left w-full">
               <span
                 className="
-      rounded-full border p-2
-      bg-white text-black border-black
-      dark:bg-black dark:text-white dark:border-white
-      transition-colors
-      shrink-0
-    "
+                         rounded-full border p-2
+                         bg-white text-black border-black
+                         dark:bg-black dark:text-white dark:border-white
+                         transition-colors
+                         shrink-0"
               >
                 <Code size={18} />
               </span>
@@ -75,12 +74,11 @@ export default function About() {
             <div className="flex items-center gap-2 sm:gap-3 text-base sm:text-lg text-gray-600 dark:text-gray-400 text-left w-full">
               <span
                 className="
-      rounded-full border p-2
-      bg-white text-black border-black
-      dark:bg-black dark:text-white dark:border-white
-      transition-colors
-      shrink-0
-    "
+                       rounded-full border p-2
+                       bg-white text-black border-black
+                       dark:bg-black dark:text-white dark:border-white
+                       transition-colors
+                            shrink-0"
               >
                 <MapPin size={18} />
               </span>
@@ -91,12 +89,11 @@ export default function About() {
             <div className="flex items-center gap-2 sm:gap-3 text-base sm:text-lg text-gray-600 dark:text-gray-400 text-left w-full">
               <span
                 className="
-      rounded-full border p-2
-      bg-white text-black border-black
-      dark:bg-black dark:text-white dark:border-white
-      transition-colors
-      shrink-0
-    "
+                          rounded-full border p-2
+                          bg-white text-black border-black
+                          dark:bg-black dark:text-white dark:border-white
+                          transition-colors
+                          shrink-0"
               >
                 <Phone size={18} />
               </span>
@@ -140,10 +137,10 @@ export default function About() {
           >
             From crafting seamless frontends to architecting intelligent backend
             systems, I specialize in delivering end-to-end solutions that solve
-            complex problems and create transformative digital experiences. I'm
-            constantly evolving, experimenting and pioneering — ensuring that
-            every project I work on is not just functional, but also elegant,
-            performant, and game-changing.
+            complex problems and create transformative digital experiences.
+            I&apos;m constantly evolving, experimenting and pioneering —
+            ensuring that every project I work on is not just functional, but
+            also elegant, performant, and game-changing.
           </motion.p>
 
           <motion.h3
