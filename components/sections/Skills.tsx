@@ -22,7 +22,7 @@ export default function Skills() {
         STACK
       </motion.h2>
 
-      <div className="max-w-7xl mx-auto grid grid-cols-4 sm:grid-cols-6 md:grid-cols-8 lg:grid-cols-12 gap-4">
+      <div className="max-w-7xl mx-auto pb-4 grid grid-cols-4 sm:grid-cols-6 md:grid-cols-8 lg:grid-cols-12 gap-8 ">
         {TECH_STACK.map((tech, index) => (
           <motion.a
             key={tech.key}

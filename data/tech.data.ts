@@ -18,6 +18,7 @@ export const TECH_STACK: TechStack[] = [
     title: "Python",
     href: "https://www.python.org/",
     categories: ["Language"],
+    lightIcon: "Python-Light.svg",
   },
   {
     key: "c",
@@ -36,6 +37,7 @@ export const TECH_STACK: TechStack[] = [
     title: "Java",
     href: "https://www.java.com/",
     categories: ["Language"],
+    lightIcon: "Java-Light.svg",
   },
   {
     key: "html",
@@ -66,18 +68,21 @@ export const TECH_STACK: TechStack[] = [
     title: "Node.js",
     href: "https://nodejs.org/",
     categories: ["Runtime Environment"],
+    lightIcon: "NodeJS-Light.svg",
   },
   {
     key: "bun",
     title: "Bun",
     href: "https://bun.sh/",
     categories: ["Runtime Environment"],
+    lightIcon: "Bun-Light.svg",
   },
   {
     key: "express",
     title: "ExpressJS",
     href: "https://nodejs.org/",
     categories: ["Runtime Environment"],
+    lightIcon: "ExpressJS-Light.svg",
   },
   {
     key: "django",
@@ -87,9 +92,10 @@ export const TECH_STACK: TechStack[] = [
   },
   {
     key: "flask",
-    title: "Django",
+    title: "Flask",
     href: "https://nodejs.org/",
     categories: ["Runtime Environment"],
+    lightIcon: "Flask-Light.svg",
   },
   {
     key: "fast",
@@ -102,6 +108,7 @@ export const TECH_STACK: TechStack[] = [
     title: "React",
     href: "https://react.dev/",
     categories: ["Library", "UI Library"],
+    lightIcon: "React-Light.svg",
   },
   {
     key: "next",
@@ -109,6 +116,7 @@ export const TECH_STACK: TechStack[] = [
     href: "https://nextjs.org/",
     categories: ["Framework"],
     theme: true,
+    lightIcon: "NextJS-Light.svg",
   },
   {
     key: "angular",
@@ -116,24 +124,28 @@ export const TECH_STACK: TechStack[] = [
     href: "https://nextjs.org/",
     categories: ["Framework"],
     theme: true,
+    lightIcon: "Angular-Light.svg",
   },
   {
     key: "nest",
     title: "NestJS",
     href: "https://nestjs.com/",
     categories: ["Library", "UI Library"],
+    lightIcon: "NestJS-Light.svg",
   },
   {
     key: "tailwind",
     title: "Tailwind CSS",
     href: "https://tailwindcss.com/",
     categories: ["Framework"],
+    lightIcon: "TailwindCSS-Light.svg",
   },
   {
     key: "three",
     title: "ThreeJS",
     href: "https://motion.dev/",
     categories: ["Library", "Animation"],
+    lightIcon: "ThreeJS-Light.svg",
   },
   {
     key: "shadcn",
@@ -180,6 +192,7 @@ export const TECH_STACK: TechStack[] = [
     title: "MaterialUI",
     href: "https://mui.com/material-ui/",
     categories: ["Library", "UI Library"],
+    lightIcon: "MaterialUI-Light.svg",
   },
   {
     key: "jest",
@@ -199,6 +212,7 @@ export const TECH_STACK: TechStack[] = [
     title: "GitHub",
     href: "https://github.com/",
     categories: ["Version Control"],
+    lightIcon: "GitHub-Light.svg",
   },
   {
     key: "docker",
@@ -220,21 +234,24 @@ export const TECH_STACK: TechStack[] = [
   },
   {
     key: "grafna",
-    title: "Grafna",
+    title: "Grafana",
     href: "https://www.docker.com/",
     categories: ["Containerization"],
+    lightIcon: "Grafana-Light.svg",
   },
   {
     key: "mysql",
     title: "MySQL",
     href: "https://www.mysql.com/",
     categories: ["Database"],
+    lightIcon: "MySQL-Light.svg",
   },
   {
     key: "postgres",
     title: "PostgreSQL",
     href: "https://www.postgresql.org/",
     categories: ["Database"],
+    lightIcon: "PostgreSQL-Light.svg",
   },
   {
     key: "mongo",
@@ -247,18 +264,21 @@ export const TECH_STACK: TechStack[] = [
     title: "Redis",
     href: "https://redis.io/",
     categories: ["Database"],
+    lightIcon: "Redis-Light.svg",
   },
   {
     key: "firebase",
     title: "Firebase",
     href: "https://redis.io/",
     categories: ["Database"],
+    lightIcon: "Firebase-Light.svg",
   },
   {
     key: "graph",
     title: "GraphQL",
     href: "https://github.com/",
     categories: ["Version Control"],
+    lightIcon: "GraphQL-Light.svg",
   },
   {
     key: "nginx",
@@ -271,11 +291,13 @@ export const TECH_STACK: TechStack[] = [
     title: "AWS",
     href: "https://redis.io/",
     categories: ["Database"],
+    lightIcon: "AWS-Light.svg",
   },
   {
     key: "figma",
     title: "Figma",
     href: "https://www.figma.com/",
     categories: ["Tools", "Design"],
+    lightIcon: "Figma-Light.svg",
   },
 ];

@@ -47,12 +47,16 @@ export default function Projects() {
                   fill
                   className="object-cover opacity-20 group-hover:blur-0 group-hover:opacity-80 transition-all duration-700"
                 />
-                <div className="absolute inset-0 bg-black/60 group-hover:bg-black/30 transition-all duration-700"></div>
+                <div className="absolute inset-0 bg-white/80 dark:bg-black/60 group-hover:bg-white/30 dark:group-hover:bg-black/30 transition-all duration-700"></div>
 
                 <div className="relative z-20 flex flex-col justify-between h-full text-center px-6 py-6">
                   <div className="transition-opacity duration-500 group-hover:opacity-0 text-xl font-bold">
-                    <CardTitle>{project.title}</CardTitle>
-                    <CardDescription>{project.description}</CardDescription>
+                    <CardTitle className="text-black dark:text-white">
+                      {project.title}
+                    </CardTitle>
+                    <CardDescription className="text-black dark:text-white">
+                      {project.description}
+                    </CardDescription>
                   </div>
 
                   <div className="flex gap-4 justify-center mt-12">

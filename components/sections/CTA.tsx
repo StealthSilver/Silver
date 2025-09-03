@@ -6,11 +6,9 @@ import { BackgroundRippleEffect } from "@/components/ui/BackgroundRipple";
 export default function CTA() {
   return (
     <section className="relative px-6 py-32 bg-white/70 dark:bg-black/70 backdrop-blur-md overflow-hidden mt-[100px]">
-      {/* Background Ripple Effect */}
       <BackgroundRippleEffect />
 
       <div className="relative z-10 max-w-4xl mx-auto flex flex-col items-center text-center space-y-6">
-        {/* Subtitle */}
         <motion.p
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -21,7 +19,6 @@ export default function CTA() {
           Let’s connect amazing stuff together
         </motion.p>
 
-        {/* Main Heading */}
         <motion.h2
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -32,7 +29,6 @@ export default function CTA() {
           Get in Touch
         </motion.h2>
 
-        {/* Button */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
