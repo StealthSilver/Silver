@@ -9,30 +9,22 @@ Steps:
 7. write all the dependencies in the metadata ina site.config.ts inside config and import from there
 8. import the og image and store it in public
 
-------------------
+---
 
 TODO :
-1. light mode icon in the head
-2. loader
-3. responsive
-4. light mode styles
-5. add elementry education
-6. add 2 more experience
-7. add one achievement section
-8. add the skill tags in the experience
-9. some of hte skill images are not visible in production
-10. link the respectivelinks for prjects
-11. improve the experience bullets
-12. improve the about section text
-13. improve the education bullets
-14. make the stack links right
-15. make the footer links import from teh data.footer.ts
-16. make the prject name and description right
-17. make the scroll animations
-18. make the awards and certificates section. at least two
-19. highlight the key points in experience
-20. optimize the loading time
-21. the show more for hte projects must animate tehm top-down not fade
-22. click sound on the theme toggle
-23. name pronountiation
-24. designation switch
+
+1. name pronunciation
+2. multiple designation animation
+3. experience bullets, tech stack and add key points
+4. add rest of the experience
+5. add the education bullets, and tech stack
+6. add elementary education
+7. add and link certificates
+8. add the awards section
+9. make the footer links take data from footer.data.ts
+10. make the project images of same size
+11. make the project links working
+12. add original project and make the content right
+13. make the skill links working
+14. make the projects show more button work perfectly
+15. create individual page for every project
