@@ -76,7 +76,7 @@ export default function Footer() {
           </a>
 
           <a
-            href="https://x.com/Rajat_0409"
+            href="https://x.com/silver_srs"
             target="_blank"
             rel="noopener noreferrer"
             className="
