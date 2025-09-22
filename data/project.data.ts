@@ -12,7 +12,7 @@ export const PROJECTS = [
     title: "BinaryNetwork",
     description: "A professional social media platform",
     image: "/projects/binarynetwork.png", //
-    live: "https://your-live-site.com", //
+    live: "https://binary-network.vercel.app/",
     github: "https://github.com/StealthSilver/BinaryNetwork",
     figma: "https://figma.com/file/your-figma-link", //
   },
@@ -52,8 +52,8 @@ export const PROJECTS = [
   {
     title: "ConnectRight",
     description: "A video confrencing platforms",
-    image: "/projects/connectright.png", //
-    live: "https://sgrids.vercel.app/", //
+    image: "/projects/connectright.png",
+    live: "https://connectright.vercel.app/", //
     github: "https://github.com/StealthSilver/ConnectRight",
     figma: "https://figma.com/file/your-figma-link", //
   },
@@ -61,7 +61,7 @@ export const PROJECTS = [
     title: "BridgePay",
     description: "A payment gateway application",
     image: "/projects/bridgepay.png",
-    live: "https://your-live-site.com",
+    live: "https://bridge-pay-chi.vercel.app/signin",
     github: "https://github.com/StealthSilver/BridgePay",
     figma: "https://figma.com/file/your-figma-link",
   },
