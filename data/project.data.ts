@@ -9,11 +9,35 @@ export const PROJECTS = [
       "https://www.figma.com/design/fkprR8ZCbDezgeWweqLc6X/MS-landing?node-id=0-1&t=gscDeXAEkqGmTJlM-1",
   },
   {
+    title: "BinaryNetwork",
+    description: "A professional social media platform",
+    image: "/projects/sgrids.png", //
+    live: "https://your-live-site.com", //
+    github: "https://github.com/StealthSilver/BinaryNetwork",
+    figma: "https://figma.com/file/your-figma-link", //
+  },
+  {
+    title: "TravoPad",
+    description: "A colloborative drawing application",
+    image: "/projects/sgrids.png", //
+    live: "https://your-live-site.com", //
+    github: "https://github.com/StealthSilver/TavroPad",
+    figma: "https://figma.com/file/your-figma-link", //
+  },
+  {
     title: "RiffinityAI",
     description: "An AI companion application",
     image: "/projects/sgrids.png", //
     live: "https://riffinity-l18s.vercel.app/",
     github: "https://github.com/StealthSilver/Riffinity",
+    figma: "https://figma.com/file/your-figma-link", //
+  },
+  {
+    title: "DevOrbit",
+    description: "Application for deploying and editing codebase",
+    image: "/projects/sgrids.png", //
+    live: "https://your-live-site.com", //
+    github: "https://github.com/StealthSilver/DevOrbit",
     figma: "https://figma.com/file/your-figma-link", //
   },
   {
@@ -41,14 +65,6 @@ export const PROJECTS = [
     github: "https://github.com/StealthSilver/BridgePay",
     figma: "https://figma.com/file/your-figma-link",
   },
-  {
-    title: "TravoPad",
-    description: "A colloborative drawing application",
-    image: "/projects/sgrids.png", //
-    live: "https://your-live-site.com", //
-    github: "https://github.com/StealthSilver/TavroPad",
-    figma: "https://figma.com/file/your-figma-link", //
-  },
 
   {
     title: "Sgrids",
@@ -61,14 +77,6 @@ export const PROJECTS = [
   },
 
   {
-    title: "DevOrbit",
-    description: "Application for deploying and editing codebase",
-    image: "/projects/sgrids.png", //
-    live: "https://your-live-site.com", //
-    github: "https://github.com/StealthSilver/DevOrbit",
-    figma: "https://figma.com/file/your-figma-link", //
-  },
-  {
     title: "InfinityX",
     description: "Real time workflow mamagement applicaion",
     image: "/projects/sgrids.png", //
@@ -77,14 +85,7 @@ export const PROJECTS = [
     figma: "https://figma.com/file/your-figma-link", //
   },
 
-  {
-    title: "BinaryNetwork",
-    description: "A professional social media platform",
-    image: "/projects/sgrids.png", //
-    live: "https://your-live-site.com", //
-    github: "https://github.com/StealthSilver/BinaryNetwork",
-    figma: "https://figma.com/file/your-figma-link", //
-  },
+  ,
   {
     title: "MindPalace",
     description: "An organization and management application",
