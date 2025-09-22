@@ -15,7 +15,6 @@ export default function About() {
         overflow-x-hidden
       "
     >
-      {/* Section Title */}
       <motion.h2
         initial={{ opacity: 0, y: 40 }}
         animate={{ opacity: 1, y: 0 }}
@@ -30,9 +29,7 @@ export default function About() {
         ABOUT ME
       </motion.h2>
 
-      {/* Grid Layout */}
       <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 items-start gap-10 sm:gap-14 md:gap-16">
-        {/* Left Column */}
         <div className="flex justify-center md:justify-start">
           <motion.div
             initial={{ opacity: 0, x: -40 }}
@@ -40,7 +37,6 @@ export default function About() {
             transition={{ duration: 1 }}
             className="flex flex-col items-center md:items-start space-y-6"
           >
-            {/* Profile Image */}
             <div className="relative w-48 h-48 sm:w-64 sm:h-64 md:w-80 md:h-80 rounded-2xl overflow-hidden shadow-lg">
               <Image
                 src="/profile_pic.png"
@@ -50,12 +46,10 @@ export default function About() {
               />
             </div>
 
-            {/* Name */}
             <div className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 dark:text-gray-100">
               Silver
             </div>
 
-            {/* Role */}
             <div className="flex items-center gap-2 sm:gap-3 text-base sm:text-lg md:text-xl text-gray-600 dark:text-gray-400 text-left w-full">
               <span
                 className="
@@ -70,7 +64,6 @@ export default function About() {
               <span className="flex-1">Software Engineer</span>
             </div>
 
-            {/* Location */}
             <div className="flex items-center gap-2 sm:gap-3 text-base sm:text-lg text-gray-600 dark:text-gray-400 text-left w-full">
               <span
                 className="
@@ -85,7 +78,6 @@ export default function About() {
               <span className="flex-1">Bengaluru, Karnataka, India</span>
             </div>
 
-            {/* Phone */}
             <div className="flex items-center gap-2 sm:gap-3 text-base sm:text-lg text-gray-600 dark:text-gray-400 text-left w-full">
               <span
                 className="
@@ -102,7 +94,6 @@ export default function About() {
           </motion.div>
         </div>
 
-        {/* Right Column */}
         <motion.div
           initial={{ opacity: 0, x: 40 }}
           animate={{ opacity: 1, x: 0 }}
