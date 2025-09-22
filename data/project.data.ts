@@ -11,7 +11,7 @@ export const PROJECTS = [
   {
     title: "BinaryNetwork",
     description: "A professional social media platform",
-    image: "/projects/binarynetwork.png", //
+    image: "/projects/binarynetwork.png",
     live: "https://binary-network.vercel.app/",
     github: "https://github.com/StealthSilver/BinaryNetwork",
     figma: "https://figma.com/file/your-figma-link", //
@@ -113,7 +113,7 @@ export const PROJECTS = [
   {
     title: "ConnectingDots",
     description: "A course selling application with LMS",
-    image: "/projects/connectiondots.png",
+    image: "/projects/connectingdots.png",
     live: "https://your-live-site.com", //
     github: "https://github.com/StealthSilver/ConnectingDots",
     figma: "https://figma.com/file/your-figma-link", //
