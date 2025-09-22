@@ -10,14 +10,14 @@ export type EducationItem = {
 export const EDUCATION: EducationItem[] = [
   {
     company: "Indian Institute of Technology Madras",
-    position: "Btech - Computer Science",
+    position: "BTech - Computer Science",
     duration: "2022 - 2026",
     location: "Chennai",
     link: "https://www.iitm.ac.in/",
     details: [
-      "Integrated designer assets with Rive & Diagrammar, configuring state machines for high-fidelity production animations.",
-      "Ensured 100% cross-platform fidelity of animations across Chrome, Safari, iOS, and Android, delivering a consistent experience for 3M+ learners.",
-      "Built reusable interactive components (graph animations, vector updates) and enhanced the Elm + SVG/Canvas framework, improving lesson reusability by 40% and reducing rendering overhead by 25%.",
+      "Served as <b><u>Head of TechSoc</u></b> for 3 years, leading 20+ student developers and organizing major technical festivals at IIT Madras.",
+      "Solved <b><u>500+ LeetCode</u></b> problems and achieved <b><u>1800+ rating</u></b> on CodeChef, demonstrating strong problem-solving and competitive programming expertise.",
+      "Contributed to research and development of <b><u>patented DSM & Digital Twin</u></b> systems for renewable energy optimization.",
     ],
   },
   {
@@ -27,10 +27,9 @@ export const EDUCATION: EducationItem[] = [
     location: "Online",
     link: "https://study.iitm.ac.in/ds/",
     details: [
-      "Led Atheneum team to build a multi-tenant onboarding platform for renewable-energy providers, enabling seamless customer integration.",
-      "Developed a low-code analytics dashboard builder with reusable widgets, cutting dashboard production time by 60% across clients.",
-      "Rebuilt landing pages with Next.js (migrated from Angular), improving SEO and increasing organic traffic by 25%.",
-      "Contributed to a patented Digital Twin system for solar plants that reduced DSM penalties by 20–40% in production.",
+      "Specialized in <b><u>Data Science & Machine Learning</u></b> with projects in predictive modeling, large-scale analytics, and optimization.",
+      "Achieved top performance in <b><u>Kaggle competitions</u></b>, winning multiple challenges and gaining hands-on experience with real-world datasets.",
+      "Built scalable <b><u>data pipelines & dashboards</u></b> for analytics-driven decision-making in academic and industry projects.",
     ],
   },
 ];

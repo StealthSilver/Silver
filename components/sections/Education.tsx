@@ -34,7 +34,7 @@ export default function Education() {
       </motion.h2>
 
       <div className="max-w-5xl mx-auto flex flex-col gap-6 sm:gap-8">
-        {EDUCATION.map((exp, index) => (
+        {EDUCATION.map((edu, index) => (
           <motion.div
             key={index}
             initial={{ opacity: 0, y: 40 }}
@@ -49,7 +49,7 @@ export default function Education() {
           >
             <div className="flex justify-between items-center">
               <a
-                href={exp.link}
+                href={edu.link}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="
@@ -58,7 +58,7 @@ export default function Education() {
                   cursor-pointer
                 "
               >
-                {exp.company}
+                {edu.company}
               </a>
             </div>
 
@@ -80,11 +80,11 @@ export default function Education() {
                   />
 
                   <p className="text-base sm:text-lg font-semibold text-gray-800 dark:text-gray-200">
-                    {exp.position}
+                    {edu.position}
                   </p>
                 </div>
                 <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-400">
-                  {exp.duration} | {exp.location}
+                  {edu.duration} | {edu.location}
                 </p>
               </div>
 
@@ -122,8 +122,8 @@ export default function Education() {
                     space-y-2 overflow-hidden
                   "
                 >
-                  {exp.details.map((point, i) => (
-                    <li key={i}>{point}</li>
+                  {edu.details.map((point, i) => (
+                    <li key={i} dangerouslySetInnerHTML={{ __html: point }} />
                   ))}
                 </motion.ul>
               )}
