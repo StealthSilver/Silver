@@ -69,7 +69,7 @@ export const PROJECTS = [
   {
     title: "Silver's Desk",
     description: "A blog application",
-    image: "/projects/blog.png", //
+    image: "/projects/blog.png",
     live: "https://silver-desk.vercel.app/",
     github: "https://github.com/StealthSilver/SilverDesk",
     figma:
@@ -78,7 +78,7 @@ export const PROJECTS = [
   {
     title: "Silver",
     description: "A portfolio application",
-    image: "/projects/silver.png", //
+    image: "/projects/silver.png",
     live: "https://silver-jet.vercel.app/",
     github: "https://github.com/StealthSilver/Silver",
     figma:
@@ -99,7 +99,7 @@ export const PROJECTS = [
     description: "Real time workflow mamagement applicaion",
     image: "/projects/infinityx.png", //
     live: "https://your-live-site.com", //
-    github: "https://github.com/your-username/tasks", //
+    github: "https://github.com/StealthSilver/InfinityX",
     figma: "https://figma.com/file/your-figma-link", //
   },
   {
@@ -107,7 +107,7 @@ export const PROJECTS = [
     description: "An organization and management application",
     image: "/projects/mindpalace.png", //
     live: "https://your-live-site.com", //
-    github: "https://github.com/your-username/weather", //
+    github: "https://github.com/StealthSilver/MindPalace",
     figma: "https://figma.com/file/your-figma-link", //
   },
   {
@@ -115,7 +115,7 @@ export const PROJECTS = [
     description: "A course selling application with LMS",
     image: "/projects/connectiondots.png", //
     live: "https://your-live-site.com",
-    github: "https://github.com/your-username/tasks", //
+    github: "https://github.com/StealthSilver/ConnectingDots",
     figma: "https://figma.com/file/your-figma-link", //
   },
 ];
