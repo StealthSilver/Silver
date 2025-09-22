@@ -42,25 +42,25 @@ export const TECH_STACK: TechStack[] = [
   {
     key: "html",
     title: "HTML",
-    href: "https://nodejs.org/",
+    href: "https://html.com/",
     categories: ["Runtime Environment"],
   },
   {
     key: "CSS",
     title: "CSS",
-    href: "https://nodejs.org/",
+    href: "https://css3.com/",
     categories: ["Runtime Environment"],
   },
   {
     key: "Sass",
     title: "Sass",
-    href: "https://nodejs.org/",
+    href: "https://sass-lang.com/",
     categories: ["Runtime Environment"],
   },
   {
     key: "jquery",
     title: "JQuery",
-    href: "https://nodejs.org/",
+    href: "https://jquery.com/",
     categories: ["Runtime Environment"],
   },
   {
