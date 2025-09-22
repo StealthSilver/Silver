@@ -122,7 +122,7 @@ export default function Experience() {
                   "
                 >
                   {exp.details.map((point, i) => (
-                    <li key={i}>{point}</li>
+                    <li key={i} dangerouslySetInnerHTML={{ __html: point }} />
                   ))}
                 </motion.ul>
               )}
