@@ -65,7 +65,7 @@ export const PROJECTS = [
     github: "https://github.com/StealthSilver/BridgePay",
     figma: "https://figma.com/file/your-figma-link",
   },
-  ,
+
   {
     title: "Silver's Desk",
     description: "A blog application",
