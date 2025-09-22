@@ -8,11 +8,11 @@ export const CERTIFICATE: CertificateItem[] = [
   {
     company: "React foundations for Nextjs ",
 
-    link: "https://www.iitm.ac.in/",
+    link: "", //
   },
   {
     company: "Introduction to Database",
 
-    link: "https://study.iitm.ac.in/ds/",
+    link: "", //
   },
 ];

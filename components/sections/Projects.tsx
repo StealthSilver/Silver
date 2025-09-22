@@ -50,13 +50,14 @@ export default function Projects() {
               transition={{ duration: 0.5 }}
               layout
             >
-              <Card className="relative w-full h-full group overflow-hidden rounded-2xl">
+              <Card className="relative w-full aspect-[16/9] group overflow-hidden rounded-2xl">
                 <Image
                   src={project.image}
                   alt={project.title}
                   fill
                   className="object-cover opacity-20 group-hover:opacity-80 transition-all duration-700"
                 />
+
                 <div className="absolute inset-0 bg-black/50 group-hover:bg-black/30 transition-all duration-700"></div>
                 <div className="absolute inset-0 bg-white/70 dark:bg-black/60 group-hover:bg-white/30 dark:group-hover:bg-black/30 transition-all duration-700"></div>
 
