@@ -2,7 +2,7 @@ export const PROJECTS = [
   {
     title: "MeshSpire",
     description: "A peer to peer learning app",
-    image: "/projects/meshspire.png", //
+    image: "/projects/meshspire.png",
     live: "https://mesh-spire-landing.vercel.app/",
     github: "https://github.com/StealthSilver/MeshSpire-lp",
     figma:
@@ -19,7 +19,7 @@ export const PROJECTS = [
   {
     title: "TravoPad",
     description: "A colloborative drawing application",
-    image: "/projects/travopad.png", //
+    image: "/projects/travopad.png",
     live: "https://your-live-site.com", //
     github: "https://github.com/StealthSilver/TavroPad",
     figma: "https://figma.com/file/your-figma-link", //
@@ -27,7 +27,7 @@ export const PROJECTS = [
   {
     title: "RiffinityAI",
     description: "An AI companion application",
-    image: "/projects/riffinity.png", //
+    image: "/projects/riffinity.png",
     live: "https://riffinity-l18s.vercel.app/",
     github: "https://github.com/StealthSilver/Riffinity",
     figma: "https://figma.com/file/your-figma-link", //
@@ -35,7 +35,7 @@ export const PROJECTS = [
   {
     title: "DevOrbit",
     description: "Application for deploying and editing codebase",
-    image: "/projects/devorbit.png", //
+    image: "/projects/devorbit.png",
     live: "https://your-live-site.com", //
     github: "https://github.com/StealthSilver/DevOrbit",
     figma: "https://figma.com/file/your-figma-link", //
@@ -43,7 +43,7 @@ export const PROJECTS = [
   {
     title: "Prominent",
     description: "Low Latency real time trading and investment application",
-    image: "/projects/prominent.png", //
+    image: "/projects/prominent.png",
     live: "https://prominent-eight.vercel.app/",
     github: "https://github.com/StealthSilver/Prominent",
     figma:
@@ -97,7 +97,7 @@ export const PROJECTS = [
   {
     title: "InfinityX",
     description: "Real time workflow mamagement applicaion",
-    image: "/projects/infinityx.png", //
+    image: "/projects/infinityx.png",
     live: "https://your-live-site.com", //
     github: "https://github.com/StealthSilver/InfinityX",
     figma: "https://figma.com/file/your-figma-link", //
@@ -105,7 +105,7 @@ export const PROJECTS = [
   {
     title: "MindPalace",
     description: "An organization and management application",
-    image: "/projects/mindpalace.png", //
+    image: "/projects/mindpalace.png",
     live: "https://your-live-site.com", //
     github: "https://github.com/StealthSilver/MindPalace",
     figma: "https://figma.com/file/your-figma-link", //
@@ -113,8 +113,8 @@ export const PROJECTS = [
   {
     title: "ConnectingDots",
     description: "A course selling application with LMS",
-    image: "/projects/connectiondots.png", //
-    live: "https://your-live-site.com",
+    image: "/projects/connectiondots.png",
+    live: "https://your-live-site.com", //
     github: "https://github.com/StealthSilver/ConnectingDots",
     figma: "https://figma.com/file/your-figma-link", //
   },
