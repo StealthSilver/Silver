@@ -65,7 +65,25 @@ export const PROJECTS = [
     github: "https://github.com/StealthSilver/BridgePay",
     figma: "https://figma.com/file/your-figma-link",
   },
-
+  ,
+  {
+    title: "Silver's Desk",
+    description: "A blog application",
+    image: "/projects/sgrids.png", //
+    live: "https://silver-desk.vercel.app/",
+    github: "https://github.com/StealthSilver/SilverDesk",
+    figma:
+      "https://www.figma.com/design/b00XL5lXg2hl2jUNbtePw9/Silver-s-Desk?node-id=0-1&t=MGYZvAoWbktNGfIE-1",
+  },
+  {
+    title: "Silver",
+    description: "A portfolio application",
+    image: "/projects/sgrids.png", //
+    live: "https://silver-jet.vercel.app/",
+    github: "https://github.com/StealthSilver/Silver",
+    figma:
+      "https://www.figma.com/design/vX7gVhAgVACysF1aFNcCtj/Portfolio?node-id=36-541&t=zlVUk0IN29zpPcVg-1",
+  },
   {
     title: "Sgrids",
     description: "Landing page for Renewables SAP application",
@@ -84,8 +102,6 @@ export const PROJECTS = [
     github: "https://github.com/your-username/tasks", //
     figma: "https://figma.com/file/your-figma-link", //
   },
-
-  ,
   {
     title: "MindPalace",
     description: "An organization and management application",
@@ -101,23 +117,5 @@ export const PROJECTS = [
     live: "https://your-live-site.com",
     github: "https://github.com/your-username/tasks", //
     figma: "https://figma.com/file/your-figma-link", //
-  },
-  {
-    title: "Silver's Desk",
-    description: "A blog application",
-    image: "/projects/sgrids.png", //
-    live: "https://silver-desk.vercel.app/",
-    github: "https://github.com/StealthSilver/SilverDesk",
-    figma:
-      "https://www.figma.com/design/b00XL5lXg2hl2jUNbtePw9/Silver-s-Desk?node-id=0-1&t=MGYZvAoWbktNGfIE-1",
-  },
-  {
-    title: "Silver",
-    description: "A portfolio application",
-    image: "/projects/sgrids.png", //
-    live: "https://silver-jet.vercel.app/",
-    github: "https://github.com/StealthSilver/Silver",
-    figma:
-      "https://www.figma.com/design/vX7gVhAgVACysF1aFNcCtj/Portfolio?node-id=36-541&t=zlVUk0IN29zpPcVg-1",
   },
 ];
