@@ -50,7 +50,7 @@ export default function Projects() {
               transition={{ duration: 0.5 }}
               layout
             >
-              <Card className="relative w-full aspect-[16/9] group overflow-hidden rounded-2xl">
+              <Card className="relative w-full group overflow-hidden rounded-2xl">
                 <Image
                   src={project.image}
                   alt={project.title}

@@ -1,7 +1,7 @@
 export const PROJECTS = [
   {
     title: "MeshSpire",
-    description: "A peer to peer learning app",
+    description: "A peer to peer learning app for students",
     image: "/projects/meshspire.png",
     live: "https://mesh-spire-landing.vercel.app/",
     github: "https://github.com/StealthSilver/MeshSpire-lp",
@@ -26,7 +26,7 @@ export const PROJECTS = [
   },
   {
     title: "RiffinityAI",
-    description: "An AI companion application",
+    description: "An AI companion application with multiple models",
     image: "/projects/riffinity.png",
     live: "https://riffinity-l18s.vercel.app/",
     github: "https://github.com/StealthSilver/Riffinity",
@@ -77,7 +77,7 @@ export const PROJECTS = [
   },
   {
     title: "Silver",
-    description: "A portfolio application",
+    description: "A portfolio application in nextjs ",
     image: "/projects/silver.png",
     live: "https://silver-jet.vercel.app/",
     github: "https://github.com/StealthSilver/Silver",
