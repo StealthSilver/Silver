@@ -58,8 +58,8 @@ export default function Projects() {
                   className="object-cover opacity-20 group-hover:opacity-80 transition-all duration-700"
                 />
 
-                <div className="absolute inset-0 bg-black/50 group-hover:bg-black/30 transition-all duration-700"></div>
-                <div className="absolute inset-0 bg-white/70 dark:bg-black/60 group-hover:bg-white/30 dark:group-hover:bg-black/30 transition-all duration-700"></div>
+                <div className="absolute inset-0 bg-black/90 group-hover:bg-black/30 transition-all duration-700"></div>
+                <div className="absolute inset-0 bg-white/90 dark:bg-black/60 group-hover:bg-white/30 dark:group-hover:bg-black/30 transition-all duration-700"></div>
 
                 <div className="relative z-20 flex flex-col justify-between h-full text-center px-4 sm:px-6 py-4 sm:py-6">
                   <div className="transition-opacity duration-500 group-hover:opacity-0">
