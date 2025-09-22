@@ -80,14 +80,14 @@ export const TECH_STACK: TechStack[] = [
   {
     key: "express",
     title: "ExpressJS",
-    href: "https://nodejs.org/",
+    href: "https://expressjs.com/",
     categories: ["Runtime Environment"],
     lightIcon: "ExpressJS-Light.svg",
   },
   {
     key: "django",
     title: "Django",
-    href: "https://nodejs.org/",
+    href: "https://www.djangoproject.com/",
     categories: ["Runtime Environment"],
   },
   {
@@ -100,7 +100,7 @@ export const TECH_STACK: TechStack[] = [
   {
     key: "fast",
     title: "FastAPI",
-    href: "https://nodejs.org/",
+    href: "https://flask.palletsprojects.com/en/stable/",
     categories: ["Runtime Environment"],
   },
   {
@@ -121,7 +121,7 @@ export const TECH_STACK: TechStack[] = [
   {
     key: "angular",
     title: "Angular",
-    href: "https://nextjs.org/",
+    href: "https://angular.dev/",
     categories: ["Framework"],
     theme: true,
     lightIcon: "Angular-Light.svg",
@@ -143,7 +143,7 @@ export const TECH_STACK: TechStack[] = [
   {
     key: "three",
     title: "ThreeJS",
-    href: "https://motion.dev/",
+    href: "https://threejs.org/",
     categories: ["Library", "Animation"],
     lightIcon: "ThreeJS-Light.svg",
   },
@@ -197,7 +197,7 @@ export const TECH_STACK: TechStack[] = [
   {
     key: "Jest",
     title: "Jest",
-    href: "https://git-scm.com/",
+    href: "https://jestjs.io/",
     categories: ["Version Control"],
   },
 
@@ -223,13 +223,13 @@ export const TECH_STACK: TechStack[] = [
   {
     key: "kubernetes",
     title: "Kubernetes",
-    href: "https://www.docker.com/",
+    href: "https://kubernetes.io/docs/home/",
     categories: ["Containerization"],
   },
   {
     key: "Kafka",
     title: "Kafka",
-    href: "https://www.docker.com/",
+    href: "https://kafka.apache.org/",
     categories: ["Containerization"],
   },
   {
@@ -269,27 +269,27 @@ export const TECH_STACK: TechStack[] = [
   {
     key: "firebase",
     title: "Firebase",
-    href: "https://redis.io/",
+    href: "https://firebase.google.com/",
     categories: ["Database"],
     lightIcon: "Firebase-Light.svg",
   },
   {
     key: "graph",
     title: "GraphQL",
-    href: "https://github.com/",
+    href: "https://graphql.org/",
     categories: ["Version Control"],
     lightIcon: "GraphQL-Light.svg",
   },
   {
     key: "nginx",
     title: "Nginx",
-    href: "https://redis.io/",
+    href: "https://nginx.org/en/",
     categories: ["Database"],
   },
   {
     key: "aws",
     title: "AWS",
-    href: "https://redis.io/",
+    href: "https://aws.amazon.com/",
     categories: ["Database"],
     lightIcon: "AWS-Light.svg",
   },
