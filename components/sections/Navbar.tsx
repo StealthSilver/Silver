@@ -22,7 +22,6 @@ export default function Navbar() {
     { name: "Experience", href: "#experience" },
     { name: "Education", href: "#education" },
     { name: "Projects", href: "#projects" },
-    { name: "Certificates", href: "#certificates" },
     {
       name: "Blogs",
       href: "https://patch-umbrella-c3a.notion.site/System-Design-27c5af667d9680f0b6d2c5baa513f7ad",
