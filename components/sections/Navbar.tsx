@@ -23,7 +23,11 @@ export default function Navbar() {
     { name: "Education", href: "#education" },
     { name: "Projects", href: "#projects" },
     { name: "Certificates", href: "#certificates" },
-    {name: "Blogs", href:"https://patch-umbrella-c3a.notion.site/System-Design-27c5af667d9680f0b6d2c5baa513f7ad"},
+    {
+      name: "Blogs",
+      href: "https://patch-umbrella-c3a.notion.site/System-Design-27c5af667d9680f0b6d2c5baa513f7ad",
+      external: true,
+    },
   ];
 
   return (
@@ -54,6 +58,7 @@ export default function Navbar() {
           />
         </Link>
 
+        {/* Desktop Nav */}
         <div
           className="hidden md:flex items-center px-2 font-mono relative gap-6"
           onMouseLeave={() => setHovered(null)}
@@ -78,22 +83,40 @@ export default function Navbar() {
                 />
               )}
 
-              <Link
-                href={item.href}
-                onMouseEnter={() => setHovered(item.name)}
-                onFocus={() => setHovered(item.name)}
-                className="
-                  relative z-10 transition-colors
-                  text-gray-700 hover:text-black
-                  dark:text-gray-300 dark:hover:text-white
-                "
-              >
-                {item.name}
-              </Link>
+              {item.external ? (
+                <a
+                  href={item.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onMouseEnter={() => setHovered(item.name)}
+                  onFocus={() => setHovered(item.name)}
+                  className="
+                    relative z-10 transition-colors
+                    text-gray-700 hover:text-black
+                    dark:text-gray-300 dark:hover:text-white
+                  "
+                >
+                  {item.name}
+                </a>
+              ) : (
+                <Link
+                  href={item.href}
+                  onMouseEnter={() => setHovered(item.name)}
+                  onFocus={() => setHovered(item.name)}
+                  className="
+                    relative z-10 transition-colors
+                    text-gray-700 hover:text-black
+                    dark:text-gray-300 dark:hover:text-white
+                  "
+                >
+                  {item.name}
+                </Link>
+              )}
             </div>
           ))}
         </div>
 
+        {/* Desktop Right Section */}
         <div className="hidden md:flex items-center gap-6 font-mono">
           <a
             href="https://github.com/StealthSilver"
@@ -124,6 +147,7 @@ export default function Navbar() {
           </a>
         </div>
 
+        {/* Mobile Menu Button */}
         <div className="md:hidden flex items-center gap-3">
           <div className="scale-90">
             <ThemeToggle />
@@ -139,19 +163,33 @@ export default function Navbar() {
         </div>
       </div>
 
+      {/* Mobile Nav */}
       {isOpen && (
         <div className="md:hidden bg-white/95 dark:bg-black/95 backdrop-blur-md shadow-lg border-t border-gray-200 dark:border-gray-700 transition-colors duration-300">
           <div className="flex flex-col items-center space-y-5 py-10">
-            {navItems.map((item) => (
-              <Link
-                key={item.name}
-                href={item.href}
-                className="transition-colors text-gray-700 hover:text-black dark:text-gray-300 dark:hover:text-white"
-                onClick={() => setIsOpen(false)}
-              >
-                {item.name}
-              </Link>
-            ))}
+            {navItems.map((item) =>
+              item.external ? (
+                <a
+                  key={item.name}
+                  href={item.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="transition-colors text-gray-700 hover:text-black dark:text-gray-300 dark:hover:text-white"
+                  onClick={() => setIsOpen(false)}
+                >
+                  {item.name}
+                </a>
+              ) : (
+                <Link
+                  key={item.name}
+                  href={item.href}
+                  className="transition-colors text-gray-700 hover:text-black dark:text-gray-300 dark:hover:text-white"
+                  onClick={() => setIsOpen(false)}
+                >
+                  {item.name}
+                </Link>
+              )
+            )}
             <a
               href="#footer"
               className="rounded-full border px-6 py-1.5 transition-colors bg-gray-900 text-white border-gray-900 hover:bg-white hover:text-black dark:bg-gray-100 dark:text-black dark:border-gray-100 dark:hover:bg-black dark:hover:text-white"
@@ -165,3 +203,4 @@ export default function Navbar() {
     </nav>
   );
 }
+
