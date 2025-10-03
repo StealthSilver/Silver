@@ -19,9 +19,10 @@ export default function Home() {
       <Skills />
       <Experience />
       <Education />
+     <Certificates />
       <Projects />
       <Awards />
-      <Certificates />
+
       <CTA />
       <Footer />
     </main>
