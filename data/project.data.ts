@@ -3,7 +3,7 @@ export const PROJECTS = [
     title: "MeshSpire",
     description: "A peer to peer learning app for students",
     image: "/projects/meshspire.png",
-    live: "https://mesh-spire-landing.vercel.app/",
+    live: "https://dev.dg4uqajhampr9.amplifyapp.com/",
     github: "https://github.com/StealthSilver/MeshSpire-lp",
     figma:
       "https://www.figma.com/design/fkprR8ZCbDezgeWweqLc6X/MS-landing?node-id=0-1&t=gscDeXAEkqGmTJlM-1",
@@ -11,11 +11,28 @@ export const PROJECTS = [
   {
     title: "Verdan",
     description: "A plantation management and monitoring platform",
-    image: "/projects/binarynetwork.png", //
-    live: "https://dev.dt8mvbuq4t843.amplifyapp.com", //
+    image: "/projects/verdan.png",
+    live: "https://verdan-nine.vercel.app/",
     github: "https://github.com/StealthSilver/Verdan",
     figma:
       "https://www.figma.com/design/hB3sQuOb3ztReunlyvGiEN/VERDAN?node-id=0-1&t=OitKgQLjk7bXnfYA-1",
+  },
+  {
+    title: "RiffinityAI",
+    description: "An AI companion application with multiple models",
+    image: "/projects/riffinity.png",
+    live: "https://riffinity-l18s.vercel.app/", // backend
+    github: "https://github.com/StealthSilver/Riffinity",
+    figma: "https://figma.com/file/your-figma-link", //
+  },
+  {
+    title: "Silver",
+    description: "A portfolio application in nextjs ",
+    image: "/projects/silver.png",
+    live: "https://silver-jet.vercel.app/",
+    github: "https://github.com/StealthSilver/Silver",
+    figma:
+      "https://www.figma.com/design/vX7gVhAgVACysF1aFNcCtj/Portfolio?node-id=36-541&t=zlVUk0IN29zpPcVg-1",
   },
   {
     title: "BinaryNetwork",
@@ -33,14 +50,7 @@ export const PROJECTS = [
     github: "https://github.com/StealthSilver/TavroPad",
     figma: "https://figma.com/file/your-figma-link", //
   },
-  {
-    title: "RiffinityAI",
-    description: "An AI companion application with multiple models",
-    image: "/projects/riffinity.png",
-    live: "https://riffinity-l18s.vercel.app/", // backend
-    github: "https://github.com/StealthSilver/Riffinity",
-    figma: "https://figma.com/file/your-figma-link", //
-  },
+
   {
     title: "DevOrbit",
     description: "Application for deploying and editing codebase",
@@ -84,15 +94,7 @@ export const PROJECTS = [
     figma:
       "https://www.figma.com/design/b00XL5lXg2hl2jUNbtePw9/Silver-s-Desk?node-id=0-1&t=MGYZvAoWbktNGfIE-1",
   },
-  {
-    title: "Silver",
-    description: "A portfolio application in nextjs ",
-    image: "/projects/silver.png",
-    live: "https://silver-jet.vercel.app/",
-    github: "https://github.com/StealthSilver/Silver",
-    figma:
-      "https://www.figma.com/design/vX7gVhAgVACysF1aFNcCtj/Portfolio?node-id=36-541&t=zlVUk0IN29zpPcVg-1",
-  },
+
   {
     title: "Sgrids",
     description: "Landing page for Renewables SAP application",
