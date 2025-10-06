@@ -9,17 +9,26 @@ export const PROJECTS = [
       "https://www.figma.com/design/fkprR8ZCbDezgeWweqLc6X/MS-landing?node-id=0-1&t=gscDeXAEkqGmTJlM-1",
   },
   {
+    title: "Verdan",
+    description: "A plantation management and monitoring platform",
+    image: "/projects/binarynetwork.png", //
+    live: "https://dev.dt8mvbuq4t843.amplifyapp.com", //
+    github: "https://github.com/StealthSilver/Verdan",
+    figma:
+      "https://www.figma.com/design/hB3sQuOb3ztReunlyvGiEN/VERDAN?node-id=0-1&t=OitKgQLjk7bXnfYA-1",
+  },
+  {
     title: "BinaryNetwork",
     description: "A professional social media platform",
-    image: "/projects/binarynetwork.png",
-    live: "https://binary-network.vercel.app/",
+    image: "/projects/binarynetwork.png", //
+    live: "https://binary-network.vercel.app/", // landing page
     github: "https://github.com/StealthSilver/BinaryNetwork",
     figma: "https://figma.com/file/your-figma-link", //
   },
   {
     title: "TravoPad",
     description: "A colloborative drawing application",
-    image: "/projects/travopad.png",
+    image: "/projects/travopad.png", //
     live: "https://your-live-site.com", //
     github: "https://github.com/StealthSilver/TavroPad",
     figma: "https://figma.com/file/your-figma-link", //
@@ -28,14 +37,14 @@ export const PROJECTS = [
     title: "RiffinityAI",
     description: "An AI companion application with multiple models",
     image: "/projects/riffinity.png",
-    live: "https://riffinity-l18s.vercel.app/",
+    live: "https://riffinity-l18s.vercel.app/", // backend
     github: "https://github.com/StealthSilver/Riffinity",
     figma: "https://figma.com/file/your-figma-link", //
   },
   {
     title: "DevOrbit",
     description: "Application for deploying and editing codebase",
-    image: "/projects/devorbit.png",
+    image: "/projects/devorbit.png", //
     live: "https://your-live-site.com", //
     github: "https://github.com/StealthSilver/DevOrbit",
     figma: "https://figma.com/file/your-figma-link", //
