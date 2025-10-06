@@ -52,32 +52,32 @@ export const PROJECTS = [
   {
     title: "Prominent",
     description: "Low Latency real time trading and investment application",
-    image: "/projects/prominent.png",
-    live: "https://prominent-eight.vercel.app/",
+    image: "/projects/prominent.png", //
+    live: "https://prominent-eight.vercel.app/", // -> landing page
     github: "https://github.com/StealthSilver/Prominent",
     figma:
-      "https://www.figma.com/design/UhdHOIha7xWSdqZwHjCc7M/Prominent?node-id=1-2&t=37UrjNWrYqGqM5ym-1",
+      "https://www.figma.com/design/UhdHOIha7xWSdqZwHjCc7M/Prominent?node-id=1-2&t=37UrjNWrYqGqM5ym-1", //
   },
   {
     title: "ConnectRight",
-    description: "A video confrencing platforms",
+    description: "A low latency video confrencing platforms",
     image: "/projects/connectright.png",
-    live: "https://connectright.vercel.app/", //
-    github: "https://github.com/StealthSilver/ConnectRight",
+    live: "https://connectright.vercel.app/", // ->chang the landing page
+    github: "https://github.com/StealthSilver/ConnectRight", // change the souce code
     figma: "https://figma.com/file/your-figma-link", //
   },
   {
     title: "BridgePay",
-    description: "A payment gateway application",
-    image: "/projects/bridgepay.png",
-    live: "https://bridge-pay-chi.vercel.app/signin",
+    description: "An end to end payment gateway application",
+    image: "/projects/bridgepay.png", //
+    live: "https://bridge-pay-chi.vercel.app/signin", // backend deploy
     github: "https://github.com/StealthSilver/BridgePay",
-    figma: "https://figma.com/file/your-figma-link",
+    figma: "https://figma.com/file/your-figma-link", //
   },
 
   {
     title: "Silver's Desk",
-    description: "A blog application",
+    description: "A blog page for stories, poems and essays",
     image: "/projects/blog.png",
     live: "https://silver-desk.vercel.app/",
     github: "https://github.com/StealthSilver/SilverDesk",
@@ -106,7 +106,7 @@ export const PROJECTS = [
   {
     title: "InfinityX",
     description: "Real time workflow mamagement applicaion",
-    image: "/projects/infinityx.png",
+    image: "/projects/infinityx.png", //
     live: "https://your-live-site.com", //
     github: "https://github.com/StealthSilver/InfinityX",
     figma: "https://figma.com/file/your-figma-link", //
@@ -114,7 +114,7 @@ export const PROJECTS = [
   {
     title: "MindPalace",
     description: "An organization and management application",
-    image: "/projects/mindpalace.png",
+    image: "/projects/mindpalace.png", //
     live: "https://your-live-site.com", //
     github: "https://github.com/StealthSilver/MindPalace",
     figma: "https://figma.com/file/your-figma-link", //
@@ -122,7 +122,7 @@ export const PROJECTS = [
   {
     title: "ConnectingDots",
     description: "A course selling application with LMS",
-    image: "/projects/connectingdots.png",
+    image: "/projects/connectingdots.png", //
     live: "https://your-live-site.com", //
     github: "https://github.com/StealthSilver/ConnectingDots",
     figma: "https://figma.com/file/your-figma-link", //
