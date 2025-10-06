@@ -43,6 +43,15 @@ export const PROJECTS = [
     figma: "https://figma.com/file/your-figma-link", //
   },
   {
+    title: "Prominent",
+    description: "Low Latency real time trading and investment application",
+    image: "/projects/prominent.png", //
+    live: "https://prominent-eight.vercel.app/", // -> landing page
+    github: "https://github.com/StealthSilver/Prominent",
+    figma:
+      "https://www.figma.com/design/UhdHOIha7xWSdqZwHjCc7M/Prominent?node-id=1-2&t=37UrjNWrYqGqM5ym-1", //
+  },
+  {
     title: "TravoPad",
     description: "A colloborative drawing application",
     image: "/projects/travopad.png", //
@@ -59,15 +68,7 @@ export const PROJECTS = [
     github: "https://github.com/StealthSilver/DevOrbit",
     figma: "https://figma.com/file/your-figma-link", //
   },
-  {
-    title: "Prominent",
-    description: "Low Latency real time trading and investment application",
-    image: "/projects/prominent.png", //
-    live: "https://prominent-eight.vercel.app/", // -> landing page
-    github: "https://github.com/StealthSilver/Prominent",
-    figma:
-      "https://www.figma.com/design/UhdHOIha7xWSdqZwHjCc7M/Prominent?node-id=1-2&t=37UrjNWrYqGqM5ym-1", //
-  },
+
   {
     title: "ConnectRight",
     description: "A low latency video confrencing platforms",
