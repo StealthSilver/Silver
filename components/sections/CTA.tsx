@@ -26,7 +26,7 @@ export default function CTA() {
           viewport={{ once: true }}
           className="text-sm sm:text-base md:text-lg font-mono text-gray-600 dark:text-gray-400"
         >
-          Let’s connect amazing stuff together
+          Let’s connect and create amazing stuff together
         </motion.p>
 
         <motion.h2
