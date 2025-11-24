@@ -18,13 +18,15 @@ export const PROJECTS = [
       "https://www.figma.com/design/hB3sQuOb3ztReunlyvGiEN/VERDAN?node-id=0-1&t=OitKgQLjk7bXnfYA-1",
   },
   {
-    title: "RiffinityAI",
-    description: "An AI companion application with multiple models",
-    image: "/projects/riffinity.png",
-    live: "https://riffinity-l18s.vercel.app/", // backend
-    github: "https://github.com/StealthSilver/Riffinity",
-    figma: "https://figma.com/file/your-figma-link", //
+    title: "Sgrids",
+    description: "Landing page for Renewables SAP application",
+    image: "/projects/sgrids.png",
+    live: "https://sgrids.vercel.app/",
+    github: "https://github.com/StealthSilver/sgrids-lp",
+    figma:
+      "https://www.figma.com/design/HTVIDAbVfEn8CzWVvqVoMs/Sgrids?node-id=0-1&t=SsSC4rk4RVRXyaHK-1",
   },
+
   {
     title: "Silver",
     description: "A portfolio application in nextjs ",
@@ -33,6 +35,47 @@ export const PROJECTS = [
     github: "https://github.com/StealthSilver/Silver",
     figma:
       "https://www.figma.com/design/vX7gVhAgVACysF1aFNcCtj/Portfolio?node-id=36-541&t=zlVUk0IN29zpPcVg-1",
+  },
+  {
+    title: "Silver's Desk",
+    description: "A blog page for stories, poems and essays",
+    image: "/projects/blog.png",
+    live: "https://silver-desk.vercel.app/",
+    github: "https://github.com/StealthSilver/SilverDesk",
+    figma:
+      "https://www.figma.com/design/b00XL5lXg2hl2jUNbtePw9/Silver-s-Desk?node-id=0-1&t=MGYZvAoWbktNGfIE-1",
+  },
+  {
+    title: "Form and Function",
+    description: "A modern and original design agency website",
+    image: "/projects/riffinity.png",
+    live: "https://form-function.vercel.app/",
+    github: "https://github.com/StealthSilver/Form-Function",
+    figma: "https://figma.com/file/your-figma-link", //
+  },
+  {
+    title: "Silver-UI",
+    description: "A modern Ui component library",
+    image: "/projects/riffinity.png",
+    live: "https://silver-ui.vercel.app/",
+    github: "https://github.com/StealthSilver/Silver-UI",
+    figma: "https://figma.com/file/your-figma-link", //
+  },
+  {
+    title: "Meetmux",
+    description: "Landing page for a social media platform",
+    image: "/projects/riffinity.png",
+    live: "https://meet-mux-xi.vercel.app/",
+    github: "https://github.com/StealthSilver/MeetMux",
+    figma: "https://figma.com/file/your-figma-link", //
+  },
+  {
+    title: "RiffinityAI",
+    description: "An AI companion application with multiple models",
+    image: "/projects/riffinity.png",
+    live: "https://riffinity-l18s.vercel.app/", // backend
+    github: "https://github.com/StealthSilver/Riffinity",
+    figma: "https://figma.com/file/your-figma-link", //
   },
   {
     title: "BinaryNetwork",
@@ -84,26 +127,6 @@ export const PROJECTS = [
     live: "https://bridge-pay-chi.vercel.app/signin", // backend deploy
     github: "https://github.com/StealthSilver/BridgePay",
     figma: "https://figma.com/file/your-figma-link", //
-  },
-
-  {
-    title: "Silver's Desk",
-    description: "A blog page for stories, poems and essays",
-    image: "/projects/blog.png",
-    live: "https://silver-desk.vercel.app/",
-    github: "https://github.com/StealthSilver/SilverDesk",
-    figma:
-      "https://www.figma.com/design/b00XL5lXg2hl2jUNbtePw9/Silver-s-Desk?node-id=0-1&t=MGYZvAoWbktNGfIE-1",
-  },
-
-  {
-    title: "Sgrids",
-    description: "Landing page for Renewables SAP application",
-    image: "/projects/sgrids.png",
-    live: "https://sgrids.vercel.app/",
-    github: "https://github.com/StealthSilver/sgrids-lp",
-    figma:
-      "https://www.figma.com/design/HTVIDAbVfEn8CzWVvqVoMs/Sgrids?node-id=0-1&t=SsSC4rk4RVRXyaHK-1",
   },
 
   {
