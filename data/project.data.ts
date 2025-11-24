@@ -48,7 +48,7 @@ export const PROJECTS = [
   {
     title: "Form and Function",
     description: "A modern and original design agency website",
-    image: "/projects/riffinity.png",
+    image: "/projects/form&function.png",
     live: "https://form-function.vercel.app/",
     github: "https://github.com/StealthSilver/Form-Function",
     figma: "https://figma.com/file/your-figma-link", //
@@ -56,7 +56,7 @@ export const PROJECTS = [
   {
     title: "Silver-UI",
     description: "A modern Ui component library",
-    image: "/projects/riffinity.png",
+    image: "/projects/silver-ui.png",
     live: "https://silver-ui.vercel.app/",
     github: "https://github.com/StealthSilver/Silver-UI",
     figma: "https://figma.com/file/your-figma-link", //
@@ -64,7 +64,7 @@ export const PROJECTS = [
   {
     title: "Meetmux",
     description: "Landing page for a social media platform",
-    image: "/projects/riffinity.png",
+    image: "/projects/metmux.png",
     live: "https://meet-mux-xi.vercel.app/",
     github: "https://github.com/StealthSilver/MeetMux",
     figma: "https://figma.com/file/your-figma-link", //
