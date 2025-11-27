@@ -73,7 +73,7 @@ export const PROJECTS = [
     title: "RiffinityAI",
     description: "An AI companion application with multiple models",
     image: "/projects/riffinity.png",
-    live: "https://riffinity-l18s.vercel.app/", // backend
+    live: "https://riffinity-landing.vercel.app/", // backend
     github: "https://github.com/StealthSilver/Riffinity",
     figma: "https://figma.com/file/your-figma-link", //
   },
