@@ -12,7 +12,7 @@ export const PROJECTS = [
     title: "Verdan",
     description: "A plantation management and monitoring platform",
     image: "/projects/verdan.png",
-    live: "https://verdan-nine.vercel.app/",
+    live: "https://verdan-main.vercel.app/",
     github: "https://github.com/StealthSilver/Verdan",
     figma:
       "https://www.figma.com/design/hB3sQuOb3ztReunlyvGiEN/VERDAN?node-id=0-1&t=OitKgQLjk7bXnfYA-1",
