@@ -95,11 +95,11 @@ export const PROJECTS = [
       "https://www.figma.com/design/UhdHOIha7xWSdqZwHjCc7M/Prominent?node-id=1-2&t=37UrjNWrYqGqM5ym-1", //
   },
   {
-    title: "TravoPad",
+    title: "Sketch-It",
     description: "A colloborative drawing application",
     image: "/projects/travopad.png", //
     live: "https://your-live-site.com", //
-    github: "https://github.com/StealthSilver/TavroPad",
+    github: "https://github.com/StealthSilver/SketchIt",
     figma: "https://figma.com/file/your-figma-link", //
   },
 
