@@ -24,7 +24,7 @@ export default function Navbar() {
     { name: "Projects", href: "#projects" },
     {
       name: "Blogs",
-      href: "https://patch-umbrella-c3a.notion.site/System-Design-27c5af667d9680f0b6d2c5baa513f7ad",
+      href: "https://patch-umbrella-c3a.notion.site/DSA-Data-Structures-and-Algorithms-2c85af667d96807ab103f0c294ecc5ee?source=copy_link",
       external: true,
     },
   ];
@@ -202,4 +202,3 @@ export default function Navbar() {
     </nav>
   );
 }
-

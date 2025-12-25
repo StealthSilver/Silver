@@ -26,6 +26,23 @@ export const PROJECTS = [
     figma:
       "https://www.figma.com/design/HTVIDAbVfEn8CzWVvqVoMs/Sgrids?node-id=0-1&t=SsSC4rk4RVRXyaHK-1",
   },
+  {
+    title: "MindPalace",
+    description: "An organization and management application",
+    image: "/projects/mindpalace.png", //
+    live: "https://mind-palace-eight.vercel.app/", //
+    github: "https://github.com/StealthSilver/MindPalace",
+    figma: "https://figma.com/file/your-figma-link", //
+  },
+
+  {
+    title: "ConnectRight",
+    description: "A low latency video confrencing platforms",
+    image: "/projects/connectright.png",
+    live: "https://connect-right.vercel.app/",
+    github: "https://github.com/StealthSilver/ConnectRight",
+    figma: "https://figma.com/file/your-figma-link", //
+  },
 
   {
     title: "Silver",
@@ -73,7 +90,7 @@ export const PROJECTS = [
     title: "RiffinityAI",
     description: "An AI companion application with multiple models",
     image: "/projects/riffinity.png",
-    live: "https://riffinity-landing.vercel.app/", 
+    live: "https://riffinity-landing.vercel.app/",
     github: "https://github.com/StealthSilver/Riffinity",
     figma: "https://figma.com/file/your-figma-link", //
   },
@@ -113,14 +130,6 @@ export const PROJECTS = [
   },
 
   {
-    title: "ConnectRight",
-    description: "A low latency video confrencing platforms",
-    image: "/projects/connectright.png",
-    live: "https://connectright.vercel.app/", // ->chang the landing page
-    github: "https://github.com/StealthSilver/ConnectRight", // change the souce code
-    figma: "https://figma.com/file/your-figma-link", //
-  },
-  {
     title: "BridgePay",
     description: "An end to end payment gateway application",
     image: "/projects/bridgepay.png", //
@@ -137,14 +146,7 @@ export const PROJECTS = [
     github: "https://github.com/StealthSilver/InfinityX",
     figma: "https://figma.com/file/your-figma-link", //
   },
-  {
-    title: "MindPalace",
-    description: "An organization and management application",
-    image: "/projects/mindpalace.png", //
-    live: "https://your-live-site.com", //
-    github: "https://github.com/StealthSilver/MindPalace",
-    figma: "https://figma.com/file/your-figma-link", //
-  },
+
   {
     title: "ConnectingDots",
     description: "A course selling application with LMS",
