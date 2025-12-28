@@ -54,11 +54,11 @@ export const PROJECTS = [
       "https://www.figma.com/design/vX7gVhAgVACysF1aFNcCtj/Portfolio?node-id=36-541&t=zlVUk0IN29zpPcVg-1",
   },
   {
-    title: "Silver's Desk",
+    title: "Intersecting Lines",
     description: "A blog page for stories, poems and essays",
     image: "/projects/blog.png",
-    live: "https://silver-desk.vercel.app/",
-    github: "https://github.com/StealthSilver/SilverDesk",
+    live: "https://intersecting-lines.vercel.app/",
+    github: "https://github.com/StealthSilver/Intersecting-Lines",
     figma:
       "https://www.figma.com/design/b00XL5lXg2hl2jUNbtePw9/Silver-s-Desk?node-id=0-1&t=MGYZvAoWbktNGfIE-1",
   },
