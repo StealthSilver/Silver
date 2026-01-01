@@ -36,6 +36,15 @@ export const PROJECTS = [
   },
 
   {
+    title: "InfinityX",
+    description: "Real time workflow mamagement applicaion",
+    image: "/projects/infinityx.png", //
+    live: "https://infinity-x-landing.vercel.app/", //
+    github: "https://github.com/StealthSilver/InfinityX",
+    figma: "https://figma.com/file/your-figma-link", //
+  },
+
+  {
     title: "ConnectRight",
     description: "A low latency video confrencing platforms",
     image: "/projects/connectright.png",
@@ -135,15 +144,6 @@ export const PROJECTS = [
     image: "/projects/bridgepay.png", //
     live: "https://bridge-pay-chi.vercel.app/signin", // backend deploy
     github: "https://github.com/StealthSilver/BridgePay",
-    figma: "https://figma.com/file/your-figma-link", //
-  },
-
-  {
-    title: "InfinityX",
-    description: "Real time workflow mamagement applicaion",
-    image: "/projects/infinityx.png", //
-    live: "https://your-live-site.com", //
-    github: "https://github.com/StealthSilver/InfinityX",
     figma: "https://figma.com/file/your-figma-link", //
   },
 
