@@ -142,7 +142,7 @@ export const PROJECTS = [
     title: "BridgePay",
     description: "An end to end payment gateway application",
     image: "/projects/bridgepay.png", //
-    live: "https://bridge-pay-chi.vercel.app/signin", // backend deploy
+    live: "https://bridge-pay-vve4.vercel.app/", // backend deploy
     github: "https://github.com/StealthSilver/BridgePay",
     figma: "https://figma.com/file/your-figma-link", //
   },
