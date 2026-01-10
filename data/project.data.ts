@@ -36,6 +36,15 @@ export const PROJECTS = [
   },
 
   {
+    title: "GameZone",
+    description: "A zone for classical games",
+    image: "/projects/gamezone.png", //
+    live: "https://game-zone-bay-xi.vercel.app/", //
+    github: "https://github.com/StealthSilver/GameZone",
+    figma: "https://figma.com/file/your-figma-link", //
+  },
+
+  {
     title: "InfinityX",
     description: "Real time workflow mamagement applicaion",
     image: "/projects/infinityx.png", //
