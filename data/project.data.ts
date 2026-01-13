@@ -81,6 +81,14 @@ export const PROJECTS = [
       "https://www.figma.com/design/b00XL5lXg2hl2jUNbtePw9/Silver-s-Desk?node-id=0-1&t=MGYZvAoWbktNGfIE-1",
   },
   {
+    title: "RiffinityAI",
+    description: "An AI companion application with multiple models",
+    image: "/projects/riffinity.png",
+    live: "https://riffinity-landing.vercel.app/",
+    github: "https://github.com/StealthSilver/Riffinity",
+    figma: "https://figma.com/file/your-figma-link", //
+  },
+  {
     title: "Form and Function",
     description: "A modern and original design agency website",
     image: "/projects/form&function.png",
@@ -97,6 +105,14 @@ export const PROJECTS = [
     figma: "https://figma.com/file/your-figma-link", //
   },
   {
+    title: "Sketch-It",
+    description: "A colloborative drawing application",
+    image: "/projects/travopad.png", //
+    live: "https://your-live-site.com", //
+    github: "https://github.com/StealthSilver/SketchIt",
+    figma: "https://figma.com/file/your-figma-link", //
+  },
+  {
     title: "Meetmux",
     description: "Landing page for a social media platform",
     image: "/projects/metmux.png",
@@ -105,13 +121,14 @@ export const PROJECTS = [
     figma: "https://figma.com/file/your-figma-link", //
   },
   {
-    title: "RiffinityAI",
-    description: "An AI companion application with multiple models",
-    image: "/projects/riffinity.png",
-    live: "https://riffinity-landing.vercel.app/",
-    github: "https://github.com/StealthSilver/Riffinity",
+    title: "BridgePay",
+    description: "An end to end payment gateway application",
+    image: "/projects/bridgepay.png", //
+    live: "https://bridge-pay-vve4.vercel.app/", // backend deploy
+    github: "https://github.com/StealthSilver/BridgePay",
     figma: "https://figma.com/file/your-figma-link", //
   },
+
   {
     title: "BinaryNetwork",
     description: "A professional social media platform",
@@ -120,6 +137,7 @@ export const PROJECTS = [
     github: "https://github.com/StealthSilver/BinaryNetwork",
     figma: "https://figma.com/file/your-figma-link", //
   },
+
   {
     title: "Prominent",
     description: "Low Latency real time trading and investment application",
@@ -129,14 +147,6 @@ export const PROJECTS = [
     figma:
       "https://www.figma.com/design/UhdHOIha7xWSdqZwHjCc7M/Prominent?node-id=1-2&t=37UrjNWrYqGqM5ym-1", //
   },
-  {
-    title: "Sketch-It",
-    description: "A colloborative drawing application",
-    image: "/projects/travopad.png", //
-    live: "https://your-live-site.com", //
-    github: "https://github.com/StealthSilver/SketchIt",
-    figma: "https://figma.com/file/your-figma-link", //
-  },
 
   {
     title: "DevOrbit",
@@ -144,15 +154,6 @@ export const PROJECTS = [
     image: "/projects/devorbit.png", //
     live: "https://your-live-site.com", //
     github: "https://github.com/StealthSilver/DevOrbit",
-    figma: "https://figma.com/file/your-figma-link", //
-  },
-
-  {
-    title: "BridgePay",
-    description: "An end to end payment gateway application",
-    image: "/projects/bridgepay.png", //
-    live: "https://bridge-pay-vve4.vercel.app/", // backend deploy
-    github: "https://github.com/StealthSilver/BridgePay",
     figma: "https://figma.com/file/your-figma-link", //
   },
 
