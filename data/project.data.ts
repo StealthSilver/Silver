@@ -43,6 +43,14 @@ export const PROJECTS = [
     github: "https://github.com/StealthSilver/GameZone",
     figma: "https://figma.com/file/your-figma-link", //
   },
+  {
+    title: "Taskly",
+    description: "A task management application",
+    image: "/projects/taskly.png", //
+    live: "https://taskly-bay.vercel.app/", //
+    github: "https://github.com/StealthSilver/Taskly",
+    figma: "https://figma.com/file/your-figma-link", //
+  },
 
   {
     title: "InfinityX",
