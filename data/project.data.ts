@@ -115,8 +115,8 @@ export const PROJECTS = [
   {
     title: "Sketch-It",
     description: "A colloborative drawing application",
-    image: "/projects/travopad.png", //
-    live: "https://your-live-site.com", //
+    image: "/projects/sketchit.png", //
+    live: "https://sketch-it-nine.vercel.app/", //
     github: "https://github.com/StealthSilver/SketchIt",
     figma: "https://figma.com/file/your-figma-link", //
   },
