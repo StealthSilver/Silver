@@ -44,6 +44,24 @@ export const PROJECTS = [
     figma: "https://figma.com/file/your-figma-link", //
   },
   {
+    title: "Sketch-It",
+    description: "A colloborative drawing application",
+    image: "/projects/sketchit.png", //
+    live: "https://sketch-it-nine.vercel.app/", //
+    github: "https://github.com/StealthSilver/SketchIt",
+    figma: "https://figma.com/file/your-figma-link", //
+  },
+
+  {
+    title: "Silver-UI",
+    description: "A modern Ui component library",
+    image: "/projects/silver-ui.png",
+    live: "https://silver-ui.vercel.app/",
+    github: "https://github.com/StealthSilver/Silver-UI",
+    figma: "https://figma.com/file/your-figma-link", //
+  },
+
+  {
     title: "Taskly",
     description: "A task management application",
     image: "/projects/taskly.png", //
@@ -53,11 +71,36 @@ export const PROJECTS = [
   },
 
   {
+    title: "RiffinityAI",
+    description: "An AI companion application with multiple models",
+    image: "/projects/riffinity.png",
+    live: "https://riffinity-landing.vercel.app/",
+    github: "https://github.com/StealthSilver/Riffinity",
+    figma: "https://figma.com/file/your-figma-link", //
+  },
+
+  {
     title: "InfinityX",
     description: "Real time workflow mamagement applicaion",
     image: "/projects/infinityx.png", //
     live: "https://infinity-x-landing.vercel.app/", //
     github: "https://github.com/StealthSilver/InfinityX",
+    figma: "https://figma.com/file/your-figma-link", //
+  },
+  {
+    title: "AlgoRhythm",
+    description: "A programming algorithm visualisation platform",
+    image: "/projects/algorhythm.png", //
+    live: "https://algo-rhythm-nine.vercel.app/", //
+    github: "https://github.com/StealthSilver/AlgoRhythm",
+    figma: "https://figma.com/file/your-figma-link", //
+  },
+  {
+    title: "Alcaster",
+    description: "A blackcahin legacy archive platform",
+    image: "/projects/alcaster.png", //
+    live: "https://alcaster.vercel.app/", //
+    github: "https://github.com/StealthSilver/Alcaster",
     figma: "https://figma.com/file/your-figma-link", //
   },
 
@@ -88,44 +131,13 @@ export const PROJECTS = [
     figma:
       "https://www.figma.com/design/b00XL5lXg2hl2jUNbtePw9/Silver-s-Desk?node-id=0-1&t=MGYZvAoWbktNGfIE-1",
   },
-  {
-    title: "RiffinityAI",
-    description: "An AI companion application with multiple models",
-    image: "/projects/riffinity.png",
-    live: "https://riffinity-landing.vercel.app/",
-    github: "https://github.com/StealthSilver/Riffinity",
-    figma: "https://figma.com/file/your-figma-link", //
-  },
+
   {
     title: "Form and Function",
     description: "A modern and original design agency website",
     image: "/projects/form&function.png",
     live: "https://form-function.vercel.app/",
     github: "https://github.com/StealthSilver/Form-Function",
-    figma: "https://figma.com/file/your-figma-link", //
-  },
-  {
-    title: "Silver-UI",
-    description: "A modern Ui component library",
-    image: "/projects/silver-ui.png",
-    live: "https://silver-ui.vercel.app/",
-    github: "https://github.com/StealthSilver/Silver-UI",
-    figma: "https://figma.com/file/your-figma-link", //
-  },
-  {
-    title: "Sketch-It",
-    description: "A colloborative drawing application",
-    image: "/projects/sketchit.png", //
-    live: "https://sketch-it-nine.vercel.app/", //
-    github: "https://github.com/StealthSilver/SketchIt",
-    figma: "https://figma.com/file/your-figma-link", //
-  },
-  {
-    title: "Meetmux",
-    description: "Landing page for a social media platform",
-    image: "/projects/metmux.png",
-    live: "https://meet-mux-xi.vercel.app/",
-    github: "https://github.com/StealthSilver/MeetMux",
     figma: "https://figma.com/file/your-figma-link", //
   },
   {
@@ -136,13 +148,12 @@ export const PROJECTS = [
     github: "https://github.com/StealthSilver/BridgePay",
     figma: "https://figma.com/file/your-figma-link", //
   },
-
   {
-    title: "BinaryNetwork",
-    description: "A professional social media platform",
-    image: "/projects/binarynetwork.png", //
-    live: "https://binary-network.vercel.app/", // landing page
-    github: "https://github.com/StealthSilver/BinaryNetwork",
+    title: "Meetmux",
+    description: "Landing page for a social media platform",
+    image: "/projects/metmux.png",
+    live: "https://meet-mux-xi.vercel.app/",
+    github: "https://github.com/StealthSilver/MeetMux",
     figma: "https://figma.com/file/your-figma-link", //
   },
 
@@ -154,6 +165,15 @@ export const PROJECTS = [
     github: "https://github.com/StealthSilver/Prominent",
     figma:
       "https://www.figma.com/design/UhdHOIha7xWSdqZwHjCc7M/Prominent?node-id=1-2&t=37UrjNWrYqGqM5ym-1", //
+  },
+
+  {
+    title: "BinaryNetwork",
+    description: "A professional social media platform",
+    image: "/projects/binarynetwork.png", //
+    live: "https://binary-network.vercel.app/", // landing page
+    github: "https://github.com/StealthSilver/BinaryNetwork",
+    figma: "https://figma.com/file/your-figma-link", //
   },
 
   {
