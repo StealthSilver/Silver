@@ -28,7 +28,7 @@ export const PROJECTS = [
   },
   {
     title: "Spardha",
-    description: "AI prep for competitive exams—practice, tests, and analytics",
+    description: "AI prep for competitive exams with practice, tests, and analytics",
     image: "/projects/spardha.png",
     live: "https://spardha-topaz.vercel.app/",
     github: "https://github.com/StealthSilver/Spardha",
