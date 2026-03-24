@@ -27,6 +27,15 @@ export const PROJECTS = [
       "https://www.figma.com/design/HTVIDAbVfEn8CzWVvqVoMs/Sgrids?node-id=0-1&t=SsSC4rk4RVRXyaHK-1",
   },
   {
+    title: "Spardha",
+    description: "AI-powered practice, real-time tests, and performance analytics designed to help you master competitive exams.",
+    image: "/projects/spardha.png",
+    live: "https://spardha-topaz.vercel.app/",
+    github: "https://github.com/StealthSilver/Spardha",
+    figma:
+      "https://www.figma.com/design/HTVIDAbVfEn8CzWVvqVoMs/Sgrids?node-id=0-1&t=SsSC4rk4RVRXyaHK-1",
+  },
+  {
     title: "MindPalace",
     description: "An organization and management application",
     image: "/projects/mindpalace.png", //
