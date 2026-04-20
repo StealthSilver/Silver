@@ -21,7 +21,6 @@ export default function Projects() {
         relative 
         px-4 sm:px-6 md:px-12
         mt-16 sm:mt-24 md:mt-32
-        bg-white/70 dark:bg-black/70 backdrop-blur-md 
         overflow-x-hidden
       "
     >

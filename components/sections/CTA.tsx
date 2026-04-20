@@ -1,7 +1,6 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { BackgroundRippleEffect } from "@/components/ui/BackgroundRipple";
 
 export default function CTA() {
   return (
@@ -11,13 +10,9 @@ export default function CTA() {
         px-4 sm:px-6 md:px-12
         py-12 sm:py-20 md:py-28
         mt-12 sm:mt-20 md:mt-28
-        bg-white/70 dark:bg-black/70 
-        backdrop-blur-md 
         overflow-x-hidden overflow-y-hidden
       "
     >
-      <BackgroundRippleEffect />
-
       <div className="relative z-10 max-w-3xl sm:max-w-4xl mx-auto flex flex-col items-center text-center space-y-4 sm:space-y-6">
         <motion.p
           initial={{ opacity: 0, y: 30 }}

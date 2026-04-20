@@ -15,7 +15,6 @@ export default function Experience() {
         relative px-4 sm:px-6 md:px-12 
         py-10 sm:py-12 md:py-16 
         mt-16 sm:mt-24 md:mt-32
-        bg-white/70 dark:bg-black/70 backdrop-blur-md 
         overflow-x-hidden
       "
     >
@@ -43,7 +42,6 @@ export default function Experience() {
             className="
               p-4 sm:p-6 
               rounded-2xl border border-gray-300/30 dark:border-gray-700/50 
-              bg-white/60 dark:bg-black/60 backdrop-blur-md 
               hover:shadow-lg transition-all duration-300
             "
           >

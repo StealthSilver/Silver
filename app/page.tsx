@@ -1,5 +1,7 @@
+"use client";
+
+import { useImmersiveMode } from "@/contexts/ImmersiveModeContext";
 import Hero from "@/components/sections/Hero";
-import Navbar from "../components/sections/Navbar";
 import About from "@/components/sections/About";
 import Skills from "@/components/sections/Skills";
 import Experience from "@/components/sections/Experience";
@@ -8,23 +10,46 @@ import Projects from "@/components/sections/Projects";
 import Awards from "@/components/sections/Awards";
 import Certificates from "@/components/sections/Certificates";
 import CTA from "@/components/sections/CTA";
-import Footer from "@/components/sections/Footer";
+import Separator from "@/components/ui/Separator";
+import { cn } from "@/lib/utils";
 
 export default function Home() {
-  return (
-    <main>
-      <Navbar />
-      <Hero />
-      <About />
-      <Skills />
-      <Experience />
-      <Education />
-     <Certificates />
-      <Projects />
-      <Awards />
+  const { isImmersive } = useImmersiveMode();
 
-      <CTA />
-      <Footer />
-    </main>
+  if (isImmersive) {
+    return <main>{/* Immersive mode content */}</main>;
+  }
+
+  return (
+    <>
+      <div className={cn("*:[[id]]:scroll-mt-22")}>
+        <Hero />
+        <Separator />
+
+        <About />
+        <Separator />
+
+        <Skills />
+        <Separator />
+
+        <Experience />
+        <Separator />
+
+        <Education />
+        <Separator />
+
+        <Certificates />
+        <Separator />
+
+        <Projects />
+        <Separator />
+
+        <Awards />
+        <Separator />
+
+        <CTA />
+        <Separator />
+      </div>
+    </>
   );
 }

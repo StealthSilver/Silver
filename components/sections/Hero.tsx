@@ -2,7 +2,6 @@
 
 import { motion } from "framer-motion";
 import { TextHoverEffect } from "../ui/TextHoverEffect";
-import { Spotlight } from "../ui/Spotlight";
 import { Download, MoveRight } from "lucide-react";
 
 export default function Hero() {
@@ -10,7 +9,6 @@ export default function Hero() {
     <section
       className="
         relative px-4 sm:px-6 pt-28 sm:pt-36 md:pt-48 
-        bg-white/70 dark:bg-black/70 backdrop-blur-md
         overflow-x-hidden
       "
     >
@@ -26,7 +24,6 @@ export default function Hero() {
             gap-3 sm:gap-4
           "
         >
-          <Spotlight />
           <span>Hi, I am</span>
           <div className="w-[200px] sm:w-[260px] md:w-[420px] md:h-[150px]">
             <TextHoverEffect text="Silver" duration={0.3} />

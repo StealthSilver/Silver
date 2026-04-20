@@ -20,6 +20,7 @@
   --color-accent-foreground: var(--accent-foreground);
   --color-border: var(--border);
   --color-edge: var(--edge);
+  --color-line: var(--line);
   --color-input: var(--input);
   --color-ring: var(--ring);
   --color-info: var(--info);
@@ -61,6 +62,14 @@
   @apply relative after:absolute after:bottom-0 after:-left-[100vw] after:-z-1 after:h-px after:w-[200vw] after:bg-edge;
 }
 
+@utility screen-line-top {
+  @apply relative before:absolute before:top-0 before:-left-[100vw] before:-z-1 before:h-px before:w-[200vw] before:bg-[var(--line)];
+}
+
+@utility screen-line-bottom {
+  @apply relative after:absolute after:bottom-0 after:-left-[100vw] after:-z-1 after:h-px after:w-[200vw] after:bg-[var(--line)];
+}
+
 @utility step {
   counter-increment: step;
   &::before {
@@ -70,14 +79,20 @@
 }
 
 :root {
-  --background: oklch(1 0 0);
+  --background: lab(100 0 0);
 
   --foreground: oklch(0.141 0.005 285.823);
+  --line: rgba(0, 0, 0, 0.1);
+  --muted: rgba(0, 0, 0, 0.05);
+  --muted-foreground: rgba(0, 0, 0, 0.6);
 }
 
 .dark {
   --background: #000000;
   --foreground: #ffffff;
+  --line: rgba(255, 255, 255, 0.15);
+  --muted: rgba(255, 255, 255, 0.08);
+  --muted-foreground: rgba(255, 255, 255, 0.6);
 }
 
 @layer base {

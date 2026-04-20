@@ -1,204 +1,122 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Menu, X, Github } from "lucide-react";
+import { Github, Sparkles, Menu, X } from "lucide-react";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import ThemeToggle from "../ui/ThemeToggle";
 import { useTheme } from "next-themes";
+import { useImmersiveMode } from "../../contexts/ImmersiveModeContext";
+import { cn } from "@/lib/utils";
 
 export default function Navbar() {
-  const [isOpen, setIsOpen] = useState(false);
-  const [hovered, setHovered] = useState<string | null>(null);
-  const { theme } = useTheme();
-
   const [mounted, setMounted] = useState(false);
+  const [mobileOpen, setMobileOpen] = useState(false);
+  const { theme } = useTheme();
+  const { isImmersive, toggleImmersiveMode } = useImmersiveMode();
+
   useEffect(() => setMounted(true), []);
 
-  const toggleMenu = () => setIsOpen((v) => !v);
-
-  const navItems = [
-    { name: "About", href: "#about" },
-    { name: "Experience", href: "#experience" },
-    { name: "Education", href: "#education" },
-    { name: "Projects", href: "#projects" },
-    {
-      name: "Blogs",
-      href: "https://patch-umbrella-c3a.notion.site/DSA-Data-Structures-and-Algorithms-2c85af667d96807ab103f0c294ecc5ee?source=copy_link",
-      external: true,
-    },
-  ];
-
   return (
-    <nav
-      className="
-        w-full sticky top-0 z-50 px-4 sm:px-6 py-3
-        border-b border-black/10 dark:border-gray-700
-        bg-white/70 dark:bg-black/70 backdrop-blur-md
-        transition-colors duration-300
-      "
-    >
-      <div className="flex items-center justify-between max-w-7xl mx-auto w-full">
-        <Link href="/" className="flex items-center cursor-pointer">
-          <motion.img
-            key={mounted ? theme : "default"}
-            src={
-              !mounted
-                ? "/logo_light.svg"
-                : theme === "dark"
-                ? "/logo_dark.svg"
-                : "/logo_light.svg"
-            }
-            alt="Silver logo"
-            className="w-28 h-auto sm:w-32 md:w-36"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.3 }}
-          />
-        </Link>
-
-        {/* Desktop Nav */}
-        <div
-          className="hidden md:flex items-center px-2 font-mono relative gap-6"
-          onMouseLeave={() => setHovered(null)}
-        >
-          {navItems.map((item) => (
-            <div key={item.name} className="relative px-3 py-1.5 select-none">
-              {hovered === item.name && (
-                <motion.span
-                  layoutId="hoverBg"
-                  className="
-                    absolute inset-0 rounded-full backdrop-blur-sm
-                    bg-gray-200/70 border border-gray-300
-                    dark:bg-gray-700/70 dark:border-gray-600
-                  "
-                  transition={{
-                    type: "spring",
-                    stiffness: 500,
-                    damping: 40,
-                    mass: 0.6,
-                  }}
-                  initial={false}
-                />
-              )}
-
-              {item.external ? (
-                <a
-                  href={item.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  onMouseEnter={() => setHovered(item.name)}
-                  onFocus={() => setHovered(item.name)}
-                  className="
-                    relative z-10 transition-colors
-                    text-gray-700 hover:text-black
-                    dark:text-gray-300 dark:hover:text-white
-                  "
-                >
-                  {item.name}
-                </a>
-              ) : (
-                <Link
-                  href={item.href}
-                  onMouseEnter={() => setHovered(item.name)}
-                  onFocus={() => setHovered(item.name)}
-                  className="
-                    relative z-10 transition-colors
-                    text-gray-700 hover:text-black
-                    dark:text-gray-300 dark:hover:text-white
-                  "
-                >
-                  {item.name}
-                </Link>
-              )}
-            </div>
-          ))}
-        </div>
-
-        {/* Desktop Right Section */}
-        <div className="hidden md:flex items-center gap-6 font-mono">
-          <a
-            href="https://github.com/StealthSilver"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="
-              rounded-full border p-2
-              bg-white text-black border-black hover:bg-black hover:text-white
-              dark:bg-black dark:text-white dark:border-white dark:hover:bg-white dark:hover:text-black
-              transition-colors
-            "
+    <>
+      <header className="sticky top-0 z-50 max-w-screen overflow-x-hidden bg-background px-2 pt-2">
+        <div className="screen-line-top screen-line-bottom mx-auto flex h-12 items-center justify-between gap-2 border-x border-line px-2 group-has-data-[slot=layout-wide]/layout:container after:z-1 after:transition-[background-color] sm:gap-4 md:max-w-3xl">
+          {/* Brand/Logo */}
+          <Link
+            className="transition-[scale] ease-out active:scale-[0.98] [&_img]:h-8 [&_img]:shrink-0"
+            href="/"
+            aria-label="Home"
           >
-            <Github size={18} />
-          </a>
+            <motion.img
+              key={mounted ? theme : "default"}
+              src={
+                !mounted
+                  ? "/icon2.svg"
+                  : theme === "dark"
+                    ? "/icon.svg"
+                    : "/icon2.svg"
+              }
+              alt="Silver icon"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.3 }}
+            />
+          </Link>
 
-          <ThemeToggle />
+          <div className="flex-1" />
 
-          <a
-            href="#footer"
-            className="
-              bg-gray-900 text-white border border-gray-900 rounded-full px-6 py-1.5
-              transition duration-300 hover:bg-white hover:text-black
-              dark:bg-gray-100 dark:text-black dark:border-gray-100
-              dark:hover:bg-black dark:hover:text-white
-            "
-          >
-            Connect
-          </a>
-        </div>
+          {/* Desktop Icons */}
+          <div className="flex items-center *:first:mr-2 max-sm:*:data-[slot=command-menu-trigger]:hidden">
+            <a
+              href="https://github.com/StealthSilver"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="transition-[scale] ease-out active:scale-[0.98] p-2 rounded-md hover:bg-muted"
+              aria-label="GitHub"
+            >
+              <Github size={18} />
+            </a>
 
-        {/* Mobile Menu Button */}
-        <div className="md:hidden flex items-center gap-3">
-          <div className="scale-90">
+            <div className="mx-2 h-4 w-px border-0 bg-line" />
+
             <ThemeToggle />
+
+            {isImmersive && (
+              <button
+                onClick={toggleImmersiveMode}
+                className="transition-[scale] ease-out active:scale-[0.98] p-2 rounded-md hover:bg-muted"
+                aria-label="Exit immersive mode"
+              >
+                <Sparkles size={18} className="animate-spin" />
+              </button>
+            )}
+
+            {/* Mobile Menu Button */}
+            <button
+              onClick={() => setMobileOpen(!mobileOpen)}
+              className="sm:hidden transition-[scale] ease-out active:scale-[0.98] p-2 rounded-md hover:bg-muted"
+              aria-label="Toggle menu"
+            >
+              {mobileOpen ? <X size={18} /> : <Menu size={18} />}
+            </button>
           </div>
 
-          <button
-            onClick={toggleMenu}
-            aria-label={isOpen ? "Close menu" : "Open menu"}
-            className="p-1.5 rounded-md"
-          >
-            {isOpen ? <X size={24} /> : <Menu size={24} />}
-          </button>
+          <div className="absolute top-[-3.5px] left-[-4.5px] z-2 flex size-2 border border-line bg-background" />
+          <div className="absolute top-[-3.5px] right-[-4.5px] z-2 flex size-2 border border-line bg-background" />
         </div>
-      </div>
+      </header>
 
       {/* Mobile Nav */}
-      {isOpen && (
-        <div className="md:hidden bg-white/95 dark:bg-black/95 backdrop-blur-md shadow-lg border-t border-gray-200 dark:border-gray-700 transition-colors duration-300">
-          <div className="flex flex-col items-center space-y-5 py-10">
-            {navItems.map((item) =>
-              item.external ? (
-                <a
-                  key={item.name}
-                  href={item.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="transition-colors text-gray-700 hover:text-black dark:text-gray-300 dark:hover:text-white"
-                  onClick={() => setIsOpen(false)}
-                >
-                  {item.name}
-                </a>
-              ) : (
-                <Link
-                  key={item.name}
-                  href={item.href}
-                  className="transition-colors text-gray-700 hover:text-black dark:text-gray-300 dark:hover:text-white"
-                  onClick={() => setIsOpen(false)}
-                >
-                  {item.name}
-                </Link>
-              )
-            )}
-            <a
-              href="#footer"
-              className="rounded-full border px-6 py-1.5 transition-colors bg-gray-900 text-white border-gray-900 hover:bg-white hover:text-black dark:bg-gray-100 dark:text-black dark:border-gray-100 dark:hover:bg-black dark:hover:text-white"
-              onClick={() => setIsOpen(false)}
-            >
-              Connect
-            </a>
-          </div>
+      <div
+        className={cn(
+          "pointer-events-none fixed inset-x-0 bottom-0 z-50 h-[calc(--spacing(24)+env(safe-area-inset-bottom,0px))] bg-linear-to-b from-transparent from-[calc(env(safe-area-inset-bottom,0%))] to-background mask-linear-[to_top,var(--background)_25%,transparent] backdrop-blur-[1px] sm:hidden",
+          mobileOpen && "pointer-events-auto",
+        )}
+      />
+      <div
+        className={cn(
+          "fixed bottom-[calc(--spacing(2)+env(safe-area-inset-bottom,0px))] left-1/2 z-50 flex w-fit -translate-x-1/2 items-center rounded-xl bg-popover py-1 pr-1 pl-2.5 shadow-md ring ring-foreground/10 sm:hidden dark:ring-foreground/20",
+          "transition-all duration-300",
+          !mobileOpen && "opacity-0 pointer-events-none",
+        )}
+      >
+        <div className="flex items-center *:first:mr-2">
+          <button
+            onClick={toggleImmersiveMode}
+            className="transition-[scale] ease-out active:scale-[0.98] p-2 rounded-md hover:bg-muted min-w-20 flex justify-center gap-2"
+            aria-label={
+              isImmersive ? "Exit immersive mode" : "Enter immersive mode"
+            }
+          >
+            <Sparkles size={16} className={isImmersive ? "animate-spin" : ""} />
+            <span className="text-xs">{isImmersive ? "Active" : "Mode"}</span>
+          </button>
+
+          <div className="mr-1 ml-2.5 h-6 w-px border-0 bg-line" />
+
+          <ThemeToggle />
         </div>
-      )}
-    </nav>
+      </div>
+    </>
   );
 }

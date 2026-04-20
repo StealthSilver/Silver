@@ -11,7 +11,6 @@ export default function About() {
       className="
         relative px-4 sm:px-6 md:px-12 
         mt-20 sm:mt-28 md:mt-40 lg:mt-84
-        bg-white/70 dark:bg-black/70 backdrop-blur-md 
         overflow-x-hidden
       "
     >

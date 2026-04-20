@@ -20,7 +20,7 @@ class SoundManager {
 
   playClick() {
     this.playAudio(
-      "https://assets.chanhdai.com/audio/ui-sounds/click.wav" // Source: iOS UI Sounds
+      "https://assets.chanhdai.com/audio/ui-sounds/click.wav", // Source: iOS UI Sounds
     );
   }
 }

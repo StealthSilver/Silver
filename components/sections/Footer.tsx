@@ -22,7 +22,6 @@ export default function Footer() {
           max-w-7xl mx-auto px-4 sm:px-6 py-6
           border-t border-l border-r
           border-black/10 dark:border-gray-700
-          bg-white/70 dark:bg-black/70 backdrop-blur-md
           rounded-t-3xl
           transition-colors duration-300
           flex flex-col items-center text-center space-y-6
@@ -34,8 +33,8 @@ export default function Footer() {
             !mounted
               ? "/logo_light.svg"
               : theme === "dark"
-              ? "/logo_dark.svg"
-              : "/logo_light.svg"
+                ? "/logo_dark.svg"
+                : "/logo_light.svg"
           }
           alt="Silver logo"
           width={140}

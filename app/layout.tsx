@@ -1,10 +1,19 @@
 import type { Metadata } from "next";
 import { IBM_Plex_Sans, IBM_Plex_Mono } from "next/font/google";
+import dynamic from "next/dynamic";
 import "./globals.css";
 import { SITE } from "../config/site.config";
 import { ThemeProvider } from "next-themes";
 import ThemeHeadIcons from "../components/ui/ThemeHeadIcon";
 import ClientWrapper from "../components/ui/ClientWrapper";
+import { ImmersiveModeProvider } from "../contexts/ImmersiveModeContext";
+import ImmersiveBackground from "../components/ui/ImmersiveBackground";
+import { SiteHeader } from "../components/site-header";
+import { SiteFooter } from "../components/site-footer";
+
+const ScrollToTop = dynamic(() =>
+  import("../components/scroll-to-top").then((mod) => mod.ScrollToTop),
+);
 const ibmPlexSans = IBM_Plex_Sans({
   variable: "--font-plex-sans",
   subsets: ["latin"],
@@ -73,7 +82,23 @@ export default function RootLayout({
           enableSystem
           value={{ light: "light", dark: "dark" }}
         >
-          <ClientWrapper>{children}</ClientWrapper>
+          <ImmersiveModeProvider>
+            <ImmersiveBackground>
+              <div className="group/layout">
+                <SiteHeader />
+                <main className="max-w-screen overflow-x-clip px-2">
+                  <div
+                    className="mx-auto md:max-w-3xl border-x"
+                    style={{ borderColor: "var(--line)" }}
+                  >
+                    <ClientWrapper>{children}</ClientWrapper>
+                  </div>
+                </main>
+                <SiteFooter />
+                <ScrollToTop />
+              </div>
+            </ImmersiveBackground>
+          </ImmersiveModeProvider>
         </ThemeProvider>
       </body>
     </html>
