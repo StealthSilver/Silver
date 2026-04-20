@@ -73,10 +73,10 @@ export const TextHoverEffect = ({
         y="50%"
         textAnchor="middle"
         dominantBaseline="middle"
-        strokeWidth="0.6"
+        strokeWidth="0.35"
         className="
           fill-neutral-300 stroke-neutral-700
-          font-[helvetica] text-8xl font-extrabold
+          text-8xl font-normal [font-family:var(--font-cursive),cursive]
           dark:stroke-neutral-400 dark:fill-neutral-800
         "
         style={{ opacity: 0.6 }}
@@ -90,8 +90,8 @@ export const TextHoverEffect = ({
         textAnchor="middle"
         dominantBaseline="middle"
         stroke="url(#silverShimmer)"
-        strokeWidth="0.9"
-        className="fill-transparent font-[helvetica] text-8xl font-extrabold"
+        strokeWidth="0.55"
+        className="fill-transparent text-8xl font-normal [font-family:var(--font-cursive),cursive]"
         mask="url(#textMask)"
         style={{ opacity: 0.9 }}
       >
