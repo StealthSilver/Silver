@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Great_Vibes, IBM_Plex_Sans, IBM_Plex_Mono } from "next/font/google";
+import { Cinzel, IBM_Plex_Sans, IBM_Plex_Mono } from "next/font/google";
 import dynamic from "next/dynamic";
 import "./globals.css";
 import { SITE } from "../config/site.config";
@@ -28,10 +28,10 @@ const ibmPlexMono = IBM_Plex_Mono({
   display: "swap",
 });
 
-const greatVibes = Great_Vibes({
-  weight: "400",
+const cinzel = Cinzel({
+  variable: "--font-cinzel",
   subsets: ["latin"],
-  variable: "--font-cursive",
+  weight: ["400", "500", "600", "700"],
   display: "swap",
 });
 
@@ -77,7 +77,7 @@ export default function RootLayout({
     <html
       lang="en"
       suppressHydrationWarning
-      className={`${ibmPlexSans.variable} ${ibmPlexMono.variable} ${greatVibes.variable}`}
+      className={`${ibmPlexSans.variable} ${ibmPlexMono.variable} ${cinzel.variable}`}
     >
       <head>
         <ThemeHeadIcons />
