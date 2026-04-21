@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import { AvatarElectricEffect } from "../ui/AvatarElectricEffect";
 import { TextHoverEffect } from "../ui/TextHoverEffect";
 import Separator from "../ui/Separator";
 
@@ -29,16 +30,18 @@ export default function Hero() {
 
       <div className="relative mx-auto w-full max-w-3xl">
         <div className="relative z-[2] flex items-center gap-0">
-          <div className="relative size-36 shrink-0 overflow-hidden rounded-full ring-1 ring-line sm:size-40">
-            <Image
-              src="/profile_pic.png"
-              alt="Silver"
-              fill
-              sizes="(max-width: 640px) 144px, 160px"
-              className="object-cover"
-              priority
-            />
-          </div>
+          <AvatarElectricEffect>
+            <div className="relative size-36 shrink-0 overflow-hidden rounded-full ring-1 ring-line sm:size-40">
+              <Image
+                src="/profile_pic.png"
+                alt="Silver"
+                fill
+                sizes="(max-width: 640px) 144px, 160px"
+                className="object-cover"
+                priority
+              />
+            </div>
+          </AvatarElectricEffect>
           <div
             aria-hidden
             className="ml-0 h-32 w-px shrink-0 self-center bg-line sm:h-40"
