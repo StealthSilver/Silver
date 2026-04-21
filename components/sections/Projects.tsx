@@ -40,9 +40,9 @@ export default function Projects() {
 
       <HoverEffect className="max-w-6xl mx-auto font-mono gap-3 sm:gap-4">
         <AnimatePresence>
-          {(showAll ? PROJECTS : PROJECTS.slice(0, 6)).map((project, idx) => (
+          {(showAll ? PROJECTS : PROJECTS.slice(0, 6)).map((project) => (
             <motion.div
-              key={project.title + idx}
+              key={project.id}
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: 30 }}

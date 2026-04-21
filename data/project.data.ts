@@ -1,4 +1,26 @@
-export const PROJECTS = [
+export type ProjectBase = {
+  title: string;
+  description: string;
+  image: string;
+  live?: string;
+  github?: string;
+  figma?: string;
+};
+
+export type Project = ProjectBase & {
+  id: string;
+  slug: string;
+};
+
+function slugify(title: string): string {
+  return title
+    .toLowerCase()
+    .replace(/&/g, "and")
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "");
+}
+
+const PROJECT_RECORDS: ProjectBase[] = [
   {
     title: "MeshSpire",
     description: "A peer to peer learning app for students",
@@ -203,3 +225,13 @@ export const PROJECTS = [
     figma: "https://figma.com/file/your-figma-link", //
   },
 ];
+
+export const PROJECTS: Project[] = PROJECT_RECORDS.map((p, i) => ({
+  ...p,
+  id: `project-${i + 1}`,
+  slug: slugify(p.title),
+}));
+
+export function getProjectBySlug(slug: string): Project | undefined {
+  return PROJECTS.find((p) => p.slug === slug);
+}

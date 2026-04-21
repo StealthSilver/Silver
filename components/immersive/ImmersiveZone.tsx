@@ -1,9 +1,12 @@
 "use client";
 
+import { useCallback, useState } from "react";
 import { motion } from "motion/react";
 import { ChevronLeft, ChevronRight, Pause, Play } from "lucide-react";
 import { GeistSans } from "geist/font/sans";
 import { GeistMono } from "geist/font/mono";
+import { CinematicIntroLazy } from "@/components/immersive/CinematicIntroLazy";
+import { ProjectGalaxyLazy } from "@/components/immersive/ProjectGalaxyLazy";
 import { navLinkColor } from "@/lib/nav-link-color";
 import {
   IMMERSIVE_TRACKS,
@@ -36,6 +39,22 @@ export default function ImmersiveZone() {
     immersiveTrackIndex,
   } = useImmersiveMode();
 
+  const [showR3fIntro, setShowR3fIntro] = useState(true);
+  const [introExiting, setIntroExiting] = useState(false);
+  const behindVisible = introExiting || !showR3fIntro;
+
+  const handleIntroPlaybackEnd = useCallback(() => {
+    setIntroExiting(true);
+  }, []);
+
+  const handleIntroFadeOutComplete = useCallback(
+    (e: React.TransitionEvent<HTMLDivElement>) => {
+      if (e.target !== e.currentTarget || e.propertyName !== "opacity") return;
+      if (introExiting) setShowR3fIntro(false);
+    },
+    [introExiting],
+  );
+
   return (
     <div
       className="fixed inset-0 z-[40] overflow-hidden bg-background"
@@ -43,20 +62,29 @@ export default function ImmersiveZone() {
       aria-label="Immersion zone"
     >
       <div
-        className="pointer-events-none absolute inset-0 opacity-90 dark:opacity-100"
-        style={{
-          background: `
+        className={cn(
+          "pointer-events-none absolute inset-0 transition-opacity duration-[1200ms] ease-[cubic-bezier(0.22,1,0.36,1)]",
+          behindVisible ? "opacity-100" : "opacity-0",
+        )}
+      >
+        <div
+          className="pointer-events-none absolute inset-0 opacity-90 dark:opacity-100"
+          style={{
+            background: `
             radial-gradient(ellipse 120% 80% at 50% -20%, color-mix(in oklab, var(--primary) 35%, transparent), transparent 55%),
             radial-gradient(ellipse 90% 60% at 80% 100%, color-mix(in oklab, var(--muted-foreground) 12%, transparent), transparent 50%),
             linear-gradient(180deg, color-mix(in oklab, var(--muted) 45%, var(--background)) 0%, var(--background) 45%, color-mix(in oklab, var(--background) 88%, var(--foreground) 4%) 100%)
           `,
-        }}
-      />
+          }}
+        />
 
-      <div
-        className="absolute inset-0 flex items-center justify-center pt-8 pb-12"
-        style={{ perspective: "1100px" }}
-      >
+        <div
+          className={cn(
+            "absolute inset-0 flex items-center justify-center pt-8 pb-12 transition-opacity duration-[1200ms] ease-[cubic-bezier(0.22,1,0.36,1)]",
+            !showR3fIntro ? "opacity-[0.12] sm:opacity-[0.16]" : "opacity-100",
+          )}
+          style={{ perspective: "1100px" }}
+        >
         <motion.div
           className="relative h-[min(72vw,420px)] w-[min(92vw,560px)] [transform-style:preserve-3d]"
           animate={{ rotateX: 18 }}
@@ -126,9 +154,34 @@ export default function ImmersiveZone() {
             />
           </motion.div>
         </motion.div>
+        </div>
+
+        <div className="pointer-events-none absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-background to-transparent" />
       </div>
 
-      <div className="pointer-events-none absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-background to-transparent" />
+      {showR3fIntro && (
+        <div
+          className={cn(
+            "absolute inset-0 z-[15] transition-opacity duration-[1200ms] ease-[cubic-bezier(0.22,1,0.36,1)]",
+            introExiting ? "pointer-events-none opacity-0" : "opacity-100",
+          )}
+          onTransitionEnd={handleIntroFadeOutComplete}
+        >
+          <CinematicIntroLazy onIntroEnd={handleIntroPlaybackEnd} />
+        </div>
+      )}
+
+      {behindVisible && (
+        <motion.div
+          key="project-galaxy"
+          className="absolute inset-0 z-[12] h-full w-full"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 1.15, ease: [0.22, 1, 0.36, 1] }}
+        >
+          <ProjectGalaxyLazy className="h-full w-full" />
+        </motion.div>
+      )}
 
       <div className="pointer-events-auto absolute top-[max(0.65rem,env(safe-area-inset-top))] right-[max(0.65rem,env(safe-area-inset-right))] z-[50] inline-grid w-max max-w-[min(100vw-1.5rem,22rem)] grid-cols-1 gap-2 justify-items-stretch sm:top-4 sm:right-4">
         <motion.button
