@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import { Caveat } from "next/font/google";
 import { GeistSans } from "geist/font/sans";
 import { GeistMono } from "geist/font/mono";
 import { AvatarElectricEffect } from "../ui/AvatarElectricEffect";
@@ -15,13 +16,31 @@ const heroDotBg = {
   backgroundSize: "14px 14px",
 } as const;
 
+const heroPencil = Caveat({
+  subsets: ["latin"],
+  weight: ["500", "600"],
+  display: "swap",
+});
+
 export default function Hero() {
   return (
     <section className="relative">
       <div className="relative pb-0 pt-14" style={heroDotBg}>
-        <div className="flex justify-center px-4">
-          <div className="mx-auto aspect-[480/128] w-full max-w-[min(96vw,720px)] py-2">
+        <div className="flex flex-col items-center justify-center px-4">
+          <div className="relative mx-auto aspect-[480/128] w-full max-w-[min(96vw,720px)] py-2">
             <TextHoverEffect text="Silver" duration={0.3} />
+            <p
+              className={`${heroPencil.className} pointer-events-none absolute bottom-[12px] right-[12px] z-[1] max-w-[min(58%,16rem)] text-right text-lg leading-tight tracking-wide sm:text-xl md:text-2xl`}
+              style={{
+                color: "color-mix(in oklab, var(--muted-foreground) 82%, var(--foreground) 18%)",
+                fontWeight: 600,
+                textShadow:
+                  "0.55px 0.45px 0 color-mix(in oklab, var(--foreground) 18%, transparent), -0.45px -0.35px 0 color-mix(in oklab, var(--background) 42%, transparent), 0.35px -0.28px 0 color-mix(in oklab, var(--foreground) 10%, transparent), -0.2px 0.5px 0 color-mix(in oklab, var(--foreground) 6%, transparent)",
+                transform: "rotate(-1.1deg)",
+              }}
+            >
+              Enter the different zone
+            </p>
           </div>
         </div>
 
@@ -33,7 +52,7 @@ export default function Hero() {
       </div>
 
       <div className="relative mx-auto w-full max-w-3xl">
-        <div className="relative z-[2] flex items-center gap-0">
+        <div className="relative z-[2] flex items-end gap-0">
           <AvatarElectricEffect>
             <div className="relative size-36 shrink-0 overflow-hidden rounded-full ring-1 ring-line sm:size-40">
               <Image
@@ -57,7 +76,7 @@ export default function Hero() {
               aria-hidden
               className="mt-2.5 h-px w-[calc(100%+0.75rem)] -ml-3 bg-line sm:mt-3 sm:-ml-4 sm:w-[calc(100%+1rem)]"
             />
-            <div className="mt-2 sm:mt-2.5">
+            <div className="mt-2 mb-[8px] sm:mt-2.5">
               <TextFlip
                 className={`${GeistMono.className} text-[14px] leading-snug text-balance text-muted-foreground`}
                 variants={{
