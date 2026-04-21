@@ -23,7 +23,6 @@ export default function Home() {
     <>
       <div className={cn("*:[[id]]:scroll-mt-22")}>
         <Hero />
-        <Separator />
 
         <Skills />
         <Separator />

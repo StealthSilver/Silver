@@ -90,7 +90,10 @@ export const TextHoverEffect = ({
           text-8xl font-medium [font-family:var(--font-cinzel),ui-serif,Georgia,serif]
           dark:stroke-neutral-400 dark:fill-neutral-800
         "
-        style={{ opacity: 0.6 }}
+        style={{
+          opacity: 0.6,
+          fontFamily: "var(--font-cinzel), ui-serif, Georgia, serif",
+        }}
       >
         {displayText}
       </text>
@@ -104,7 +107,10 @@ export const TextHoverEffect = ({
         strokeWidth="0.6"
         className="fill-transparent text-8xl font-medium [font-family:var(--font-cinzel),ui-serif,Georgia,serif]"
         mask={`url(#${textMaskId})`}
-        style={{ opacity: 0.9 }}
+        style={{
+          opacity: 0.9,
+          fontFamily: "var(--font-cinzel), ui-serif, Georgia, serif",
+        }}
       >
         {displayText}
       </text>
