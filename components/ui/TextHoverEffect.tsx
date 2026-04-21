@@ -5,6 +5,9 @@ import { motion } from "motion/react";
 const VIEW_W = 480;
 const VIEW_H = 128;
 
+/** Cinzel for the Silver wordmark only; inherited by both SVG text layers. */
+const SILVER_FONT_FAMILY = "var(--font-cinzel), serif" as const;
+
 export const TextHoverEffect = ({
   text,
   duration,
@@ -45,6 +48,7 @@ export const TextHoverEffect = ({
       xmlns="http://www.w3.org/2000/svg"
       onMouseMove={(e) => setCursor({ x: e.clientX, y: e.clientY })}
       className="block h-full w-full select-none"
+      style={{ fontFamily: SILVER_FONT_FAMILY }}
     >
       <defs>
         <motion.linearGradient
@@ -85,15 +89,8 @@ export const TextHoverEffect = ({
         textAnchor="middle"
         dominantBaseline="middle"
         strokeWidth="0.45"
-        className="
-          fill-neutral-300 stroke-neutral-700
-          text-8xl font-medium [font-family:var(--font-cinzel),ui-serif,Georgia,serif]
-          dark:stroke-neutral-400 dark:fill-neutral-800
-        "
-        style={{
-          opacity: 0.6,
-          fontFamily: "var(--font-cinzel), ui-serif, Georgia, serif",
-        }}
+        className="fill-neutral-300 stroke-neutral-700 text-8xl font-medium dark:stroke-neutral-400 dark:fill-neutral-800"
+        style={{ opacity: 0.6 }}
       >
         {displayText}
       </text>
@@ -105,12 +102,9 @@ export const TextHoverEffect = ({
         dominantBaseline="middle"
         stroke={`url(#${shimmerId})`}
         strokeWidth="0.6"
-        className="fill-transparent text-8xl font-medium [font-family:var(--font-cinzel),ui-serif,Georgia,serif]"
+        className="fill-transparent text-8xl font-medium"
         mask={`url(#${textMaskId})`}
-        style={{
-          opacity: 0.9,
-          fontFamily: "var(--font-cinzel), ui-serif, Georgia, serif",
-        }}
+        style={{ opacity: 0.9 }}
       >
         {displayText}
       </text>

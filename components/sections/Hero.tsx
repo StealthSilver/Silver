@@ -1,9 +1,13 @@
 "use client";
 
 import Image from "next/image";
+import { GeistSans } from "geist/font/sans";
+import { GeistMono } from "geist/font/mono";
 import { AvatarElectricEffect } from "../ui/AvatarElectricEffect";
 import { TextHoverEffect } from "../ui/TextHoverEffect";
+import { TextFlip } from "../ui/TextFlip";
 import Separator from "../ui/Separator";
+import { USER } from "@/config/user.config";
 
 const heroDotBg = {
   backgroundColor: "var(--background)",
@@ -34,7 +38,7 @@ export default function Hero() {
             <div className="relative size-36 shrink-0 overflow-hidden rounded-full ring-1 ring-line sm:size-40">
               <Image
                 src="/profile_pic.png"
-                alt="Silver"
+                alt={USER.displayName}
                 fill
                 sizes="(max-width: 640px) 144px, 160px"
                 className="object-cover"
@@ -42,10 +46,33 @@ export default function Hero() {
               />
             </div>
           </AvatarElectricEffect>
-          <div
-            aria-hidden
-            className="ml-0 h-32 w-px shrink-0 self-center bg-line sm:h-40"
-          />
+          <div aria-hidden className="w-px shrink-0 self-stretch bg-line" />
+          <div className="mt-2 flex min-w-0 flex-1 flex-col justify-start gap-0 pl-3 sm:mt-3 sm:pl-4">
+            <p
+              className={`${GeistSans.className} text-[22px] font-semibold leading-tight tracking-tight text-foreground sm:text-[24px]`}
+            >
+              {USER.displayName}
+            </p>
+            <div
+              aria-hidden
+              className="mt-2.5 h-px w-[calc(100%+0.75rem)] -ml-3 bg-line sm:mt-3 sm:-ml-4 sm:w-[calc(100%+1rem)]"
+            />
+            <div className="mt-2 sm:mt-2.5">
+              <TextFlip
+                className={`${GeistMono.className} text-[14px] leading-snug text-balance text-muted-foreground`}
+                variants={{
+                  initial: { y: -10, opacity: 0 },
+                  animate: { y: -1, opacity: 1 },
+                  exit: { y: 10, opacity: 0 },
+                }}
+                interval={3.5}
+              >
+                {USER.flipSentences.map((line) => (
+                  <span key={line}>{line}</span>
+                ))}
+              </TextFlip>
+            </div>
+          </div>
         </div>
         <Separator />
       </div>

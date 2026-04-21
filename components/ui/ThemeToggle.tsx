@@ -1,21 +1,81 @@
 "use client";
 
-import { useCallback, useEffect, useState } from "react";
+import type { ComponentPropsWithoutRef } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
+import { flushSync } from "react-dom";
 import { useTheme } from "next-themes";
 import { AnimatePresence, motion } from "framer-motion";
 import { Moon, Sun } from "lucide-react";
 import soundManager from "@/lib/sound-mamager";
+import { cn } from "@/lib/utils";
 
-export default function ThemeToggle() {
+const DEFAULT_VIEW_TRANSITION_MS = 400;
+
+export type ThemeToggleProps = ComponentPropsWithoutRef<"button"> & {
+  duration?: number;
+};
+
+export default function ThemeToggle({
+  className,
+  duration = DEFAULT_VIEW_TRANSITION_MS,
+  ...props
+}: ThemeToggleProps) {
   const { resolvedTheme, setTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
+  const buttonRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => setMounted(true), []);
 
-  const handleToggle = useCallback(() => {
+  const toggleTheme = useCallback(() => {
+    if (!mounted || resolvedTheme === undefined) return;
+
     soundManager.playClick();
-    setTheme(resolvedTheme === "dark" ? "light" : "dark");
-  }, [resolvedTheme, setTheme]);
+
+    const button = buttonRef.current;
+    const nextTheme = resolvedTheme === "dark" ? "light" : "dark";
+
+    const applyTheme = () => {
+      flushSync(() => {
+        setTheme(nextTheme);
+      });
+    };
+
+    if (!button || typeof document.startViewTransition !== "function") {
+      applyTheme();
+      return;
+    }
+
+    const { top, left, width, height } = button.getBoundingClientRect();
+    const x = left + width / 2;
+    const y = top + height / 2;
+    const viewportWidth = window.visualViewport?.width ?? window.innerWidth;
+    const viewportHeight = window.visualViewport?.height ?? window.innerHeight;
+    const maxRadius = Math.hypot(
+      Math.max(x, viewportWidth - x),
+      Math.max(y, viewportHeight - y),
+    );
+
+    const transition = document.startViewTransition(applyTheme);
+
+    const ready = transition?.ready;
+    if (ready && typeof ready.then === "function") {
+      void ready.then(() => {
+        document.documentElement.animate(
+          {
+            clipPath: [
+              `circle(0px at ${x}px ${y}px)`,
+              `circle(${maxRadius}px at ${x}px ${y}px)`,
+            ],
+          },
+          {
+            duration,
+            easing: "ease-in-out",
+            pseudoElement: "::view-transition-new(root)",
+          },
+        );
+      });
+    }
+  }, [duration, mounted, resolvedTheme, setTheme]);
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -25,20 +85,25 @@ export default function ThemeToggle() {
         !e.metaKey &&
         !e.altKey
       ) {
-        setTheme(resolvedTheme === "dark" ? "light" : "dark");
+        toggleTheme();
       }
     };
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [resolvedTheme, setTheme]);
+  }, [toggleTheme]);
 
   if (!mounted) {
     return (
       <button
         type="button"
+        ref={buttonRef}
         aria-label="Toggle theme"
-        className="inline-flex items-center justify-center rounded-md p-2 opacity-70 cursor-wait transition-[scale] ease-out"
+        className={cn(
+          "inline-flex cursor-wait items-center justify-center rounded-md p-2 opacity-70 transition-[scale] ease-out",
+          className,
+        )}
         disabled
+        {...props}
       />
     );
   }
@@ -48,10 +113,15 @@ export default function ThemeToggle() {
   return (
     <button
       type="button"
-      onClick={handleToggle}
+      ref={buttonRef}
+      onClick={toggleTheme}
       aria-label={`Switch to ${showSun ? "light" : "dark"} theme`}
       title={`Switch to ${showSun ? "light" : "dark"} theme (Press D)`}
-      className="relative inline-flex items-center justify-center gap-2 rounded-md p-2 transition-[scale] ease-out active:scale-[0.98] hover:bg-muted"
+      className={cn(
+        "relative inline-flex items-center justify-center gap-2 rounded-md p-2 transition-[scale] ease-out hover:bg-muted active:scale-[0.98]",
+        className,
+      )}
+      {...props}
     >
       <AnimatePresence mode="wait" initial={false}>
         {showSun ? (
