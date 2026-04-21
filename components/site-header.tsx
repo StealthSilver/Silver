@@ -12,8 +12,8 @@ import { cn } from "@/lib/utils";
 import { navLinkColor } from "@/lib/nav-link-color";
 
 const navItems = [
-  { href: "/#projects", label: "Projects" },
   { href: "/#experience", label: "Experience" },
+  { href: "/#projects", label: "Projects" },
   { href: "/#education", label: "Education" },
   { href: "/Resume1.pdf", label: "Resume" },
 ] as const;

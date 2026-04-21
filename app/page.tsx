@@ -3,6 +3,7 @@
 import { useImmersiveMode } from "@/contexts/ImmersiveModeContext";
 import ImmersiveZone from "@/components/immersive/ImmersiveZone";
 import Hero from "@/components/sections/Hero";
+import About from "@/components/sections/About";
 import Skills from "@/components/sections/Skills";
 import Experience from "@/components/sections/Experience";
 import Education from "@/components/sections/Education";
@@ -21,6 +22,8 @@ export default function Home() {
       {!isImmersive && (
         <div className={cn("*:[[id]]:scroll-mt-22")}>
           <Hero />
+          <About />
+          <Separator />
 
           <Skills />
           <Separator />

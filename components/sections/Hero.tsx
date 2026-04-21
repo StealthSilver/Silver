@@ -1,6 +1,6 @@
 "use client";
 
-import { useId } from "react";
+import { useEffect, useId, useState } from "react";
 import Image from "next/image";
 import { Caveat } from "next/font/google";
 import { GeistSans } from "geist/font/sans";
@@ -27,6 +27,20 @@ const heroPencil = Caveat({
 export default function Hero() {
   const { requestEnterImmersive } = useImmersiveMode();
   const zoneArrowMarkerId = useId().replace(/:/g, "");
+  const [isKnowMoreOpen, setIsKnowMoreOpen] = useState(false);
+
+  useEffect(() => {
+    if (!isKnowMoreOpen) return;
+
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setIsKnowMoreOpen(false);
+      }
+    };
+
+    window.addEventListener("keydown", onKeyDown);
+    return () => window.removeEventListener("keydown", onKeyDown);
+  }, [isKnowMoreOpen]);
 
   return (
     <section className="relative">
@@ -104,7 +118,12 @@ export default function Hero() {
       <div className="relative mx-auto w-full max-w-3xl">
         <div className="relative z-[2] flex items-end gap-0">
           <AvatarElectricEffect>
-            <div className="relative size-36 shrink-0 overflow-hidden rounded-full ring-1 ring-line sm:size-40">
+            <button
+              type="button"
+              onClick={() => setIsKnowMoreOpen(true)}
+              className="group relative size-36 shrink-0 overflow-hidden rounded-full ring-1 ring-line transition-opacity hover:opacity-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background sm:size-40"
+              aria-label="Open favorites popup"
+            >
               <Image
                 src="/profile_pic.png"
                 alt={USER.displayName}
@@ -113,7 +132,13 @@ export default function Hero() {
                 className="object-cover"
                 priority
               />
-            </div>
+              <span
+                aria-hidden
+                className={`${GeistMono.className} absolute inset-0 grid place-items-center bg-black/55 text-[14px] uppercase tracking-[0.14em] text-white opacity-0 transition-opacity duration-200 group-hover:opacity-100 group-focus-visible:opacity-100`}
+              >
+                KNOW ME
+              </span>
+            </button>
           </AvatarElectricEffect>
           <div aria-hidden className="w-px shrink-0 self-stretch bg-line" />
           <div className="mt-2 flex min-w-0 flex-1 flex-col justify-start gap-0 pl-3 sm:mt-3 sm:pl-4">
@@ -145,6 +170,99 @@ export default function Hero() {
         </div>
         <Separator />
       </div>
+
+      {isKnowMoreOpen ? (
+        <div
+          className="fixed inset-0 z-50 grid place-items-center bg-black/45 px-4 backdrop-blur-md"
+          onClick={() => setIsKnowMoreOpen(false)}
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="know-more-title"
+        >
+          <div
+            className="relative w-full max-w-[40rem] border border-line bg-background p-5 shadow-xl sm:p-6"
+            onClick={(event) => event.stopPropagation()}
+          >
+            <span
+              className="pointer-events-none absolute left-[-4.5px] top-[-3.5px] z-2 flex size-2 border bg-background"
+              style={{ borderColor: "var(--line)" }}
+              aria-hidden
+            />
+            <span
+              className="pointer-events-none absolute right-[-4.5px] top-[-3.5px] z-2 flex size-2 border bg-background"
+              style={{ borderColor: "var(--line)" }}
+              aria-hidden
+            />
+            <span
+              className="pointer-events-none absolute bottom-[-3.5px] left-[-4.5px] z-2 flex size-2 border bg-background"
+              style={{ borderColor: "var(--line)" }}
+              aria-hidden
+            />
+            <span
+              className="pointer-events-none absolute bottom-[-3.5px] right-[-4.5px] z-2 flex size-2 border bg-background"
+              style={{ borderColor: "var(--line)" }}
+              aria-hidden
+            />
+
+            <div className="mb-4 flex items-center justify-between border-b border-line pb-2">
+              <h3
+                id="know-more-title"
+                className={`${GeistSans.className} text-xl font-semibold tracking-tight text-foreground`}
+              >
+                Since you have clicked the profile picture
+              </h3>
+              <button
+                type="button"
+                onClick={() => setIsKnowMoreOpen(false)}
+                className={`${GeistMono.className} text-[13px] uppercase tracking-[0.12em] text-muted-foreground transition-colors hover:text-foreground`}
+                aria-label="Close popup"
+              >
+                Close
+              </button>
+            </div>
+
+            <div className={`${GeistMono.className} space-y-4 text-[14px] leading-relaxed text-muted-foreground`}>
+              <blockquote className="border-l border-line pl-3 italic text-foreground/90">
+                <p>What is earth without art.</p>
+                <p>It&apos;s just a bare rock floating in space.</p>
+                <footer className="mt-1 text-muted-foreground">- Anonymous</footer>
+              </blockquote>
+
+              <div>
+                <p className="mb-1 text-foreground">Music</p>
+                <p>Linkin Park</p>
+                <p>R.E.M.</p>
+              </div>
+
+              <div>
+                <p className="mb-1 text-foreground">Books</p>
+                <p>The Road — by Cormac McCarthy</p>
+                <p>A Fine Balance — by Rohinton Mistry</p>
+              </div>
+
+              <div>
+                <p className="mb-1 text-foreground">Movies</p>
+                <p>The Prestige</p>
+                <p>Phantom Thread</p>
+                <p>Moneyball</p>
+                <p>Udaan</p>
+              </div>
+
+              <div>
+                <p className="mb-1 text-foreground">Actors I Admire</p>
+                <p>Irfan Khan</p>
+                <p>Christian Bale</p>
+              </div>
+
+              <div>
+                <p className="mb-1 text-foreground">Comedians</p>
+                <p>Bo Burnham</p>
+                <p>Kanan Gill</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      ) : null}
     </section>
   );
 }
