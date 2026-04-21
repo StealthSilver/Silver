@@ -7,6 +7,7 @@ import { ThemeProvider } from "next-themes";
 import ThemeHeadIcons from "../components/ui/ThemeHeadIcon";
 import ClientWrapper from "../components/ui/ClientWrapper";
 import { ImmersiveModeProvider } from "../contexts/ImmersiveModeContext";
+import ImmersiveTransitionOverlay from "../components/ui/ImmersiveTransitionOverlay";
 import ImmersiveBackground from "../components/ui/ImmersiveBackground";
 import { SiteHeader } from "../components/site-header";
 import { SiteFooter } from "../components/site-footer";
@@ -90,6 +91,7 @@ export default function RootLayout({
           value={{ light: "light", dark: "dark" }}
         >
           <ImmersiveModeProvider>
+            <ImmersiveTransitionOverlay />
             <ImmersiveBackground>
               <div className="group/layout">
                 <SiteHeader />

@@ -1,6 +1,7 @@
 "use client";
 
 import { useImmersiveMode } from "@/contexts/ImmersiveModeContext";
+import ImmersiveZone from "@/components/immersive/ImmersiveZone";
 import Hero from "@/components/sections/Hero";
 import Skills from "@/components/sections/Skills";
 import Experience from "@/components/sections/Experience";
@@ -15,36 +16,36 @@ import { cn } from "@/lib/utils";
 export default function Home() {
   const { isImmersive } = useImmersiveMode();
 
-  if (isImmersive) {
-    return <main>{/* Immersive mode content */}</main>;
-  }
-
   return (
     <>
-      <div className={cn("*:[[id]]:scroll-mt-22")}>
-        <Hero />
+      {!isImmersive && (
+        <div className={cn("*:[[id]]:scroll-mt-22")}>
+          <Hero />
 
-        <Skills />
-        <Separator />
+          <Skills />
+          <Separator />
 
-        <Experience />
-        <Separator />
+          <Experience />
+          <Separator />
 
-        <Education />
-        <Separator />
+          <Education />
+          <Separator />
 
-        <Certificates />
-        <Separator />
+          <Certificates />
+          <Separator />
 
-        <Projects />
-        <Separator />
+          <Projects />
+          <Separator />
 
-        <Awards />
-        <Separator />
+          <Awards />
+          <Separator />
 
-        <CTA />
-        <Separator />
-      </div>
+          <CTA />
+          <Separator />
+        </div>
+      )}
+
+      {isImmersive && <ImmersiveZone />}
     </>
   );
 }

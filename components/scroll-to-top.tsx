@@ -4,11 +4,13 @@ import { ArrowUpIcon } from "lucide-react";
 import { useMotionValueEvent, useScroll } from "motion/react";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
+import { useImmersiveMode } from "@/contexts/ImmersiveModeContext";
 
 export function ScrollToTop({
   className,
   ...props
 }: React.ComponentProps<"button">) {
+  const { isImmersive } = useImmersiveMode();
   const { scrollY } = useScroll();
 
   const [visible, setVisible] = useState(false);
@@ -21,6 +23,10 @@ export function ScrollToTop({
     const diff = latestValue - prev;
     setScrollDirection(diff > 0 ? "down" : "up");
   });
+
+  if (isImmersive) {
+    return null;
+  }
 
   return (
     <button

@@ -1,5 +1,6 @@
 "use client";
 
+import { useId } from "react";
 import Image from "next/image";
 import { Caveat } from "next/font/google";
 import { GeistSans } from "geist/font/sans";
@@ -9,6 +10,7 @@ import { TextHoverEffect } from "../ui/TextHoverEffect";
 import { TextFlip } from "../ui/TextFlip";
 import Separator from "../ui/Separator";
 import { USER } from "@/config/user.config";
+import { useImmersiveMode } from "@/contexts/ImmersiveModeContext";
 
 const heroDotBg = {
   backgroundColor: "var(--background)",
@@ -23,14 +25,62 @@ const heroPencil = Caveat({
 });
 
 export default function Hero() {
+  const { requestEnterImmersive } = useImmersiveMode();
+  const zoneArrowMarkerId = useId().replace(/:/g, "");
+
   return (
     <section className="relative">
       <div className="relative pb-0 pt-14" style={heroDotBg}>
         <div className="flex flex-col items-center justify-center px-4">
           <div className="relative mx-auto aspect-[480/128] w-full max-w-[min(96vw,720px)] py-2">
-            <TextHoverEffect text="Silver" duration={0.3} />
+            <svg
+              className="pointer-events-none absolute inset-0 z-[1] h-full w-full overflow-visible text-muted-foreground"
+              viewBox="0 0 480 128"
+              fill="none"
+              aria-hidden
+            >
+              <defs>
+                <marker
+                  id={zoneArrowMarkerId}
+                  markerWidth="5"
+                  markerHeight="5"
+                  refX="3"
+                  refY="2"
+                  orient="auto"
+                  markerUnits="strokeWidth"
+                >
+                  <path
+                    d="M0 0.9 L4 2.2 L20 5"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="0.9"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </marker>
+              </defs>
+              {/* Top of “r” in “different” → middle of “R” in SILVER (viewBox 480×128) */}
+              <path
+                d="M 420 95 C 502 70 390 50 395 48"
+                stroke="currentColor"
+                strokeWidth="1.15"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeDasharray="2.2 1.35"
+                markerEnd={`url(#${zoneArrowMarkerId})`}
+                className="opacity-[0.88]"
+              />
+            </svg>
+            <div className="relative z-[2] h-full w-full">
+              <TextHoverEffect
+                text="Silver"
+                duration={0.3}
+                interactive
+                onPrimaryAction={requestEnterImmersive}
+              />
+            </div>
             <p
-              className={`${heroPencil.className} pointer-events-none absolute bottom-[12px] right-[12px] z-[1] max-w-[min(58%,16rem)] text-right text-lg leading-tight tracking-wide sm:text-xl md:text-2xl`}
+              className={`${heroPencil.className} pointer-events-none absolute bottom-[12px] right-[12px] z-[3] max-w-[min(58%,16rem)] text-right text-lg leading-tight tracking-wide sm:text-xl md:text-2xl`}
               style={{
                 color: "color-mix(in oklab, var(--muted-foreground) 82%, var(--foreground) 18%)",
                 fontWeight: 600,

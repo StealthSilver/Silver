@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Github, Sparkles, Menu, X } from "lucide-react";
+import { Github, Menu, X } from "lucide-react";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { GeistSans } from "geist/font/sans";
@@ -23,9 +23,13 @@ export function SiteHeader() {
   const [mounted, setMounted] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const { theme } = useTheme();
-  const { isImmersive, toggleImmersiveMode } = useImmersiveMode();
+  const { isImmersive } = useImmersiveMode();
 
   useEffect(() => setMounted(true), []);
+
+  if (isImmersive) {
+    return null;
+  }
 
   return (
     <>
@@ -96,16 +100,6 @@ export function SiteHeader() {
               <div className="h-4 w-px shrink-0 border-0 bg-line" aria-hidden />
 
               <ThemeToggle />
-
-              {isImmersive && (
-                <button
-                  onClick={toggleImmersiveMode}
-                  className="transition-[scale] ease-out active:scale-[0.98] p-2 rounded-md hover:bg-muted"
-                  aria-label="Exit immersive mode"
-                >
-                  <Sparkles size={18} className="animate-spin" />
-                </button>
-              )}
 
               {/* Mobile Menu Button */}
               <button

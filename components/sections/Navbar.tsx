@@ -13,7 +13,7 @@ export default function Navbar() {
   const [mounted, setMounted] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const { theme } = useTheme();
-  const { isImmersive, toggleImmersiveMode } = useImmersiveMode();
+  const { isImmersive, requestExitImmersive } = useImmersiveMode();
 
   useEffect(() => setMounted(true), []);
 
@@ -63,9 +63,10 @@ export default function Navbar() {
 
             {isImmersive && (
               <button
-                onClick={toggleImmersiveMode}
+                type="button"
+                onClick={requestExitImmersive}
                 className="transition-[scale] ease-out active:scale-[0.98] p-2 rounded-md hover:bg-muted"
-                aria-label="Exit immersive mode"
+                aria-label="Exit immersion zone"
               >
                 <Sparkles size={18} className="animate-spin" />
               </button>
@@ -101,18 +102,21 @@ export default function Navbar() {
         )}
       >
         <div className="flex items-center *:first:mr-2">
-          <button
-            onClick={toggleImmersiveMode}
-            className="transition-[scale] ease-out active:scale-[0.98] p-2 rounded-md hover:bg-muted min-w-20 flex justify-center gap-2"
-            aria-label={
-              isImmersive ? "Exit immersive mode" : "Enter immersive mode"
-            }
-          >
-            <Sparkles size={16} className={isImmersive ? "animate-spin" : ""} />
-            <span className="text-xs">{isImmersive ? "Active" : "Mode"}</span>
-          </button>
+          {isImmersive && (
+            <>
+              <button
+                type="button"
+                onClick={requestExitImmersive}
+                className="transition-[scale] ease-out active:scale-[0.98] p-2 rounded-md hover:bg-muted min-w-20 flex justify-center gap-2"
+                aria-label="Exit immersion zone"
+              >
+                <Sparkles size={16} className="animate-spin" />
+                <span className="text-xs">Minimal</span>
+              </button>
 
-          <div className="mr-1 ml-2.5 h-6 w-px border-0 bg-line" />
+              <div className="mr-1 ml-2.5 h-6 w-px border-0 bg-line" />
+            </>
+          )}
 
           <ThemeToggle />
         </div>

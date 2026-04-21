@@ -2,12 +2,19 @@
 
 import { Github, Linkedin, Twitter, Mail } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { useImmersiveMode } from "@/contexts/ImmersiveModeContext";
 
 function Separator({ className }: { className?: string }) {
   return <div className={cn("flex h-11 w-px bg-line", className)} />;
 }
 
 export function SiteFooter() {
+  const { isImmersive } = useImmersiveMode();
+
+  if (isImmersive) {
+    return null;
+  }
+
   return (
     <footer className="max-w-screen overflow-x-hidden px-2">
       <div className="mx-auto md:max-w-3xl">
