@@ -1,15 +1,39 @@
 "use client";
 
 import { motion } from "motion/react";
-import { Pause, Play } from "lucide-react";
+import { ChevronLeft, ChevronRight, Pause, Play } from "lucide-react";
 import { GeistSans } from "geist/font/sans";
-import { useImmersiveMode } from "@/contexts/ImmersiveModeContext";
+import { GeistMono } from "geist/font/mono";
+import { navLinkColor } from "@/lib/nav-link-color";
+import {
+  IMMERSIVE_TRACKS,
+  useImmersiveMode,
+} from "@/contexts/ImmersiveModeContext";
+import { cn } from "@/lib/utils";
+
+const frameCorner =
+  "pointer-events-none absolute z-[1] size-2 border bg-background shadow-none";
+
+function FrameCorners() {
+  const s = { borderColor: "var(--line)" } as const;
+  return (
+    <>
+      <span className={cn(frameCorner, "-left-[3.5px] -top-[3.5px]")} style={s} aria-hidden />
+      <span className={cn(frameCorner, "-right-[3.5px] -top-[3.5px]")} style={s} aria-hidden />
+      <span className={cn(frameCorner, "-bottom-[3.5px] -left-[3.5px]")} style={s} aria-hidden />
+      <span className={cn(frameCorner, "-bottom-[3.5px] -right-[3.5px]")} style={s} aria-hidden />
+    </>
+  );
+}
 
 export default function ImmersiveZone() {
   const {
     requestExitImmersive,
     immersiveMusicPaused,
     toggleImmersiveMusicPaused,
+    immersivePrevTrack,
+    immersiveNextTrack,
+    immersiveTrackIndex,
   } = useImmersiveMode();
 
   return (
@@ -106,36 +130,88 @@ export default function ImmersiveZone() {
 
       <div className="pointer-events-none absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-background to-transparent" />
 
-      <div className="pointer-events-auto absolute top-[max(0.65rem,env(safe-area-inset-top))] right-[max(0.65rem,env(safe-area-inset-right))] z-[50] flex flex-col items-end gap-2 sm:top-4 sm:right-4">
+      <div className="pointer-events-auto absolute top-[max(0.65rem,env(safe-area-inset-top))] right-[max(0.65rem,env(safe-area-inset-right))] z-[50] inline-grid w-max max-w-[min(100vw-1.5rem,22rem)] grid-cols-1 gap-2 justify-items-stretch sm:top-4 sm:right-4">
         <motion.button
           type="button"
           onClick={requestExitImmersive}
-          className={`${GeistSans.className} rounded-full border border-line bg-background/85 px-4 py-2 text-sm font-medium text-foreground shadow-sm backdrop-blur-md transition-[transform,background-color] hover:bg-muted/80 active:scale-[0.98] sm:px-5 sm:py-2.5`}
+          className="relative inline-flex h-10 min-w-0 cursor-pointer items-center justify-center rounded-none border border-line bg-background/85 px-4 shadow-sm backdrop-blur-md transition-[transform,background-color] hover:bg-muted/80 active:scale-[0.98] sm:px-5"
           initial={{ opacity: 0, y: -8 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2, duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
         >
-          Return to minimal
+          <FrameCorners />
+          <span
+            className={`${GeistMono.className} relative z-[2] text-[14px] font-medium uppercase tracking-[0.14em]`}
+            style={{ color: navLinkColor }}
+          >
+            Return to minimal
+          </span>
         </motion.button>
-        <motion.button
-          type="button"
-          onClick={toggleImmersiveMusicPaused}
-          className={`${GeistSans.className} inline-flex items-center gap-2 rounded-full border border-line bg-background/85 px-4 py-2 text-sm font-medium text-foreground shadow-sm backdrop-blur-md transition-[transform,background-color] hover:bg-muted/80 active:scale-[0.98] sm:px-5 sm:py-2.5`}
+        <motion.div
+          className={`${GeistSans.className} relative flex h-10 min-w-0 w-full items-stretch rounded-none border border-line bg-background/85 shadow-sm backdrop-blur-md`}
           initial={{ opacity: 0, y: -8 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.28, duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
-          aria-pressed={immersiveMusicPaused}
-          aria-label={
-            immersiveMusicPaused ? "Resume immersion music" : "Pause immersion music"
-          }
+          role="group"
+          aria-label={`Immersion music: track ${immersiveTrackIndex + 1} of ${IMMERSIVE_TRACKS.length}`}
         >
-          {immersiveMusicPaused ? (
-            <Play className="size-4 shrink-0" aria-hidden />
-          ) : (
-            <Pause className="size-4 shrink-0" aria-hidden />
-          )}
-          <span>{immersiveMusicPaused ? "Play music" : "Pause music"}</span>
-        </motion.button>
+          <FrameCorners />
+          <button
+            type="button"
+            onClick={immersivePrevTrack}
+            className="relative z-[2] inline-flex h-10 min-w-0 flex-1 cursor-pointer items-center justify-center rounded-none border-0 bg-transparent transition-[background-color,transform] hover:bg-muted/80 active:scale-[0.96]"
+            aria-label="Previous track"
+          >
+            <ChevronLeft
+              className="size-5"
+              strokeLinecap="square"
+              strokeLinejoin="miter"
+              style={{ color: navLinkColor }}
+              aria-hidden
+            />
+          </button>
+          <button
+            type="button"
+            onClick={toggleImmersiveMusicPaused}
+            className="relative z-[2] inline-flex h-10 min-w-0 flex-1 cursor-pointer items-center justify-center rounded-none border-0 bg-transparent transition-[background-color,transform] hover:bg-muted/80 active:scale-[0.96]"
+            aria-pressed={immersiveMusicPaused}
+            aria-label={
+              immersiveMusicPaused ? "Resume immersion music" : "Pause immersion music"
+            }
+          >
+            {immersiveMusicPaused ? (
+              <Play
+                className="size-4 sm:size-[1.125rem]"
+                strokeLinecap="square"
+                strokeLinejoin="miter"
+                style={{ color: navLinkColor }}
+                aria-hidden
+              />
+            ) : (
+              <Pause
+                className="size-4 sm:size-[1.125rem]"
+                strokeLinecap="square"
+                strokeLinejoin="miter"
+                style={{ color: navLinkColor }}
+                aria-hidden
+              />
+            )}
+          </button>
+          <button
+            type="button"
+            onClick={immersiveNextTrack}
+            className="relative z-[2] inline-flex h-10 min-w-0 flex-1 cursor-pointer items-center justify-center rounded-none border-0 bg-transparent transition-[background-color,transform] hover:bg-muted/80 active:scale-[0.96]"
+            aria-label="Next track"
+          >
+            <ChevronRight
+              className="size-5"
+              strokeLinecap="square"
+              strokeLinejoin="miter"
+              style={{ color: navLinkColor }}
+              aria-hidden
+            />
+          </button>
+        </motion.div>
       </div>
 
       <p

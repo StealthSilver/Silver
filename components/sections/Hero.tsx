@@ -89,7 +89,7 @@ export default function Hero() {
                 transform: "rotate(-1.1deg)",
               }}
             >
-              Enter the different zone
+              Change the vibes
             </p>
           </div>
         </div>

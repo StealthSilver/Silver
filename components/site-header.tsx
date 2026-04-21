@@ -9,8 +9,7 @@ import ThemeToggle from "./ui/ThemeToggle";
 import { useTheme } from "next-themes";
 import { useImmersiveMode } from "@/contexts/ImmersiveModeContext";
 import { cn } from "@/lib/utils";
-
-const navLinkColor = "lab(65.6464% 1.53497 -5.42429)";
+import { navLinkColor } from "@/lib/nav-link-color";
 
 const navItems = [
   { href: "/#projects", label: "Projects" },
