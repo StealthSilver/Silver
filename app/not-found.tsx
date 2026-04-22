@@ -1,48 +1,32 @@
-"use client";
-
-import { motion } from "framer-motion";
+import { ArrowRightIcon } from "lucide-react";
 import Link from "next/link";
+import { TextHoverEffect } from "@/components/ui/TextHoverEffect";
+import { cn } from "@/lib/utils";
 
 export default function NotFound() {
   return (
-    <section
-      className="relative px-6 min-h-screen flex flex-col items-center justify-center 
-                 bg-white/70 dark:bg-black/70 backdrop-blur-md overflow-hidden"
+    <div
+      className={cn(
+        "flex h-[calc(100svh-5.5rem)] flex-col items-center justify-center px-4",
+      )}
     >
-      <motion.h1
-        initial={{ opacity: 0, y: 40 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 1 }}
-        className="text-6xl md:text-8xl font-bold text-gray-900 dark:text-gray-100"
-      >
+      <div className="mb-12 w-full max-w-[min(92vw,720px)]">
+        <div className="mx-auto aspect-[480/128] w-full">
+          <TextHoverEffect text="Silver" duration={0.3} />
+        </div>
+      </div>
+
+      <h1 className="mb-10 text-9xl font-medium tracking-tighter tabular-nums sm:text-[10rem]">
         404
-      </motion.h1>
+      </h1>
 
-      <motion.p
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 1, delay: 0.2 }}
-        className="mt-4 text-lg md:text-xl text-gray-700 dark:text-gray-300 text-center max-w-xl"
+      <Link
+        href="/"
+        className="inline-flex items-center gap-2 rounded-md border border-line bg-background px-4 py-2 text-sm font-medium transition-colors hover:bg-muted"
       >
-        Oops! The page you are looking for doesn’t exist or might have been
-        moved.
-      </motion.p>
-
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 1, delay: 0.4 }}
-        className="mt-10"
-      >
-        <Link
-          href="/"
-          className="px-6 py-3 border border-gray-700 dark:border-gray-300 rounded-full 
-                     text-gray-900 dark:text-gray-100 hover:bg-gray-900 hover:text-white 
-                     dark:hover:bg-white dark:hover:text-black transition-colors"
-        >
-          Go Back Home
-        </Link>
-      </motion.div>
-    </section>
+        Go to Home
+        <ArrowRightIcon className="size-4" />
+      </Link>
+    </div>
   );
 }

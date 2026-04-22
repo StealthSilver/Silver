@@ -3,6 +3,7 @@
 import { Github, Linkedin, Twitter, Mail } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useImmersiveMode } from "@/contexts/ImmersiveModeContext";
+import { SiteFooterInteractiveLogotype } from "@/components/site-footer-interactive-logotype";
 
 function Separator({ className }: { className?: string }) {
   return <div className={cn("flex h-11 w-px bg-line", className)} />;
@@ -112,7 +113,8 @@ export function SiteFooter() {
         </div>
 
         <div className="pb-[env(safe-area-inset-bottom,0px)]">
-          <div className="flex h-16 sm:h-2" />
+          <SiteFooterInteractiveLogotype />
+          <div className="flex h-8 sm:h-2" />
         </div>
       </div>
     </footer>
