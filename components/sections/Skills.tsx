@@ -34,7 +34,7 @@ export default function Skills() {
                 </span>
               </span>
               <span
-                className="inline-flex size-10 shrink-0 items-center justify-center border border-line bg-muted/40 text-muted-foreground transition-transform duration-200 group-hover:scale-105"
+                className="inline-flex size-10 shrink-0 items-center justify-center border border-line bg-muted/40 text-muted-foreground transition-transform duration-200 group-hover:scale-105 rounded-none"
                 aria-hidden
               >
                 {tech.lightIcon ? (
@@ -44,14 +44,14 @@ export default function Skills() {
                       alt=""
                       width={20}
                       height={20}
-                      className="size-5 object-contain dark:hidden"
+                      className="size-5 object-contain dark:hidden rounded-none"
                     />
                     <Image
                       src={`/icons/${tech.key}.svg`}
                       alt=""
                       width={20}
                       height={20}
-                      className="size-5 object-contain hidden dark:block"
+                      className="size-5 object-contain hidden dark:block rounded-none"
                     />
                   </>
                 ) : (
@@ -60,7 +60,7 @@ export default function Skills() {
                     alt=""
                     width={20}
                     height={20}
-                    className="size-5 object-contain"
+                    className="size-5 object-contain rounded-none"
                   />
                 )}
               </span>

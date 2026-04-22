@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
+import { Suspense } from "react";
 import Image from "next/image";
 import { GeistMono } from "geist/font/mono";
 import { useTheme } from "next-themes";
@@ -24,6 +25,14 @@ import {
   FaDiscord,
   FaYoutube,
 } from "react-icons/fa6";
+import {
+  GitHubContributions,
+  GitHubContributionsFallback,
+} from "@/components/github-contributions";
+import { getCachedContributions } from "@/lib/get-cached-contributions";
+
+const GITHUB_USERNAME = "StealthSilver";
+const GITHUB_PROFILE_URL = "https://github.com/StealthSilver";
 
 const aboutItems = [
   { id: "role", icon: BriefcaseBusiness, type: "role" as const },
@@ -138,6 +147,8 @@ export default function About() {
 
     return `${bengaluruTime} // ${formatHourDelta(hourDelta)}`;
   }, [now]);
+
+  const contributions = getCachedContributions(GITHUB_USERNAME);
 
   return (
     <section id="about" className="relative px-4 pb-3 pt-5 sm:px-6 sm:pt-6">
@@ -292,6 +303,15 @@ export default function About() {
           );
         })}
       </div>
+
+      <div className="relative left-1/2 my-4 h-px w-screen max-w-none -translate-x-1/2 bg-line" aria-hidden />
+
+      <Suspense fallback={<GitHubContributionsFallback />}>
+        <GitHubContributions
+          contributions={contributions}
+          githubProfileUrl={GITHUB_PROFILE_URL}
+        />
+      </Suspense>
     </section>
   );
 }

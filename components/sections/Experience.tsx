@@ -148,10 +148,12 @@ export default function Experience() {
                   ))}
                 </ul>
               </div>
-              <div
-                aria-hidden
-                className="relative left-1/2 mt-4 h-px w-screen max-w-none -translate-x-1/2 bg-line"
-              />
+              {experience.company !== "DRDO, Centre for AI & Robotics" ? (
+                <div
+                  aria-hidden
+                  className="relative left-1/2 mt-4 h-px w-screen max-w-none -translate-x-1/2 bg-line"
+                />
+              ) : null}
             </article>
           ))}
         </div>

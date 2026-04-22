@@ -23,7 +23,7 @@ export const EDUCATION: EducationItem[] = [
   {
     company: "Indian Institute of Technology Madras",
     position: "BS - Data Science",
-    duration: "2024 - 2027",
+    duration: "2024 - 2028",
     location: "Online",
     link: "https://study.iitm.ac.in/ds/",
     details: [
