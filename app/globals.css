@@ -192,42 +192,31 @@
   .immersive-wave-shell {
     position: absolute;
     inset: 0;
-    display: flex;
-    align-items: center;
+    display: block;
+    overflow: hidden;
     pointer-events: none;
-    opacity: 0.42;
+    opacity: 0.55;
   }
 
-  .immersive-wave-track {
+  .immersive-wave-svg {
+    position: absolute;
+    top: 0;
+    left: 0;
     width: 200%;
     height: 100%;
-    stroke: color-mix(in oklab, var(--line) 68%, #b9bdcf);
-    stroke-width: 0.85;
+    display: block;
+    stroke: color-mix(in oklab, var(--line) 70%, #b9bdcf);
+    stroke-width: 0.75;
     fill: none;
     stroke-linecap: square;
     stroke-linejoin: miter;
-    animation: immersive-wave-slide 2.8s linear infinite;
+    animation: immersive-wave-slide 4s linear infinite;
+    will-change: transform;
   }
 
-  .immersive-wave-track path:nth-child(2) {
-    opacity: 0.78;
-    stroke-width: 0.75;
-    animation: immersive-wave-float 1.4s ease-in-out infinite;
-  }
-
-  .immersive-wave-track path:nth-child(3) {
-    opacity: 0.6;
-    stroke-width: 0.65;
-    animation: immersive-wave-float 1.8s ease-in-out infinite reverse;
-  }
-
-  .immersive-wave-shell.is-paused .immersive-wave-track {
-    width: 100%;
+  .immersive-wave-shell.is-paused .immersive-wave-svg {
     animation: none;
-  }
-
-  .immersive-wave-shell.is-paused .immersive-wave-track path {
-    animation: none;
+    transform: none;
   }
 }
 

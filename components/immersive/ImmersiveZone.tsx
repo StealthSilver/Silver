@@ -126,22 +126,14 @@ export default function ImmersiveZone() {
                 className={`immersive-wave-shell ${immersiveMusicPaused ? "is-paused" : ""}`}
               >
                 <svg
-                  className="immersive-wave-track"
-                  viewBox="0 0 240 40"
+                  className="immersive-wave-svg"
+                  viewBox="0 0 480 40"
                   preserveAspectRatio="none"
                 >
                   {immersiveMusicPaused ? (
-                    <>
-                      <path d="M0 20 L240 20" />
-                      <path d="M0 20 L240 20" />
-                      <path d="M0 20 L240 20" />
-                    </>
+                    <path d="M 0 20 L 480 20" />
                   ) : (
-                    <>
-                      <path d="M0 20 Q 10 12 20 20 T 40 20 T 60 20 T 80 20 T 100 20 T 120 20 T 140 20 T 160 20 T 180 20 T 200 20 T 220 20 T 240 20" />
-                      <path d="M0 20 Q 10 14 20 20 T 40 20 T 60 20 T 80 20 T 100 20 T 120 20 T 140 20 T 160 20 T 180 20 T 200 20 T 220 20 T 240 20" />
-                      <path d="M0 20 Q 10 16 20 20 T 40 20 T 60 20 T 80 20 T 100 20 T 120 20 T 140 20 T 160 20 T 180 20 T 200 20 T 220 20 T 240 20" />
-                    </>
+                    <path d="M 0 20 Q 10 8 20 20 T 40 20 T 60 20 T 80 20 T 100 20 T 120 20 T 140 20 T 160 20 T 180 20 T 200 20 T 220 20 T 240 20 T 260 20 T 280 20 T 300 20 T 320 20 T 340 20 T 360 20 T 380 20 T 400 20 T 420 20 T 440 20 T 460 20 T 480 20" />
                   )}
                 </svg>
               </span>
