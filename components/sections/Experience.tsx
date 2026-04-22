@@ -52,7 +52,7 @@ export default function Experience() {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
 
   return (
-    <section id="experience" className="relative px-4 pb-3 pt-5 sm:px-6 sm:pt-6">
+    <section id="experience" className="relative px-4 pb-3 ">
       <div className="px-1 pb-2 pt-1 sm:pt-1.5">
         <h2
           className={`${GeistSans.className} text-[22px] font-semibold leading-tight tracking-tight text-foreground sm:text-[24px]`}
