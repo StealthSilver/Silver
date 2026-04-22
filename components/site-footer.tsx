@@ -24,10 +24,7 @@ export function SiteFooter() {
           className="screen-line-top relative border-x pt-4"
           style={{ borderColor: "var(--line)" }}
         >
-          <p className="mb-1 px-4 text-center font-mono text-sm text-balance text-muted-foreground">
-            Full-stack software engineer specializing in modern web development
-          </p>
-
+          
           <p className="mb-4 px-4 text-center font-mono text-sm text-balance text-muted-foreground">
             Built by{" "}
             <a
