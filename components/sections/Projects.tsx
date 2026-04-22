@@ -102,7 +102,7 @@ export default function Projects() {
     <section id="projects" className="relative px-4 pb-3 ">
       <div className="sm:pt-1.5">
         <h2
-          className={`${GeistSans.className} text-[22px] font-semibold leading-tight tracking-tight text-foreground sm:text-[24px]`}
+          className={`${GeistSans.className} max-sm:mt-2 text-[22px] font-semibold leading-tight tracking-tight text-foreground sm:text-[24px]`}
         >
           Projects
           <sup className={`${GeistMono.className} ml-1 align-super text-[12px] text-muted-foreground sm:text-[13px]`}>

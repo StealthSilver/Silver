@@ -28,6 +28,15 @@ export default function Hero() {
   const { requestEnterImmersive } = useImmersiveMode();
   const zoneArrowMarkerId = useId().replace(/:/g, "");
   const [isKnowMoreOpen, setIsKnowMoreOpen] = useState(false);
+  const [showLongFlipLine, setShowLongFlipLine] = useState(false);
+
+  useEffect(() => {
+    const mq = window.matchMedia("(min-width: 640px)");
+    const apply = () => setShowLongFlipLine(mq.matches);
+    apply();
+    mq.addEventListener("change", apply);
+    return () => mq.removeEventListener("change", apply);
+  }, []);
 
   useEffect(() => {
     if (!isKnowMoreOpen) return;
@@ -153,6 +162,7 @@ export default function Hero() {
             />
             <div className="mt-2 mb-[8px] sm:mt-2.5">
               <TextFlip
+                key={showLongFlipLine ? "flip-wide" : "flip-narrow"}
                 className={`${GeistMono.className} text-[14px] leading-snug text-balance text-muted-foreground`}
                 variants={{
                   initial: { y: -10, opacity: 0 },
@@ -161,7 +171,10 @@ export default function Hero() {
                 }}
                 interval={3.5}
               >
-                {USER.flipSentences.map((line) => (
+                {(showLongFlipLine
+                  ? USER.flipSentences
+                  : USER.flipSentences.slice(0, 2)
+                ).map((line) => (
                   <span key={line}>{line}</span>
                 ))}
               </TextFlip>

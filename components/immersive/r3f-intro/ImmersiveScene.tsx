@@ -862,9 +862,12 @@ function computeTileScreenRect(
 ): ScreenRect {
   const worldPos = new THREE.Vector3();
   group.getWorldPosition(worldPos);
-  const scale = group.scale.x;
-  const halfW = (PAGE_W / 2) * scale;
-  const halfH = (PAGE_H / 2) * scale;
+  // Use world scale so parent transforms (e.g. the carousel group scaling
+  // down on mobile) are accounted for when projecting the tile corners.
+  const worldScale = new THREE.Vector3();
+  group.getWorldScale(worldScale);
+  const halfW = (PAGE_W / 2) * worldScale.x;
+  const halfH = (PAGE_H / 2) * worldScale.y;
   const corners: THREE.Vector3[] = [
     new THREE.Vector3(worldPos.x - halfW, worldPos.y + halfH, worldPos.z),
     new THREE.Vector3(worldPos.x + halfW, worldPos.y + halfH, worldPos.z),
@@ -1153,10 +1156,21 @@ function Scene({
     /* ========================= HORIZONTAL ROW GROUP ========================= */
     // Only the parent group transforms. Scroll translates the row in -X so
     // pages drift from the right side of the screen to the left side.
+    //
+    // On narrow viewports the tiles (PAGE_W = 5.2 world units) are wider
+    // than the visible frustum, so we shrink the whole row uniformly.
+    // Scaling is stepped so it's predictable across breakpoints and
+    // doesn't jitter on minor resize events.
+    const sceneScale =
+      size.width < 480 ? 0.5 : size.width < 768 ? 0.7 : size.width < 1024 ? 0.85 : 1;
     if (spiralGroup.current) {
       spiralGroup.current.rotation.y = 0;
+      spiralGroup.current.scale.setScalar(sceneScale);
       if (interactiveRef.current) {
-        spiralGroup.current.position.x = -scroll * TOTAL_WIDTH;
+        // Multiply by sceneScale so the horizontal sweep covers the same
+        // number of tiles regardless of breakpoint — pages still travel
+        // from right to left at a consistent screen-space cadence.
+        spiralGroup.current.position.x = -scroll * TOTAL_WIDTH * sceneScale;
         spiralGroup.current.position.y = 0;
       } else {
         spiralGroup.current.position.x = 0;
@@ -1518,10 +1532,14 @@ const focusedBackground = "#000000";
 const ZOOM_DURATION_MS = 520;
 const ZOOM_EASING = "cubic-bezier(0.22, 0.61, 0.36, 1)";
 
-// Fractional insets for the zoomed panel (in viewport units)
+// Fractional insets for the zoomed panel (in viewport units). Mobile
+// shrinks the side/top gap so the panel uses more of the limited
+// real estate while still leaving the immersive frame visible.
 const PANEL_INSET_TOP = 0.12;    // 12% from top
 const PANEL_INSET_SIDE = 0.05;   // 5% from left and right
 const PANEL_INSET_BOTTOM = 0;    // flush with bottom
+const PANEL_INSET_TOP_MOBILE = 0.08;
+const PANEL_INSET_SIDE_MOBILE = 0.03;
 
 function FocusedProjectPage({
   project,
@@ -1594,13 +1612,17 @@ function FocusedProjectPage({
     height: 300,
   };
 
-  // Panel sits inset from the viewport: 12% top, 5% sides, flush at bottom.
+  // Panel sits inset from the viewport. Mobile uses a tighter inset so the
+  // page gets more usable real estate on narrow screens.
   // The "compact" (tile-sized) state is achieved by translating + scaling
   // the panel so its top-left corner lands on the tile's screen position.
-  const panelLeft = viewport.w * PANEL_INSET_SIDE;
-  const panelTop = viewport.h * PANEL_INSET_TOP;
-  const panelW = viewport.w * (1 - PANEL_INSET_SIDE * 2);
-  const panelH = viewport.h * (1 - PANEL_INSET_TOP - PANEL_INSET_BOTTOM);
+  const isMobile = viewport.w < 640;
+  const insetTop = isMobile ? PANEL_INSET_TOP_MOBILE : PANEL_INSET_TOP;
+  const insetSide = isMobile ? PANEL_INSET_SIDE_MOBILE : PANEL_INSET_SIDE;
+  const panelLeft = viewport.w * insetSide;
+  const panelTop = viewport.h * insetTop;
+  const panelW = viewport.w * (1 - insetSide * 2);
+  const panelH = viewport.h * (1 - insetTop - PANEL_INSET_BOTTOM);
   const scaleX = rect.width / panelW;
   const scaleY = rect.height / panelH;
   const tx = rect.left - panelLeft;
@@ -1608,9 +1630,9 @@ function FocusedProjectPage({
   const compactTransform = `translate(${tx}px, ${ty}px) scale(${scaleX}, ${scaleY})`;
   const panelStyle: React.CSSProperties = {
     position: "fixed",
-    top: `${PANEL_INSET_TOP * 100}%`,
-    left: `${PANEL_INSET_SIDE * 100}%`,
-    right: `${PANEL_INSET_SIDE * 100}%`,
+    top: `${insetTop * 100}%`,
+    left: `${insetSide * 100}%`,
+    right: `${insetSide * 100}%`,
     bottom: 0,
     width: "auto",
     height: "auto",
@@ -1680,10 +1702,10 @@ function FocusedProjectPage({
         type="button"
         onClick={handleClose}
         aria-label="Close project"
-        className={`${GeistMono.className} absolute top-4 right-4 z-20 inline-flex h-9 items-center gap-2 rounded-none border bg-black/60 px-3 text-[11px] font-medium tracking-[0.14em] text-neutral-200 uppercase backdrop-blur transition-colors hover:bg-neutral-800`}
+        className={`${GeistMono.className} absolute top-3 right-3 z-20 inline-flex h-8 items-center gap-1.5 rounded-none border bg-black/60 px-2.5 text-[10px] font-medium tracking-[0.12em] text-neutral-200 uppercase backdrop-blur transition-colors hover:bg-neutral-800 sm:top-4 sm:right-4 sm:h-9 sm:gap-2 sm:px-3 sm:text-[11px] sm:tracking-[0.14em]`}
         style={closeButtonStyle}
       >
-        <X className="size-3.5" strokeLinecap="square" />
+        <X className="size-3 sm:size-3.5" strokeLinecap="square" />
         <span>Close</span>
       </button>
 
@@ -1692,7 +1714,7 @@ function FocusedProjectPage({
         className="flex-1 overflow-auto"
         style={{ pointerEvents: isOpen ? "auto" : "none" }}
       >
-        <div className="mx-auto flex w-full max-w-5xl flex-col items-center gap-8 px-6 py-16 sm:px-10 sm:py-20">
+        <div className="mx-auto flex w-full max-w-5xl flex-col items-center gap-5 px-4 pt-14 pb-10 sm:gap-8 sm:px-10 sm:pt-20 sm:pb-20">
           {/* project image — centered at the top; fades in as the panel
               settles so the scaled-down entering state reads as the tile
               itself morphing rather than an image shrinking awkwardly. */}
@@ -1716,7 +1738,7 @@ function FocusedProjectPage({
 
           {/* project name */}
           <h1
-            className={`${GeistMono.className} text-center text-2xl font-semibold tracking-[0.08em] text-neutral-100 uppercase sm:text-4xl`}
+            className={`${GeistMono.className} text-center text-xl font-semibold tracking-[0.06em] text-neutral-100 uppercase sm:text-4xl sm:tracking-[0.08em]`}
             style={detailsStyle(60)}
           >
             {project.title}
@@ -1724,7 +1746,7 @@ function FocusedProjectPage({
 
           {/* project description */}
           <p
-            className={`${GeistSans.className} max-w-2xl text-center text-sm leading-relaxed text-neutral-400 sm:text-base`}
+            className={`${GeistSans.className} max-w-2xl text-center text-[13px] leading-relaxed text-neutral-400 sm:text-base`}
             style={detailsStyle(120)}
           >
             {project.description}
@@ -1732,7 +1754,7 @@ function FocusedProjectPage({
 
           {/* project links */}
           <div
-            className="flex flex-wrap items-center justify-center gap-3"
+            className="flex flex-wrap items-center justify-center gap-2.5 sm:gap-3"
             style={detailsStyle(180)}
           >
             {project.github ? (
@@ -1742,7 +1764,7 @@ function FocusedProjectPage({
                 rel="noopener noreferrer"
                 aria-label={`${project.title} on GitHub`}
                 title="GitHub"
-                className={`${GeistMono.className} inline-flex h-11 w-11 items-center justify-center rounded-none border bg-black/40 text-neutral-200 transition-colors hover:bg-neutral-800`}
+                className={`${GeistMono.className} inline-flex h-10 w-10 items-center justify-center rounded-none border bg-black/40 text-neutral-200 transition-colors hover:bg-neutral-800 sm:h-11 sm:w-11`}
                 style={{ borderColor: focusedBorderColor }}
               >
                 <Github className="size-4" strokeLinecap="square" />
@@ -1755,7 +1777,7 @@ function FocusedProjectPage({
                 rel="noopener noreferrer"
                 aria-label={`${project.title} on Figma`}
                 title="Figma"
-                className={`${GeistMono.className} inline-flex h-11 w-11 items-center justify-center rounded-none border bg-black/40 text-neutral-200 transition-colors hover:bg-neutral-800`}
+                className={`${GeistMono.className} inline-flex h-10 w-10 items-center justify-center rounded-none border bg-black/40 text-neutral-200 transition-colors hover:bg-neutral-800 sm:h-11 sm:w-11`}
                 style={{ borderColor: focusedBorderColor }}
               >
                 <Figma className="size-4" strokeLinecap="square" />
@@ -1768,7 +1790,7 @@ function FocusedProjectPage({
                 rel="noopener noreferrer"
                 aria-label={`${project.title} live site`}
                 title="Live site"
-                className={`${GeistMono.className} inline-flex h-11 w-11 items-center justify-center rounded-none border bg-black/40 text-neutral-200 transition-colors hover:bg-neutral-800`}
+                className={`${GeistMono.className} inline-flex h-10 w-10 items-center justify-center rounded-none border bg-black/40 text-neutral-200 transition-colors hover:bg-neutral-800 sm:h-11 sm:w-11`}
                 style={{ borderColor: focusedBorderColor }}
               >
                 <ExternalLink className="size-4" strokeLinecap="square" />

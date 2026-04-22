@@ -26,7 +26,7 @@ export default function Education() {
     <section id="education" className="relative px-4 pb-3 ">
       <div className=" sm:pt-1.5">
         <h2
-          className={`${GeistSans.className} text-[22px] font-semibold leading-tight tracking-tight text-foreground sm:text-[24px]`}
+          className={`${GeistSans.className} max-sm:mt-2 text-[22px] font-semibold leading-tight tracking-tight text-foreground sm:text-[24px]`}
         >
           Education
         </h2>

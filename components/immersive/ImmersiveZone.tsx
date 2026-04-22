@@ -80,21 +80,21 @@ export default function ImmersiveZone() {
     >
       <ImmersiveScene />
 
-      <div className="pointer-events-auto absolute top-[max(0.65rem,env(safe-area-inset-top))] left-[max(0.65rem,env(safe-area-inset-left))] z-[50] sm:top-4 sm:left-4">
+      <div className="pointer-events-auto absolute top-[max(0.55rem,env(safe-area-inset-top))] left-[max(0.55rem,env(safe-area-inset-left))] z-[50] sm:top-4 sm:left-4">
         <div>
-          <div className="relative inline-block w-[9.5rem]">
+          <div className="relative inline-block w-[7.5rem] sm:w-[9.5rem]">
             <button
               type="button"
               onClick={() => setContactOpen((open) => !open)}
               aria-expanded={contactOpen}
               aria-controls="immersive-contact-flyout"
               aria-label={contactOpen ? "Close contact options" : "Open contact options"}
-              className="inline-flex h-10 w-full cursor-pointer items-center justify-center rounded-none border bg-black px-4 shadow-sm transition-colors hover:bg-muted sm:px-5"
+              className="inline-flex h-9 w-full cursor-pointer items-center justify-center rounded-none border bg-black px-3 shadow-sm transition-colors hover:bg-muted sm:h-10 sm:px-5"
               style={{ borderColor: immersiveBorderColor }}
             >
               {contactOpen ? (
                 <X
-                  className="size-[1.05rem] transition-transform duration-200"
+                  className="size-4 transition-transform duration-200 sm:size-[1.05rem]"
                   strokeLinecap="square"
                   strokeLinejoin="miter"
                   style={{ color: navLinkColor }}
@@ -102,7 +102,7 @@ export default function ImmersiveZone() {
                 />
               ) : (
                 <span
-                  className={`${GeistMono.className} text-[14px] font-medium uppercase tracking-[0.14em]`}
+                  className={`${GeistMono.className} text-[12px] font-medium uppercase tracking-[0.14em] sm:text-[14px]`}
                   style={{ color: navLinkColor }}
                 >
                   Contact
@@ -133,7 +133,7 @@ export default function ImmersiveZone() {
 
           <div
             id="immersive-contact-flyout"
-            className="mt-2 flex w-[9.5rem] flex-col gap-2"
+            className="mt-2 flex w-[7.5rem] flex-col gap-1.5 sm:w-[9.5rem] sm:gap-2"
             aria-hidden={!contactOpen}
           >
             {contactLinks.map((item, index) => {
@@ -150,7 +150,7 @@ export default function ImmersiveZone() {
                   rel={href.startsWith("mailto:") ? undefined : "noopener noreferrer"}
                   tabIndex={contactOpen ? 0 : -1}
                   aria-label={label}
-                  className="group flex h-10 items-center gap-3 border bg-background px-3 transition-colors hover:bg-muted/20"
+                  className="group flex h-9 items-center gap-2 border bg-background px-2.5 transition-colors hover:bg-muted/20 sm:h-10 sm:gap-3 sm:px-3"
                   style={{
                     borderColor: immersiveBorderColor,
                     backgroundColor: immersiveBackground,
@@ -163,20 +163,20 @@ export default function ImmersiveZone() {
                   }}
                 >
                   <span
-                    className="inline-flex size-6 shrink-0 items-center justify-center border bg-muted/40"
+                    className="inline-flex size-5 shrink-0 items-center justify-center border bg-muted/40 sm:size-6"
                     style={{ borderColor: immersiveBorderColor }}
                     aria-hidden
                   >
-                    <Icon className="size-3.5" style={{ color: iconColor }} />
+                    <Icon className="size-3 sm:size-3.5" style={{ color: iconColor }} />
                   </span>
                   <span
-                    className={`${GeistMono.className} min-w-0 flex-1 text-[13px] font-medium uppercase tracking-[0.12em] no-underline transition-all duration-200 ease-out group-hover:underline underline-offset-2`}
+                    className={`${GeistMono.className} min-w-0 flex-1 text-[11px] font-medium uppercase tracking-[0.1em] no-underline transition-all duration-200 ease-out group-hover:underline underline-offset-2 sm:text-[13px] sm:tracking-[0.12em]`}
                     style={{ color: navLinkColor }}
                   >
                     {label}
                   </span>
                   <ArrowUpRight
-                    className="size-3.5 shrink-0 transition-transform duration-200 ease-out group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
+                    className="size-3 shrink-0 transition-transform duration-200 ease-out group-hover:-translate-y-0.5 group-hover:translate-x-0.5 sm:size-3.5"
                     style={{ color: navLinkColor }}
                     aria-hidden
                   />
@@ -186,19 +186,20 @@ export default function ImmersiveZone() {
           </div>
         </div>
       </div>
-      <div className="pointer-events-auto absolute top-[max(0.65rem,env(safe-area-inset-top))] right-[max(0.65rem,env(safe-area-inset-right))] z-[50] inline-grid w-max max-w-[min(100vw-1.5rem,22rem)] grid-cols-1 gap-2 justify-items-stretch sm:top-4 sm:right-4">
+      <div className="pointer-events-auto absolute top-[max(0.55rem,env(safe-area-inset-top))] right-[max(0.55rem,env(safe-area-inset-right))] z-[50] inline-grid w-max max-w-[min(100vw-1.3rem,22rem)] grid-cols-1 gap-1.5 justify-items-stretch sm:top-4 sm:right-4 sm:gap-2">
         <div className="relative">
           <button
             type="button"
             onClick={requestExitImmersive}
-            className="inline-flex h-10 min-w-0 cursor-pointer items-center justify-center rounded-none border bg-black px-4 shadow-sm transition-colors hover:bg-muted sm:px-5"
+            className="inline-flex h-9 min-w-0 cursor-pointer items-center justify-center rounded-none border bg-black px-3 shadow-sm transition-colors hover:bg-muted sm:h-10 sm:px-5"
             style={{ borderColor: immersiveBorderColor }}
           >
             <span
-              className={`${GeistMono.className} text-[14px] font-medium uppercase tracking-[0.14em]`}
+              className={`${GeistMono.className} text-[12px] font-medium uppercase tracking-[0.12em] sm:text-[14px] sm:tracking-[0.14em]`}
               style={{ color: navLinkColor }}
             >
-              Return to minimal
+              <span className="sm:hidden">Exit immersion</span>
+              <span className="hidden sm:inline">Return to minimal</span>
             </span>
           </button>
           <span
@@ -224,13 +225,13 @@ export default function ImmersiveZone() {
         </div>
         <div className={`relative ${GeistSans.className}`}>
           <div
-            className="flex h-10 min-w-0 w-full items-stretch rounded-none border shadow-sm"
+            className="flex h-9 min-w-0 w-full items-stretch rounded-none border shadow-sm sm:h-10"
             style={{ borderColor: immersiveBorderColor, backgroundColor: immersiveBackground }}
           >
             <button
               type="button"
               onClick={immersivePrevTrack}
-              className="inline-flex h-10 w-10 shrink-0 cursor-pointer items-center justify-center border-0 bg-transparent text-xs font-semibold uppercase tracking-[0.08em] transition-colors hover:bg-muted"
+              className="inline-flex h-9 w-9 shrink-0 cursor-pointer items-center justify-center border-0 bg-transparent text-xs font-semibold uppercase tracking-[0.08em] transition-colors hover:bg-muted sm:h-10 sm:w-10"
               aria-label="Previous immersion track"
               title="Previous track"
               style={{ color: navLinkColor }}
@@ -240,7 +241,7 @@ export default function ImmersiveZone() {
             <button
               type="button"
               onClick={toggleImmersiveMusicPaused}
-              className="relative inline-flex h-10 min-w-0 flex-1 cursor-pointer items-center justify-center overflow-hidden rounded-none border-0 bg-transparent px-4 transition-colors hover:bg-muted"
+              className="relative inline-flex h-9 min-w-0 flex-1 cursor-pointer items-center justify-center overflow-hidden rounded-none border-0 bg-transparent px-3 transition-colors hover:bg-muted sm:h-10 sm:px-4"
               aria-pressed={immersiveMusicPaused}
               aria-label={
                 immersiveMusicPaused ? "Resume immersion music" : "Pause immersion music"
@@ -285,7 +286,7 @@ export default function ImmersiveZone() {
             <button
               type="button"
               onClick={immersiveNextTrack}
-              className="inline-flex h-10 w-10 shrink-0 cursor-pointer items-center justify-center border-0 bg-transparent text-xs font-semibold uppercase tracking-[0.08em] transition-colors hover:bg-muted"
+              className="inline-flex h-9 w-9 shrink-0 cursor-pointer items-center justify-center border-0 bg-transparent text-xs font-semibold uppercase tracking-[0.08em] transition-colors hover:bg-muted sm:h-10 sm:w-10"
               aria-label="Next immersion track"
               title="Next track"
               style={{ color: navLinkColor }}

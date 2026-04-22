@@ -1,9 +1,10 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useId, useRef } from "react";
 import { Github, Menu, X } from "lucide-react";
 import Link from "next/link";
-import { motion } from "framer-motion";
+import { usePathname } from "next/navigation";
+import { AnimatePresence, motion } from "framer-motion";
 import { GeistSans } from "geist/font/sans";
 import ThemeToggle from "./ui/ThemeToggle";
 import { useTheme } from "next-themes";
@@ -18,13 +19,50 @@ const navItems = [
   { href: "/Resume1.pdf", label: "Resume" },
 ] as const;
 
+const mobileMenuEase = [0.16, 1, 0.3, 1] as const;
+const mobileMenuTransition = {
+  duration: 0.38,
+  ease: mobileMenuEase,
+} as const;
+
 export function SiteHeader() {
   const [mounted, setMounted] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const mobileNavId = useId();
+  const bodyOverflowBeforeMenu = useRef<string | null>(null);
+  const pathname = usePathname();
   const { theme } = useTheme();
   const { isImmersive } = useImmersiveMode();
 
   useEffect(() => setMounted(true), []);
+
+  useEffect(() => {
+    setMobileOpen(false);
+  }, [pathname]);
+
+  useEffect(() => {
+    if (!mobileOpen) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setMobileOpen(false);
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [mobileOpen]);
+
+  useEffect(() => {
+    if (!mobileOpen) return;
+    bodyOverflowBeforeMenu.current = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+  }, [mobileOpen]);
+
+  useEffect(() => {
+    return () => {
+      if (bodyOverflowBeforeMenu.current != null) {
+        document.body.style.overflow = bodyOverflowBeforeMenu.current;
+        bodyOverflowBeforeMenu.current = null;
+      }
+    };
+  }, []);
 
   if (isImmersive) {
     return null;
@@ -64,7 +102,7 @@ export function SiteHeader() {
               <nav
                 className={cn(
                   GeistSans.className,
-                  "no-scrollbar flex min-w-0 flex-1 items-center gap-4 overflow-x-auto text-[14px] py-1 md:gap-6 md:overflow-x-visible md:py-0",
+                  "no-scrollbar hidden min-w-0 flex-1 items-center gap-4 overflow-x-auto text-[14px] py-1 sm:flex md:gap-6 md:overflow-x-visible md:py-0",
                 )}
                 aria-label="Primary"
               >
@@ -102,9 +140,12 @@ export function SiteHeader() {
 
               {/* Mobile Menu Button */}
               <button
-                onClick={() => setMobileOpen(!mobileOpen)}
+                type="button"
+                onClick={() => setMobileOpen((o) => !o)}
                 className="sm:hidden transition-[scale] ease-out active:scale-[0.98] p-2 rounded-md hover:bg-muted"
-                aria-label="Toggle menu"
+                aria-label={mobileOpen ? "Close menu" : "Open menu"}
+                aria-expanded={mobileOpen}
+                aria-controls={mobileNavId}
               >
                 {mobileOpen ? <X size={18} /> : <Menu size={18} />}
               </button>
@@ -122,13 +163,92 @@ export function SiteHeader() {
         </div>
       </header>
 
-      {/* Mobile Nav */}
-      <div
-        className={cn(
-          "pointer-events-none fixed inset-x-0 bottom-0 z-50 h-[calc(--spacing(24)+env(safe-area-inset-bottom,0px))] bg-linear-to-b from-transparent from-[calc(env(safe-area-inset-bottom,0%))] to-background mask-linear-[to_top,var(--background)_25%,transparent] backdrop-blur-[1px] sm:hidden",
-          mobileOpen && "pointer-events-auto",
-        )}
-      />
+      {/* Mobile: nav in hamburger — slides from above / exits upward */}
+      <AnimatePresence
+        onExitComplete={() => {
+          if (bodyOverflowBeforeMenu.current != null) {
+            document.body.style.overflow = bodyOverflowBeforeMenu.current;
+            bodyOverflowBeforeMenu.current = null;
+          } else {
+            document.body.style.removeProperty("overflow");
+          }
+        }}
+      >
+        {mobileOpen ? (
+          <motion.div
+            key="site-header-mobile-scrim"
+            className="sm:hidden fixed inset-0 z-40 bg-background/55 backdrop-blur-sm dark:bg-background/45"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={mobileMenuTransition}
+            onClick={() => setMobileOpen(false)}
+            aria-hidden
+          />
+        ) : null}
+        {mobileOpen ? (
+          <motion.div
+            key="site-header-mobile-panel"
+            className="sm:hidden pointer-events-none fixed top-14 right-0 left-0 z-50 flex max-h-[min(70dvh,calc(100dvh-3.5rem-1.5rem))] justify-center overflow-y-auto overscroll-contain px-2 pb-[max(0.5rem,env(safe-area-inset-bottom))] will-change-transform"
+            initial={{ y: -20, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            exit={{ y: -20, opacity: 0 }}
+            transition={mobileMenuTransition}
+          >
+            <div
+              id={mobileNavId}
+              role="dialog"
+              aria-modal="true"
+              aria-label="Main menu"
+              className={cn(
+                GeistSans.className,
+                "screen-line-top screen-line-bottom pointer-events-auto relative w-full max-w-3xl border-x border-b border-line bg-background text-[15px] shadow-sm",
+              )}
+            >
+              <nav className="flex flex-col" aria-label="Primary">
+                {navItems.map(({ href, label }, index) => (
+                  <Link
+                    key={href}
+                    href={href}
+                    onClick={() => setMobileOpen(false)}
+                    className={cn(
+                      "block px-4 py-3.5 transition-[background-color,color] hover:bg-muted/80 active:bg-muted",
+                      index < navItems.length - 1 && "border-b border-line",
+                    )}
+                    style={{ color: navLinkColor }}
+                    {...(href.endsWith(".pdf")
+                      ? { target: "_blank", rel: "noopener noreferrer" }
+                      : {})}
+                  >
+                    {label}
+                  </Link>
+                ))}
+              </nav>
+
+              <div
+                className="absolute top-[-3.5px] left-[-4.5px] z-2 flex size-2 border bg-background"
+                style={{ borderColor: "var(--line)" }}
+                aria-hidden
+              />
+              <div
+                className="absolute top-[-3.5px] right-[-4.5px] z-2 flex size-2 border bg-background"
+                style={{ borderColor: "var(--line)" }}
+                aria-hidden
+              />
+              <div
+                className="absolute bottom-[-3.5px] left-[-4.5px] z-2 flex size-2 border bg-background"
+                style={{ borderColor: "var(--line)" }}
+                aria-hidden
+              />
+              <div
+                className="absolute right-[-4.5px] bottom-[-3.5px] z-2 flex size-2 border bg-background"
+                style={{ borderColor: "var(--line)" }}
+                aria-hidden
+              />
+            </div>
+          </motion.div>
+        ) : null}
+      </AnimatePresence>
     </>
   );
 }

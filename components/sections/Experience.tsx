@@ -55,7 +55,7 @@ export default function Experience() {
     <section id="experience" className="relative px-4 pb-3 ">
       <div className="px-1 pb-2 pt-1 sm:pt-1.5">
         <h2
-          className={`${GeistSans.className} text-[22px] font-semibold leading-tight tracking-tight text-foreground sm:text-[24px]`}
+          className={`${GeistSans.className} max-sm:mt-2 text-[22px] font-semibold leading-tight tracking-tight text-foreground sm:text-[24px]`}
         >
           Experience
         </h2>
