@@ -31,10 +31,10 @@ export default function Navbar() {
               key={mounted ? theme : "default"}
               src={
                 !mounted
-                  ? "/icon2.svg"
+                  ? "/logo2.svg"
                   : theme === "dark"
-                    ? "/icon.svg"
-                    : "/icon2.svg"
+                    ? "/logo.svg"
+                    : "/logo2.svg"
               }
               alt="Silver icon"
               initial={{ opacity: 0 }}
