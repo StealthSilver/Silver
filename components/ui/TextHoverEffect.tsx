@@ -75,7 +75,7 @@ export const TextHoverEffect = ({
       role={interactive ? "button" : undefined}
       tabIndex={interactive ? 0 : undefined}
       aria-label={interactive ? "Enter immersion zone" : undefined}
-      className="block h-full w-full select-none rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+      className="block h-full w-full select-none rounded-sm outline-none focus:outline-none focus-visible:outline-none"
       style={{
         fontFamily: SILVER_FONT_FAMILY,
         cursor: interactive
