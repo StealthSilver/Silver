@@ -188,6 +188,47 @@
   [data-highlighted-line] {
     @apply bg-code-highlight;
   }
+
+  .immersive-wave-shell {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    pointer-events: none;
+    opacity: 0.42;
+  }
+
+  .immersive-wave-track {
+    width: 200%;
+    height: 100%;
+    stroke: color-mix(in oklab, var(--line) 68%, #b9bdcf);
+    stroke-width: 0.85;
+    fill: none;
+    stroke-linecap: square;
+    stroke-linejoin: miter;
+    animation: immersive-wave-slide 2.8s linear infinite;
+  }
+
+  .immersive-wave-track path:nth-child(2) {
+    opacity: 0.78;
+    stroke-width: 0.75;
+    animation: immersive-wave-float 1.4s ease-in-out infinite;
+  }
+
+  .immersive-wave-track path:nth-child(3) {
+    opacity: 0.6;
+    stroke-width: 0.65;
+    animation: immersive-wave-float 1.8s ease-in-out infinite reverse;
+  }
+
+  .immersive-wave-shell.is-paused .immersive-wave-track {
+    width: 100%;
+    animation: none;
+  }
+
+  .immersive-wave-shell.is-paused .immersive-wave-track path {
+    animation: none;
+  }
 }
 
 @theme inline {
@@ -204,5 +245,24 @@
     100% {
       opacity: 0.4;
     }
+  }
+}
+
+@keyframes immersive-wave-slide {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes immersive-wave-float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-0.7px);
   }
 }
