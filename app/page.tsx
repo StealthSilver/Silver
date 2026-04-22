@@ -8,9 +8,7 @@ import Skills from "@/components/sections/Skills";
 import Experience from "@/components/sections/Experience";
 import Education from "@/components/sections/Education";
 import Projects from "@/components/sections/Projects";
-import Awards from "@/components/sections/Awards";
 import Certificates from "@/components/sections/Certificates";
-import CTA from "@/components/sections/CTA";
 import Separator from "@/components/ui/Separator";
 import { cn } from "@/lib/utils";
 
@@ -31,19 +29,13 @@ export default function Home() {
           <Skills />
           <Separator />
 
+          <Projects />
+          <Separator />
+
           <Education />
           <Separator />
 
           <Certificates />
-          <Separator />
-
-          <Projects />
-          <Separator />
-
-          <Awards />
-          <Separator />
-
-          <CTA />
           <Separator />
         </div>
       )}

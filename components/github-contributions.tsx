@@ -2,11 +2,11 @@
 
 import { GeistMono } from "geist/font/mono";
 import { ArrowUpRight, GitCommitHorizontal } from "lucide-react";
+import { GitHubCalendar } from "react-github-calendar";
+import { cloneElement, useMemo } from "react";
 
 type ContributionsData = {
   username: string;
-  chartUrl: string;
-  alt: string;
 };
 
 type GitHubContributionsProps = {
@@ -24,6 +24,14 @@ export function GitHubContributionsFallback() {
 }
 
 export function GitHubContributions({ contributions, githubProfileUrl }: GitHubContributionsProps) {
+  const grayscaleTheme = useMemo(
+    () => ({
+      light: ["#f5f5f5", "#e5e5e5", "#d4d4d4", "#a3a3a3", "#737373"],
+      dark: ["#0a0a0a", "#141414", "#262626", "#6b7280", "#9ca3af"],
+    }),
+    [],
+  );
+
   return (
     <a
       href={githubProfileUrl}
@@ -53,12 +61,21 @@ export function GitHubContributions({ contributions, githubProfileUrl }: GitHubC
       </div>
 
       <div className="overflow-hidden border border-line bg-muted/25 p-2 shadow-[inset_0_1px_0_color-mix(in_oklab,var(--line)_35%,transparent)]">
-        <img
-          src={contributions.chartUrl}
-          alt={contributions.alt}
-          className="h-auto w-full object-cover grayscale contrast-[1.3] brightness-[0.72] saturate-0 dark:brightness-[0.52] dark:contrast-[1.45]"
-          loading="lazy"
-        />
+        <div className="[&_svg]:h-auto [&_svg]:max-w-full [&_text]:fill-muted-foreground dark:[&_text]:fill-foreground">
+          <GitHubCalendar
+            username={contributions.username}
+            colorScheme="light"
+            theme={grayscaleTheme}
+            fontSize={11}
+            blockSize={9}
+            blockMargin={3}
+            renderBlock={(block, activity) =>
+              cloneElement(block, {
+                title: `${activity.count} commit${activity.count === 1 ? "" : "s"} on ${activity.date}`,
+              })
+            }
+          />
+        </div>
       </div>
     </a>
   );
