@@ -9,9 +9,33 @@ export type ExperienceItem = {
 
 export const EXPERIENCES: ExperienceItem[] = [
   {
+    company: "Eleken",
+    position: "Design Engineer",
+    duration: "Mar 2026 - Present",
+    location: "Remote",
+    link: "https://eleken.co/",
+    details: [
+      "Integrated designer assets with <b><u>Rive</u></b> & <b><u>Diagrammar</u></b>, configuring state machines for high-fidelity production animations.",
+      "Ensured <b><u>100% cross-platform fidelity</u></b> of animations across <b><u>Chrome</u></b>, <b><u>Safari</u></b>, <b><u>iOS</u></b>, and <b><u>Android</u></b>, delivering a consistent experience for <b><u>3M+ learners</u></b>.",
+      "Built reusable interactive components (<b><u>graph animations</u></b>, <b><u>vector updates</u></b>) and enhanced the <b><u>Elm + SVG/Canvas framework</u></b>, improving lesson reusability by <b><u>40%</u></b> and reducing rendering overhead by <b><u>25%</u></b>.",
+    ],
+  },
+  {
+    company: "Adobe",
+    position: "Software Engneer Intern",
+    duration: "Dec 2025 - Mar 2025",
+    location: "Noida, India",
+    link: "https://adobe.com",
+    details: [ "Integrated designer assets with <b><u>Rive</u></b> & <b><u>Diagrammar</u></b>, configuring state machines for high-fidelity production animations.",
+      "Ensured <b><u>100% cross-platform fidelity</u></b> of animations across <b><u>Chrome</u></b>, <b><u>Safari</u></b>, <b><u>iOS</u></b>, and <b><u>Android</u></b>, delivering a consistent experience for <b><u>3M+ learners</u></b>.",
+      "Built reusable interactive components (<b><u>graph animations</u></b>, <b><u>vector updates</u></b>) and enhanced the <b><u>Elm + SVG/Canvas framework</u></b>, improving lesson reusability by <b><u>40%</u></b> and reducing rendering overhead by <b><u>25%</u></b>.",
+     
+    ],
+  },
+  {
     company: "Brilliant.org",
     position: "Software Intern",
-    duration: "Mar 2025 - Aug 2025",
+    duration: "Mar 2025 - Oct 2025",
     location: "Remote",
     link: "https://brilliant.org/",
     details: [

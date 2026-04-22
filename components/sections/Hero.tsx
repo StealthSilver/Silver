@@ -209,7 +209,7 @@ export default function Hero() {
                 id="know-more-title"
                 className={`${GeistSans.className} text-xl font-semibold tracking-tight text-foreground`}
               >
-                Since you have clicked the profile picture
+                Since you have clicked my profile picture
               </h3>
               <button
                 type="button"
@@ -232,6 +232,8 @@ export default function Hero() {
                 <p className="mb-1 text-foreground">Music</p>
                 <p>Linkin Park</p>
                 <p>R.E.M.</p>
+                <p>
+                Avenged Sevenfold</p>
               </div>
 
               <div>

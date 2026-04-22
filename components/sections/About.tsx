@@ -24,6 +24,8 @@ import {
   FaDiscord,
   FaYoutube,
 } from "react-icons/fa6";
+import { GeistSans } from "geist/font/sans";
+import { EXPERIENCES } from "@/data/experience.data";
 
 const aboutItems = [
   { id: "role", icon: BriefcaseBusiness, type: "role" as const },
@@ -142,7 +144,12 @@ export default function About() {
   return (
     <section id="about" className="relative px-4 pb-3 pt-5 sm:px-6 sm:pt-6">
       <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
-        {aboutItems.map(({ id, icon: Icon, value, type }) => (
+        {aboutItems.map((item) => {
+          const { id, icon: Icon } = item;
+          const type = "type" in item ? item.type : undefined;
+          const value = "value" in item ? item.value : undefined;
+
+          return (
           <div key={id} className="group flex items-center gap-3 border border-line bg-background px-3 py-2.5">
             <span
               className="inline-flex size-8 shrink-0 items-center justify-center border border-line bg-muted/40 text-muted-foreground"
@@ -213,7 +220,9 @@ export default function About() {
               {type === "email" || type === "phone" ? (
                 <button
                   type="button"
-                  onClick={() => copyToClipboard(type, value)}
+                  onClick={() => {
+                    if (value) copyToClipboard(type, value);
+                  }}
                   className="inline-flex size-6 shrink-0 items-center justify-center text-muted-foreground opacity-0 transition-[opacity,color,transform] duration-200 ease-out group-hover:translate-y-0 group-hover:opacity-100 group-focus-within:translate-y-0 group-focus-within:opacity-100 hover:text-foreground focus-visible:opacity-100 focus-visible:outline-none"
                   aria-label={`Copy ${type}`}
                   title={`Copy ${type}`}
@@ -223,7 +232,8 @@ export default function About() {
               ) : null}
             </div>
           </div>
-        ))}
+          );
+        })}
 
         <div className="flex items-center gap-3 border border-line bg-background px-3 py-2.5 sm:col-start-2 sm:row-start-4">
           <span
@@ -239,7 +249,14 @@ export default function About() {
       <div className="relative left-1/2 my-4 h-px w-screen max-w-none -translate-x-1/2 bg-line" aria-hidden />
 
       <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
-        {socialItems.map(({ label, href, icon: Icon, color, iconSvg, themeAware }) => (
+        {socialItems.map((item) => {
+          const { label, href } = item;
+          const Icon = "icon" in item ? item.icon : undefined;
+          const color = "color" in item ? item.color : undefined;
+          const iconSvg = "iconSvg" in item ? item.iconSvg : undefined;
+          const themeAware = "themeAware" in item ? item.themeAware : undefined;
+
+          return (
           <a
             key={label}
             href={href}
@@ -274,7 +291,60 @@ export default function About() {
               aria-hidden
             />
           </a>
-        ))}
+          );
+        })}
+      </div>
+
+      <div className="relative left-1/2 my-4 h-px w-screen max-w-none -translate-x-1/2 bg-line" aria-hidden />
+
+      <div className="px-1 pb-2 pt-1 sm:pt-1.5">
+        <h2
+          className={`${GeistSans.className} text-[22px] font-semibold leading-tight tracking-tight text-foreground sm:text-[24px]`}
+        >
+          Experience
+        </h2>
+        <div
+          aria-hidden
+          className="relative left-1/2 mt-1.5 h-px w-screen max-w-none -translate-x-1/2 bg-line sm:mt-2"
+        />
+        <div className="mt-2.5 space-y-4 sm:mt-3 sm:space-y-5">
+          {EXPERIENCES.map((experience) => (
+            <article
+              key={`${experience.company}-${experience.position}-${experience.duration}`}
+              className="border border-line bg-background/80 p-4"
+            >
+              <div className="flex flex-wrap items-start justify-between gap-x-4 gap-y-1">
+                <div className="min-w-0">
+                  <a
+                    href={experience.link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={`${GeistSans.className} text-[17px] font-semibold tracking-tight text-foreground underline-offset-2 hover:underline`}
+                  >
+                    {experience.company}
+                  </a>
+                  <p className={`${GeistMono.className} mt-1 text-[13px] text-muted-foreground`}>
+                    {experience.position}
+                  </p>
+                </div>
+                <p
+                  className={`${GeistMono.className} text-right text-[12px] leading-relaxed text-muted-foreground sm:text-[13px]`}
+                >
+                  {experience.duration}
+                  <br />
+                  {experience.location}
+                </p>
+              </div>
+              <ul
+                className={`${GeistMono.className} mt-3 list-disc space-y-1.5 pl-4 text-[13px] leading-relaxed text-muted-foreground`}
+              >
+                {experience.details.map((detail, index) => (
+                  <li key={`${experience.company}-detail-${index}`} dangerouslySetInnerHTML={{ __html: detail }} />
+                ))}
+              </ul>
+            </article>
+          ))}
+        </div>
       </div>
     </section>
   );
