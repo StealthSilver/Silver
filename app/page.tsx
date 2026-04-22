@@ -25,10 +25,10 @@ export default function Home() {
           <About />
           <Separator />
 
-          <Skills />
+          <Experience />
           <Separator />
 
-          <Experience />
+          <Skills />
           <Separator />
 
           <Education />
