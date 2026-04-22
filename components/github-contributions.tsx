@@ -2,8 +2,9 @@
 
 import { GeistMono } from "geist/font/mono";
 import { ArrowUpRight, GitCommitHorizontal } from "lucide-react";
+import { useTheme } from "next-themes";
 import { GitHubCalendar } from "react-github-calendar";
-import { cloneElement, useMemo } from "react";
+import { cloneElement, useEffect, useMemo, useState } from "react";
 
 type ContributionsData = {
   username: string;
@@ -24,13 +25,22 @@ export function GitHubContributionsFallback() {
 }
 
 export function GitHubContributions({ contributions, githubProfileUrl }: GitHubContributionsProps) {
+  const { resolvedTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
   const grayscaleTheme = useMemo(
     () => ({
       light: ["#f5f5f5", "#e5e5e5", "#d4d4d4", "#a3a3a3", "#737373"],
-      dark: ["#0a0a0a", "#141414", "#262626", "#6b7280", "#9ca3af"],
+      dark: ["#0d0d0d", "#171717", "#222222", "#2e2e2e", "#3f3f3f"],
     }),
     [],
   );
+
+  const colorScheme = mounted && resolvedTheme === "dark" ? "dark" : "light";
 
   return (
     <a
@@ -60,11 +70,11 @@ export function GitHubContributions({ contributions, githubProfileUrl }: GitHubC
         />
       </div>
 
-      <div className="overflow-hidden border border-line bg-muted/25 p-2 shadow-[inset_0_1px_0_color-mix(in_oklab,var(--line)_35%,transparent)]">
-        <div className="[&_svg]:h-auto [&_svg]:max-w-full [&_text]:fill-muted-foreground dark:[&_text]:fill-foreground">
+      <div className="overflow-hidden border border-line bg-muted/25 p-2 shadow-[inset_0_1px_0_color-mix(in_oklab,var(--line)_35%,transparent)] dark:bg-muted/35 dark:shadow-[inset_0_1px_0_color-mix(in_oklab,var(--line)_55%,transparent)]">
+        <div className="[&_svg]:h-auto [&_svg]:max-w-full [&_text]:fill-muted-foreground dark:[&_text]:fill-muted-foreground">
           <GitHubCalendar
             username={contributions.username}
-            colorScheme="light"
+            colorScheme={colorScheme}
             theme={grayscaleTheme}
             fontSize={11}
             blockSize={9}

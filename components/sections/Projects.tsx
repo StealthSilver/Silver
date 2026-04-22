@@ -1,133 +1,119 @@
 "use client";
 import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { Github, Globe, Figma, ChevronDown, ChevronUp } from "lucide-react";
+import { GeistSans } from "geist/font/sans";
+import { GeistMono } from "geist/font/mono";
 import Image from "next/image";
-import { PROJECTS } from "../../data/project.data";
-import {
-  HoverEffect,
-  Card,
-  CardTitle,
-  CardDescription,
-} from "@/components/ui/CardHover";
+import { PROJECTS } from "@/data/project.data";
 
 export default function Projects() {
-  const [showAll, setShowAll] = useState(false);
+  const [showAllProjects, setShowAllProjects] = useState(false);
+  const initialVisibleProjects = 5;
+  const hasHiddenProjects = PROJECTS.length > initialVisibleProjects;
+  const primaryProjects = PROJECTS.slice(0, initialVisibleProjects);
+  const extraProjects = PROJECTS.slice(initialVisibleProjects);
+
+  const renderProject = (
+    project: (typeof PROJECTS)[number],
+    index: number,
+    totalProjects: number,
+  ) => {
+    const liveLink = project.live ?? project.github ?? project.figma;
+
+    return (
+      <article key={project.id} className="pt-1">
+        <div className="flex items-start gap-3 min-w-0">
+          <div className="min-w-0 flex-1">
+            <div className="flex items-baseline gap-3">
+              <a href={liveLink} target="_blank" rel="noopener noreferrer" className="inline-flex items-baseline gap-3">
+                <span
+                  className="inline-flex size-8 shrink-0 items-center justify-center overflow-hidden border border-line bg-muted/40 text-muted-foreground"
+                  aria-hidden
+                >
+                  <Image
+                    src={project.image}
+                    alt={`${project.title} preview`}
+                    width={32}
+                    height={32}
+                    className="size-full object-cover"
+                  />
+                </span>
+                <span
+                  className={`${GeistSans.className} text-[17px] font-semibold tracking-tight text-foreground underline-offset-2 hover:underline`}
+                >
+                  {project.title}
+                </span>
+              </a>
+            </div>
+            <p className={`${GeistMono.className} mt-2 pl-11 text-[12px] leading-relaxed text-muted-foreground sm:text-[13px]`}>
+              {project.description}
+            </p>
+          </div>
+          {liveLink ? (
+            <a
+              href={liveLink}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={`${GeistMono.className} inline-flex h-8 shrink-0 items-center justify-center border border-line bg-muted/40 px-3 text-[12px] text-muted-foreground transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background sm:text-[13px]`}
+            >
+              Live
+            </a>
+          ) : null}
+        </div>
+        {index < totalProjects - 1 ? (
+          <div
+            aria-hidden
+            className="relative left-1/2 mt-4 h-px w-screen max-w-none -translate-x-1/2 bg-line"
+          />
+        ) : null}
+      </article>
+    );
+  };
 
   return (
-    <section
-      id="projects"
-      className="
-        relative 
-        px-4 sm:px-6 md:px-12
-        mt-16 sm:mt-24 md:mt-32
-        overflow-x-hidden
-      "
-    >
-      <motion.h2
-        initial={{ opacity: 0, y: 40 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 1, delay: 0.3 }}
-        className="
-          text-2xl sm:text-3xl md:text-4xl 
-          flex items-center justify-center 
-          text-gray-900 dark:text-gray-100 
-          mb-10 sm:mb-16
-        "
-      >
-        PROJECTS
-      </motion.h2>
-
-      <HoverEffect className="max-w-6xl mx-auto font-mono gap-3 sm:gap-4">
-        <AnimatePresence>
-          {(showAll ? PROJECTS : PROJECTS.slice(0, 6)).map((project) => (
-            <motion.div
-              key={project.id}
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: 30 }}
-              transition={{ duration: 0.5 }}
-              layout
+    <section id="projects" className="relative px-4 pb-3 ">
+      <div className="sm:pt-1.5">
+        <h2
+          className={`${GeistSans.className} text-[22px] font-semibold leading-tight tracking-tight text-foreground sm:text-[24px]`}
+        >
+          Projects
+          <sup className={`${GeistMono.className} ml-1 align-super text-[12px] text-muted-foreground sm:text-[13px]`}>
+            ({PROJECTS.length})
+          </sup>
+        </h2>
+        <div
+          aria-hidden
+          className="relative left-1/2 mt-1.5 h-px w-screen max-w-none -translate-x-1/2 bg-line sm:mt-2"
+        />
+        <div className="mt-2.5 space-y-4 sm:mt-3 sm:space-y-5">
+          {primaryProjects.map((project, index) => renderProject(project, index, primaryProjects.length))}
+          {hasHiddenProjects ? (
+            <div
+              className={`grid overflow-hidden transition-[grid-template-rows,opacity] duration-500 ease-in-out ${
+                showAllProjects ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"
+              }`}
+              aria-hidden={!showAllProjects}
+              inert={!showAllProjects}
             >
-              <Card className="relative w-full group overflow-hidden rounded-2xl">
-                <Image
-                  src={project.image}
-                  alt={project.title}
-                  fill
-                  className="object-cover opacity-20 group-hover:opacity-80 transition-all duration-700"
-                />
-
-                <div className="absolute inset-0 bg-black/90 group-hover:bg-black/30 transition-all duration-700"></div>
-                <div className="absolute inset-0 bg-white/90 dark:bg-black/60 group-hover:bg-white/30 dark:group-hover:bg-black/30 transition-all duration-700"></div>
-
-                <div className="relative z-20 flex flex-col justify-between h-full text-center px-4 sm:px-6 py-4 sm:py-6">
-                  <div className="transition-opacity duration-500 group-hover:opacity-0">
-                    <CardTitle className="text-base sm:text-lg md:text-xl font-bold text-black dark:text-white">
-                      {project.title}
-                    </CardTitle>
-                    <CardDescription className="text-xs sm:text-sm md:text-base text-black dark:text-white">
-                      {project.description}
-                    </CardDescription>
-                  </div>
-
-                  <div className="flex gap-3 sm:gap-4 justify-center mt-6 sm:mt-12">
-                    {project.live && (
-                      <a
-                        href={project.live}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="rounded-full border p-2 sm:p-3 bg-white text-black border-black hover:bg-black hover:text-white 
-                                dark:bg-black dark:text-white dark:border-white dark:hover:bg-white dark:hover:text-black transition-colors"
-                      >
-                        <Globe size={18} />
-                      </a>
-                    )}
-                    {project.github && (
-                      <a
-                        href={project.github}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="rounded-full border p-2 sm:p-3 bg-white text-black border-black hover:bg-black hover:text-white 
-                                dark:bg-black dark:text-white dark:border-white dark:hover:bg-white dark:hover:text-black transition-colors"
-                      >
-                        <Github size={18} />
-                      </a>
-                    )}
-                    {project.figma && (
-                      <a
-                        href={project.figma}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="rounded-full border p-2 sm:p-3 bg-white text-black border-black hover:bg-black hover:text-white 
-                                dark:bg-black dark:text-white dark:border-white dark:hover:bg-white dark:hover:text-black transition-colors"
-                      >
-                        <Figma size={18} />
-                      </a>
-                    )}
-                  </div>
-                </div>
-              </Card>
-            </motion.div>
-          ))}
-        </AnimatePresence>
-      </HoverEffect>
-
-      {PROJECTS.length > 6 && (
-        <div className="flex justify-center mt-8 sm:mt-10">
-          <button
-            onClick={() => setShowAll(!showAll)}
-            className="flex items-center gap-2 px-5 sm:px-6 py-2 sm:py-3 border border-gray-700 dark:border-gray-300 rounded-full 
-                       text-sm sm:text-base 
-                       text-gray-900 dark:text-gray-100 
-                       hover:bg-gray-900 hover:text-white 
-                       dark:hover:bg-white dark:hover:text-black 
-                       transition-colors"
-          >
-            {showAll ? "Show Less" : "Show More"}
-            {showAll ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
-          </button>
+              <div className="min-h-0 space-y-4 sm:space-y-5">
+                {extraProjects.map((project, index) =>
+                  renderProject(project, index, extraProjects.length),
+                )}
+              </div>
+            </div>
+          ) : null}
         </div>
-      )}
+        {hasHiddenProjects ? (
+          <div className="mt-5 flex justify-center">
+            <button
+              type="button"
+              onClick={() => setShowAllProjects((prev) => !prev)}
+              className={`${GeistMono.className} inline-flex items-center border border-line bg-muted/40 px-4 py-2 text-[12px] text-foreground transition-colors hover:bg-muted/70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background sm:text-[13px]`}
+            >
+              {showAllProjects ? "Show less" : `Show more (${PROJECTS.length - initialVisibleProjects})`}
+            </button>
+          </div>
+        ) : null}
+      </div>
     </section>
   );
 }

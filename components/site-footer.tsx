@@ -1,6 +1,7 @@
 "use client";
 
-import { Github, Linkedin, Twitter, Mail } from "lucide-react";
+import { Github, Linkedin, Mail } from "lucide-react";
+import { FaXTwitter } from "react-icons/fa6";
 import { cn } from "@/lib/utils";
 import { useImmersiveMode } from "@/contexts/ImmersiveModeContext";
 import { SiteFooterInteractiveLogotype } from "@/components/site-footer-interactive-logotype";
@@ -59,9 +60,9 @@ export function SiteFooter() {
                 href="https://x.com/Rajat_0409"
                 target="_blank"
                 rel="noopener"
-                aria-label="Twitter"
+                aria-label="X"
               >
-                <Twitter className="size-4" />
+                <FaXTwitter className="size-4" />
               </a>
 
               <Separator />
