@@ -14,6 +14,8 @@ export const IMMERSIVE_TRACKS = [
   "/music/a.mp3",
   "/music/b.mp3",
   "/music/c.mp3",
+  "/music/d.mp3",
+  "/music/e.mp3",
 ] as const;
 
 /** @deprecated use IMMERSIVE_TRACKS[0] */
@@ -129,8 +131,21 @@ export function ImmersiveModeProvider({ children }: { children: ReactNode }) {
     if (!musicRef.current) {
       const a = new Audio(IMMERSIVE_TRACKS[0]);
       a.preload = "auto";
-      a.loop = true;
+      a.loop = false;
       a.crossOrigin = "anonymous";
+      a.addEventListener("ended", () => {
+        const el = musicRef.current;
+        if (!el) return;
+        const next =
+          (trackIndexRef.current + 1) % IMMERSIVE_TRACKS.length;
+        trackIndexRef.current = next;
+        setImmersiveTrackIndex(next);
+        el.src = IMMERSIVE_TRACKS[next];
+        el.load();
+        el.loop = false;
+        el.volume = 1;
+        if (!pausedRef.current) void el.play().catch(() => {});
+      });
       musicRef.current = a;
     }
     return musicRef.current;
@@ -198,7 +213,7 @@ export function ImmersiveModeProvider({ children }: { children: ReactNode }) {
       setSheet("immersive-enter-cover");
       return;
     }
-    a.loop = true;
+    a.loop = false;
     const first = IMMERSIVE_TRACKS[0];
     if (!trackUrlMatches(a, first)) {
       a.src = first;
@@ -272,7 +287,7 @@ export function ImmersiveModeProvider({ children }: { children: ReactNode }) {
     setImmersiveTrackIndex(next);
     a.src = IMMERSIVE_TRACKS[next];
     a.load();
-    a.loop = true;
+    a.loop = false;
     a.volume = 1;
     ensureAudioGraph(a);
     if (!pausedRef.current) void a.play().catch(() => {});
@@ -288,7 +303,7 @@ export function ImmersiveModeProvider({ children }: { children: ReactNode }) {
     setImmersiveTrackIndex(next);
     a.src = IMMERSIVE_TRACKS[next];
     a.load();
-    a.loop = true;
+    a.loop = false;
     a.volume = 1;
     ensureAudioGraph(a);
     if (!pausedRef.current) void a.play().catch(() => {});

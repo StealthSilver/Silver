@@ -4,12 +4,10 @@ import { Canvas, useFrame, useThree, type ThreeEvent } from "@react-three/fiber"
 import {
   Bloom,
   EffectComposer,
-  SMAA,
   Vignette,
 } from "@react-three/postprocessing";
 import { Text } from "@react-three/drei";
 import {
-  Suspense,
   useCallback,
   useEffect,
   useMemo,
@@ -37,7 +35,7 @@ import {
 const PAGE_W = 5.2;                    // landscape 4:3 cards — wider than tall
 const PAGE_H = 3.9;
 const HSPACE = 6.4;                    // horizontal gap between pages (center-to-center)
-const PAGE_ROW_Y = 0.65;               // lifted slightly above center for better visual balance
+const PAGE_ROW_Y = 0.75;               // lifted slightly above center for better visual balance
 const TOTAL_WIDTH = (PROJECTS.length - 1) * HSPACE;
 
 // Dark-theme tile palette — matches the site's cards (black card on a faint
@@ -183,7 +181,11 @@ type AnalyserGetter = () => AnalyserNode | null;
 // leaves a smaller, lower "cap" on screen.
 const SPHERE_RADIUS = 2.45;
 const SPHERE_CENTER_Y = -4.15;
-const SPHERE_PARTICLE_COUNT = 6400;
+// Particle count is a heavy driver of per-frame cost; the GPU can chew
+// through this many points, but 4200 is the smallest count at which the
+// sphere still reads as a continuous shimmering shell instead of discrete
+// dots — a sweet spot for quality vs. cost.
+const SPHERE_PARTICLE_COUNT = 4200;
 
 /**
  * Fiery particle sphere that sits half-below the viewport like a bonfire
@@ -193,6 +195,12 @@ const SPHERE_PARTICLE_COUNT = 6400;
  *   - `pulseHigh` (hats / cymbal) → randomized jitter + brightness flare
  *   - `bass`                     → overall warm glow + ambient light
  *   - `mid` / `high`             → rotation speed + color drift toward hot
+ *
+ * The per-particle animation runs entirely in a custom `ShaderMaterial` —
+ * audio values + time are pushed as uniforms, and the vertex shader derives
+ * per-particle position offsets, colour glow and point size. The CPU side
+ * only updates a handful of uniforms per frame, so visual complexity
+ * scales with the GPU rather than JavaScript.
  *
  * Stays hidden until `visibleRef` flips on (pages are horizontal) and fades
  * in smoothly.
@@ -205,26 +213,21 @@ function MusicSphere({
   visibleRef: React.MutableRefObject<boolean>;
 }) {
   const groupRef = useRef<THREE.Group>(null);
-  const pointsRef = useRef<THREE.Points>(null);
-  const materialRef = useRef<THREE.PointsMaterial>(null);
   const lightRef = useRef<THREE.PointLight>(null);
   const rimLightRef = useRef<THREE.PointLight>(null);
+  const size = useThree((s) => s.size);
+  const gl = useThree((s) => s.gl);
 
   const emberTex = useMemo(() => makeEmberTexture(), []);
 
   /**
-   * Pre-compute all per-particle buffers. Positions float around `originals`
-   * (unit-sphere surface coordinates) through a damped spring so each beat
-   * pushes particles outward before they relax back.
+   * Pre-compute all per-particle attribute buffers once. These never change
+   * on the CPU — the vertex shader reads them straight from the GPU.
    */
   const buffers = useMemo(() => {
     const positions = new Float32Array(SPHERE_PARTICLE_COUNT * 3);
-    const originals = new Float32Array(SPHERE_PARTICLE_COUNT * 3);
-    const velocities = new Float32Array(SPHERE_PARTICLE_COUNT * 3);
-    const colors = new Float32Array(SPHERE_PARTICLE_COUNT * 3);
     const baseColors = new Float32Array(SPHERE_PARTICLE_COUNT * 3);
     const phases = new Float32Array(SPHERE_PARTICLE_COUNT);
-    // Per-particle gain — some particles "respond" harder to beats.
     const responsiveness = new Float32Array(SPHERE_PARTICLE_COUNT);
 
     // Silver / polished-metal palette — pulled from the shimmer gradient used
@@ -247,9 +250,6 @@ function MusicSphere({
       const nx = Math.sin(phi) * Math.cos(theta);
       const ny = Math.sin(phi) * Math.sin(theta);
       const nz = Math.cos(phi);
-      originals[i * 3] = nx;
-      originals[i * 3 + 1] = ny;
-      originals[i * 3 + 2] = nz;
       positions[i * 3] = nx * SPHERE_RADIUS;
       positions[i * 3 + 1] = ny * SPHERE_RADIUS;
       positions[i * 3 + 2] = nz * SPHERE_RADIUS;
@@ -264,23 +264,120 @@ function MusicSphere({
       baseColors[i * 3] = c[0];
       baseColors[i * 3 + 1] = c[1];
       baseColors[i * 3 + 2] = c[2];
-      colors[i * 3] = c[0];
-      colors[i * 3 + 1] = c[1];
-      colors[i * 3 + 2] = c[2];
 
       phases[i] = Math.random() * Math.PI * 2;
       responsiveness[i] = 0.6 + Math.random() * 0.9;
     }
-    return {
-      positions,
-      originals,
-      velocities,
-      colors,
-      baseColors,
-      phases,
-      responsiveness,
-    };
+    return { positions, baseColors, phases, responsiveness };
   }, []);
+
+  /**
+   * Custom shader material — all per-particle motion, glow and size lives
+   * in the vertex shader. We only upload uniforms each frame (a handful of
+   * floats) instead of re-uploading 4200 × 3 floats of positions + colours.
+   */
+  const material = useMemo(() => {
+    return new THREE.ShaderMaterial({
+      uniforms: {
+        uTime: { value: 0 },
+        uBass: { value: 0 },
+        uMid: { value: 0 },
+        uHigh: { value: 0 },
+        uPulseLow: { value: 0 },
+        uPulseHigh: { value: 0 },
+        uBeat: { value: 0 },
+        uBaseSize: { value: 0.14 },
+        uScale: { value: 600 },
+        uOpacity: { value: 0 },
+        uMap: { value: emberTex },
+      },
+      vertexShader: /* glsl */ `
+        attribute vec3 aBaseColor;
+        attribute float aPhase;
+        attribute float aResponsiveness;
+
+        uniform float uTime;
+        uniform float uBass;
+        uniform float uMid;
+        uniform float uHigh;
+        uniform float uPulseLow;
+        uniform float uPulseHigh;
+        uniform float uBeat;
+        uniform float uBaseSize;
+        uniform float uScale;
+
+        varying vec3 vColor;
+
+        // Stateless pseudo-random hash — gives each particle its own "grain"
+        // without needing Math.random() on the CPU.
+        float hash11(float n) { return fract(sin(n) * 43758.5453); }
+
+        void main() {
+          vec3 radial = normalize(position);
+
+          // Bass transient → radial outward puff. Gated the same way as the
+          // old CPU code so sub-threshold audio leaves the sphere still.
+          float beatPush = uPulseLow > 0.04
+            ? uPulseLow * 0.55 + uBeat * 0.28
+            : uBeat * 0.12;
+          // Coarse time quantisation so the hash "rerolls" a few times a
+          // second — cheap stand-in for per-frame CPU randomness.
+          float tStepLow = floor(uTime * 6.0);
+          float randR = 0.5 + hash11(aPhase * 13.37 + tStepLow) * 1.1;
+          float radialOffset = beatPush * randR * aResponsiveness;
+
+          // High transient → small per-particle jitter.
+          float jitterAmp = uPulseHigh > 0.05
+            ? uPulseHigh * 0.18 + uBeat * 0.06
+            : 0.0;
+          float tStepHi = floor(uTime * 30.0);
+          vec3 jit = vec3(
+            hash11(aPhase + 1.1 + tStepHi) - 0.5,
+            hash11(aPhase + 2.3 + tStepHi) - 0.5,
+            hash11(aPhase + 3.7 + tStepHi) - 0.5
+          ) * jitterAmp * aResponsiveness;
+
+          // Continuous shimmer — tiny radial breathing correlated with the
+          // mid / high band, zero when audio is silent.
+          float wig = sin(uTime * 4.2 + aPhase)
+            * (uHigh * 0.08 + uMid * 0.03 + uBeat * 0.06);
+
+          vec3 pos = position + radial * radialOffset + jit + position * wig;
+
+          vec4 mvPosition = modelViewMatrix * vec4(pos, 1.0);
+          gl_Position = projectionMatrix * mvPosition;
+
+          float glowBase = 0.7 + uBass * 1.1 + uPulseLow * 4.2
+                         + uHigh * 0.5 + uPulseHigh * 2.2 + uBeat * 2.0;
+          float flick = 0.88 + 0.12 * sin(uTime * 7.0 + aPhase * 2.7);
+          float g = glowBase * flick;
+          float hotLift = uPulseHigh * 0.32 + uHigh * 0.14;
+          vec3 c = aBaseColor * g
+                 + vec3(hotLift * 0.42, hotLift * 0.44, hotLift * 0.50);
+          vColor = min(c, vec3(1.5));
+
+          // Match PointsMaterial.sizeAttenuation:
+          //   gl_PointSize = size * ( scale / -mvPosition.z )
+          // where scale = renderTarget.height / 2 (in physical pixels).
+          gl_PointSize = uBaseSize * uScale / -mvPosition.z;
+        }
+      `,
+      fragmentShader: /* glsl */ `
+        varying vec3 vColor;
+        uniform sampler2D uMap;
+        uniform float uOpacity;
+        void main() {
+          vec4 tex = texture2D(uMap, gl_PointCoord);
+          if (tex.a < 0.01) discard;
+          gl_FragColor = vec4(vColor, 1.0) * tex * uOpacity;
+        }
+      `,
+      transparent: true,
+      depthWrite: false,
+      blending: THREE.AdditiveBlending,
+      toneMapped: false,
+    });
+  }, [emberTex]);
 
   // Persistent analysis state (running avgs + decaying pulses). Outlives
   // component re-renders via useRef so transitions read naturally.
@@ -289,9 +386,7 @@ function MusicSphere({
 
   useFrame((state, delta) => {
     const group = groupRef.current;
-    const pts = pointsRef.current;
-    const mat = materialRef.current;
-    if (!group || !pts || !mat) return;
+    if (!group) return;
 
     // ---- visibility fade --------------------------------------------------
     const target = visibleRef.current ? 1 : 0;
@@ -300,135 +395,44 @@ function MusicSphere({
     group.visible = vis > 0.001;
     if (!group.visible) return;
 
-    // ---- audio "deconstruction" -----------------------------------------
+    // ---- audio "deconstruction" ------------------------------------------
     const energy = analyseFrame(getAnalyser(), audioStateRef.current);
     const { bass, mid, high, pulseLow, pulseHigh, beat } = energy;
     const hit = pulseLow + pulseHigh * 0.6;
 
     // ---- whole-sphere transforms -----------------------------------------
-    // Beat-driven but toned down — the sphere now reacts with small
+    // Beat-driven but toned down — the sphere reacts with small
     // breathing-style pulses rather than large expansion/contraction.
     const targetScale =
       (0.92 + beat * 0.14 + pulseLow * 0.09 + pulseHigh * 0.05 + bass * 0.04) * vis;
     const curScale = group.scale.x || 0.001;
-    // Smoother response — more inertia on attack, slower relax.
     const scaleLerp = targetScale > curScale ? 0.25 : 0.12;
     group.scale.setScalar(lerp(curScale, targetScale, scaleLerp));
 
-    // Rotation gets a very gentle nudge on percussion — enough to feel
-    // alive without looking like the sphere is tumbling. Continuous/general
-    // rotation is minimal so the sphere reads as calm between drops.
     group.rotation.y += delta * (pulseLow * 0.9 + pulseHigh * 0.08 + beat * 0.45);
     group.rotation.x += delta * (pulseHigh * 0.2 + beat * 0.18);
     group.rotation.z += delta * (pulseLow * 0.18 - pulseHigh * 0.08);
 
-    // ---- per-particle update ---------------------------------------------
-    const geom = pts.geometry;
-    const posAttr = geom.getAttribute("position") as THREE.BufferAttribute;
-    const colAttr = geom.getAttribute("color") as THREE.BufferAttribute;
-    const posArr = posAttr.array as Float32Array;
-    const colArr = colAttr.array as Float32Array;
-
-    const { originals, velocities, baseColors, phases, responsiveness } =
-      buffers;
-
-    // Stiffer spring and higher damping so particles settle quickly and
-    // the sphere reads as a calm, shimmering surface rather than chaotic.
-    const springK = 0.18;
-    const damping = 0.78;
-    const time = state.clock.elapsedTime;
-
-    // Beat-drop transients keep their punch (pulseLow / beat), but the
-    // general continuous motion is dialled way down so the sphere is
-    // mostly still between drops.
-    const beatPush = pulseLow > 0.04 ? pulseLow * 0.18 + beat * 0.1 : beat * 0.05;
-    const hiJitter = pulseHigh > 0.05 ? pulseHigh * 0.04 + beat * 0.015 : 0;
-    // Continuous wiggle is tied ENTIRELY to audio — silent track = still sphere.
-    const wiggleAmp = high * 0.0018 + mid * 0.0008 + beat * 0.0015;
-
-    // Glow still reacts hard so the colour/light punches through without
-    // needing the sphere to physically jump around.
-    const glowBase =
-      0.7 + bass * 1.1 + pulseLow * 4.2 + high * 0.5 + pulseHigh * 2.2 + beat * 2.0;
-
-    for (let i = 0; i < SPHERE_PARTICLE_COUNT; i++) {
-      const i3 = i * 3;
-      const ox = originals[i3] * SPHERE_RADIUS;
-      const oy = originals[i3 + 1] * SPHERE_RADIUS;
-      const oz = originals[i3 + 2] * SPHERE_RADIUS;
-      const resp = responsiveness[i];
-
-      // Bass transient → radial outward impulse (kick-drum thump).
-      if (beatPush > 0) {
-        const imp = beatPush * (0.5 + Math.random() * 1.1) * resp;
-        velocities[i3] += originals[i3] * imp;
-        velocities[i3 + 1] += originals[i3 + 1] * imp;
-        velocities[i3 + 2] += originals[i3 + 2] * imp;
-      }
-
-      // High transient → randomized jitter (cymbal / hi-hat sizzle).
-      if (hiJitter > 0) {
-        const jx = (Math.random() - 0.5) * hiJitter;
-        const jy = (Math.random() - 0.5) * hiJitter;
-        const jz = (Math.random() - 0.5) * hiJitter;
-        velocities[i3] += jx * resp;
-        velocities[i3 + 1] += jy * resp;
-        velocities[i3 + 2] += jz * resp;
-      }
-
-      // Continuous shimmer correlated with high-frequency energy.
-      const phase = phases[i];
-      const wig = Math.sin(time * 4.2 + phase) * wiggleAmp;
-      velocities[i3] += originals[i3] * wig;
-      velocities[i3 + 1] += originals[i3 + 1] * wig;
-      velocities[i3 + 2] += originals[i3 + 2] * wig;
-
-      // Integrate position, then spring back to the sphere surface.
-      let vx = velocities[i3];
-      let vy = velocities[i3 + 1];
-      let vz = velocities[i3 + 2];
-      posArr[i3] += vx;
-      posArr[i3 + 1] += vy;
-      posArr[i3 + 2] += vz;
-      vx = (vx + (ox - posArr[i3]) * springK) * damping;
-      vy = (vy + (oy - posArr[i3 + 1]) * springK) * damping;
-      vz = (vz + (oz - posArr[i3 + 2]) * springK) * damping;
-      velocities[i3] = vx;
-      velocities[i3 + 1] = vy;
-      velocities[i3 + 2] = vz;
-
-      // Color modulation — multiply base tint by a glow coefficient, then
-      // lift uniformly on treble transients so tops flash neutral white
-      // (silver, no warm cast).
-      const flick = 0.88 + 0.12 * Math.sin(time * 7 + phase * 2.7);
-      const g = glowBase * flick;
-      const hotLift = pulseHigh * 0.32 + high * 0.14;
-      const r = baseColors[i3] * g + hotLift * 0.42;
-      const gg = baseColors[i3 + 1] * g + hotLift * 0.44;
-      const b = baseColors[i3 + 2] * g + hotLift * 0.50;
-      colArr[i3] = r > 1.5 ? 1.5 : r;
-      colArr[i3 + 1] = gg > 1.5 ? 1.5 : gg;
-      colArr[i3 + 2] = b > 1.5 ? 1.5 : b;
-    }
-    posAttr.needsUpdate = true;
-    colAttr.needsUpdate = true;
-
-    // ---- material + surrounding lights -----------------------------------
-    // Particle size pumps visibly on every beat so drops feel "bigger".
-    mat.size =
+    // ---- push audio state to GPU -----------------------------------------
+    const u = material.uniforms;
+    u.uTime.value = state.clock.elapsedTime;
+    u.uBass.value = bass;
+    u.uMid.value = mid;
+    u.uHigh.value = high;
+    u.uPulseLow.value = pulseLow;
+    u.uPulseHigh.value = pulseHigh;
+    u.uBeat.value = beat;
+    u.uBaseSize.value =
       0.12 + pulseLow * 0.09 + pulseHigh * 0.06 + bass * 0.03 + beat * 0.08;
-    // Lower baseline opacity — the sphere reads as a soft silver haze
-    // rather than a dense particle cloud, and drops still lift it visibly.
-    mat.opacity = vis * (0.45 + pulseLow * 0.2 + beat * 0.18);
+    u.uOpacity.value = vis * (0.45 + pulseLow * 0.2 + beat * 0.18);
+    // Match three.js' built-in point-size attenuation (render-height based).
+    u.uScale.value = size.height * gl.getPixelRatio() * 0.5;
 
     if (lightRef.current) {
-      // Silver core light — thumps hard on every kick, extra surge on drops,
-      // near-silent between beats.
       lightRef.current.intensity =
         (0.45 + bass * 1.8 + pulseLow * 8.0 + hit * 2.2 + beat * 4.5) * vis;
     }
     if (rimLightRef.current) {
-      // Bright rim flash on cymbals / drop transients.
       rimLightRef.current.intensity =
         (0.2 + high * 1.2 + pulseHigh * 5.5 + beat * 3.0) * vis;
     }
@@ -441,29 +445,26 @@ function MusicSphere({
       visible={false}
       scale={0.001}
     >
-      <points ref={pointsRef} frustumCulled={false}>
+      <points frustumCulled={false}>
         <bufferGeometry>
           <bufferAttribute
             attach="attributes-position"
             args={[buffers.positions, 3]}
           />
           <bufferAttribute
-            attach="attributes-color"
-            args={[buffers.colors, 3]}
+            attach="attributes-aBaseColor"
+            args={[buffers.baseColors, 3]}
+          />
+          <bufferAttribute
+            attach="attributes-aPhase"
+            args={[buffers.phases, 1]}
+          />
+          <bufferAttribute
+            attach="attributes-aResponsiveness"
+            args={[buffers.responsiveness, 1]}
           />
         </bufferGeometry>
-        <pointsMaterial
-          ref={materialRef}
-          size={0.14}
-          vertexColors
-          map={emberTex}
-          transparent
-          opacity={0}
-          depthWrite={false}
-          blending={THREE.AdditiveBlending}
-          sizeAttenuation
-          toneMapped={false}
-        />
+        <primitive object={material} attach="material" />
       </points>
       {/* Cool silver core uplight — drives the bass glow onto pages above. */}
       <pointLight
@@ -889,6 +890,11 @@ function Scene({
   );
 
   /* ---- project image textures ---- */
+  // Each successful load would previously trigger `setTextures([...loaded])`,
+  // meaning the whole Scene tree re-rendered N times during startup. Batch
+  // the updates: once a texture is ready, schedule a single flush on the
+  // next frame that publishes whatever has arrived so far — far fewer
+  // React reconciliations for the same visual result.
   const [textures, setTextures] = useState<(THREE.Texture | null)[]>(() =>
     PROJECTS.map(() => null),
   );
@@ -897,6 +903,12 @@ function Scene({
     const maxAniso = gl.capabilities.getMaxAnisotropy();
     let cancelled = false;
     const loaded: (THREE.Texture | null)[] = PROJECTS.map(() => null);
+    let flushScheduled = false;
+    const flush = () => {
+      flushScheduled = false;
+      if (cancelled) return;
+      setTextures(loaded.slice());
+    };
     PROJECTS.forEach((p, i) => {
       loader.load(
         p.image,
@@ -909,7 +921,10 @@ function Scene({
           tex.generateMipmaps = true;
           tex.needsUpdate = true;
           loaded[i] = tex;
-          setTextures([...loaded]);
+          if (!flushScheduled) {
+            flushScheduled = true;
+            requestAnimationFrame(flush);
+          }
         },
         undefined,
         () => {
@@ -1057,6 +1072,15 @@ function Scene({
     }
 
     const chaosT = t;
+    // Once the row has locked into its horizontal layout the chaos math
+    // resolves to its target every frame — we can skip the heavy
+    // trig/exp/lerp work entirely and only touch per-tile state that still
+    // changes (hover scale, picked visibility).
+    const formationSettled = formProg >= 0.999;
+    const morph = smoothstep(0, 0.75, formProg);
+    const baseScale = lerp(0.18, 1.0, morph);
+    const frameOp = lerp(0, 1, morph);
+    const frameTransparent = frameOp < 1;
 
     for (let i = 0; i < PROJECTS.length; i++) {
       const refs = tileRefs.current[i];
@@ -1067,35 +1091,40 @@ function Scene({
       // element stacked on top.
       refs.group.visible = picked !== i;
 
-      const c = chaos[i];
       const target = targets[i];
 
-      // flight trajectory
-      const damp = Math.exp(-chaosT * 0.55);
-      const cx = c.ox + c.vx * chaosT * damp;
-      const cy = c.oy + c.vy * chaosT * damp - 0.5 * 1.0 * chaosT * chaosT;
-      const cz = c.oz + c.vz * chaosT * damp;
-      const rotBrake = Math.max(0, 1 - formProg * 1.2);
-      const crx = c.rx + c.rvx * chaosT * rotBrake;
-      const cry = c.ry + c.rvy * chaosT * rotBrake;
-      const crz = c.rz + c.rvz * chaosT * rotBrake;
+      if (formationSettled) {
+        // Post-formation steady state — just lock the page to its target.
+        refs.group.position.set(target.x, target.y, target.z);
+        refs.group.rotation.set(0, target.rotY, 0);
+      } else {
+        const c = chaos[i];
 
-      // chaos -> stable horizontal-row target
-      const px = lerp(cx, target.x, formProg);
-      const py = lerp(cy, target.y, formProg);
-      const pz = lerp(cz, target.z, formProg);
-      const rx = lerp(crx, 0, formProg);
-      const ry = lerp(cry, target.rotY, formProg);
-      const rz = lerp(crz, 0, formProg);
+        // flight trajectory
+        const damp = Math.exp(-chaosT * 0.55);
+        const cx = c.ox + c.vx * chaosT * damp;
+        const cy = c.oy + c.vy * chaosT * damp - 0.5 * 1.0 * chaosT * chaosT;
+        const cz = c.oz + c.vz * chaosT * damp;
+        const rotBrake = Math.max(0, 1 - formProg * 1.2);
+        const crx = c.rx + c.rvx * chaosT * rotBrake;
+        const cry = c.ry + c.rvy * chaosT * rotBrake;
+        const crz = c.rz + c.rvz * chaosT * rotBrake;
 
-      refs.group.position.set(px, py, pz);
-      refs.group.rotation.set(rx, ry, rz);
+        // chaos -> stable horizontal-row target
+        const px = lerp(cx, target.x, formProg);
+        const py = lerp(cy, target.y, formProg);
+        const pz = lerp(cz, target.z, formProg);
+        const rx = lerp(crx, 0, formProg);
+        const ry = lerp(cry, target.rotY, formProg);
+        const rz = lerp(crz, 0, formProg);
+
+        refs.group.position.set(px, py, pz);
+        refs.group.rotation.set(rx, ry, rz);
+      }
 
       // scale morphs through formation. Hover lifts the focused card a hair
       // so the tile signals interactivity — no extra zoom on pick because
       // the HTML overlay takes over the focus visual.
-      const morph = smoothstep(0, 0.75, formProg);
-      const baseScale = lerp(0.18, 1.0, morph);
       const isHovered =
         interactiveRef.current &&
         hoveredRef.current === i &&
@@ -1103,25 +1132,34 @@ function Scene({
       const hoverScale = isHovered ? 1.05 : 1;
       const targetScale = baseScale * hoverScale;
       const cur2 = refs.group.scale.x || 0.001;
-      refs.group.scale.setScalar(lerp(cur2, targetScale, 0.2));
-
-      // opacities — fade the silver frame, border, and all 4 corner squares
-      // in together so the card assembles as a single piece of stationery.
-      const frameOp = lerp(0, 1, morph);
-      for (const fm of refs.frameMats) {
-        fm.opacity = frameOp;
-        fm.transparent = frameOp < 1;
+      // Stop lerping once we're effectively at target — cheap bail-out that
+      // avoids redundant Math.* calls every frame when the row is idle.
+      if (Math.abs(cur2 - targetScale) > 0.0005) {
+        refs.group.scale.setScalar(lerp(cur2, targetScale, 0.2));
+      } else if (cur2 !== targetScale) {
+        refs.group.scale.setScalar(targetScale);
       }
 
-      const imgOp = morph;
-      refs.image.opacity = imgOp;
-      refs.image.transparent = imgOp < 1;
+      // opacities — only write while they can still change. Once the
+      // frame is fully opaque there's no point rewriting every frame.
+      if (!formationSettled || refs.frameMats[0].opacity !== frameOp) {
+        for (const fm of refs.frameMats) {
+          fm.opacity = frameOp;
+          fm.transparent = frameTransparent;
+        }
+        refs.image.opacity = morph;
+        refs.image.transparent = morph < 1;
+      }
 
       if (refs.titleGroup && refs.titleMat) {
         const titleVisible = morph > 0.35;
-        refs.titleGroup.visible = titleVisible;
-        if (titleVisible) {
+        if (refs.titleGroup.visible !== titleVisible) {
+          refs.titleGroup.visible = titleVisible;
+        }
+        if (titleVisible && !formationSettled) {
           refs.titleMat.opacity = clamp01((morph - 0.35) / 0.55);
+        } else if (formationSettled && refs.titleMat.opacity !== 1) {
+          refs.titleMat.opacity = 1;
         }
       }
     }
@@ -1297,11 +1335,18 @@ export default function ImmersiveScene() {
       style={{ pointerEvents: interactive ? "auto" : "none" }}
     >
       <Canvas
-        dpr={[1, 2]}
+        // Cap DPR at 1.75 — on 2x-3x retina displays that 2x resolution
+        // requires 4-9x fragment work vs. 1x, and the perceptual gain from
+        // going above 1.75 is tiny once MSAA + bloom are in the pipeline.
+        dpr={[1, 1.75]}
         gl={{
-          antialias: true,
+          // When the EffectComposer owns the render target we use hardware
+          // MSAA via `multisampling` below instead of context-level AA.
+          antialias: false,
           alpha: false,
           powerPreference: "high-performance",
+          stencil: false,
+          depth: true,
         }}
         camera={{ position: [0, 0, 8], fov: 50, near: 0.1, far: 200 }}
         onCreated={({ gl }) => {
@@ -1316,7 +1361,10 @@ export default function ImmersiveScene() {
           setPicked={setPicked}
           onInteractive={setInteractive}
         />
-        <EffectComposer multisampling={0}>
+        {/* `multisampling={4}` enables WebGL2 hardware MSAA on the
+            composer's intermediate target, which is much cheaper than an
+            SMAA post-pass on most GPUs and looks just as clean. */}
+        <EffectComposer multisampling={4}>
           {/* Threshold pushed high so only genuinely overbright surfaces
               (the music sphere and the corner flames, both toneMapped=false
               with HDR values > 1) contribute to bloom. The project tile
@@ -1329,7 +1377,6 @@ export default function ImmersiveScene() {
             mipmapBlur
             radius={0.7}
           />
-          <SMAA />
           <Vignette eskil={false} offset={0.3} darkness={0.7} />
         </EffectComposer>
       </Canvas>
