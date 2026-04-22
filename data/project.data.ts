@@ -45,16 +45,6 @@ const PROJECT_RECORDS: ProjectBase[] = [
       "https://www.figma.com/design/hB3sQuOb3ztReunlyvGiEN/VERDAN?node-id=0-1&t=OitKgQLjk7bXnfYA-1",
   },
   {
-    title: "Sgrids",
-    description: "Landing page for Renewables SAP application",
-    image: "/projects/sgrids.png",
-    logo: "/project_logo/sgrids.svg",
-    live: "https://sgrids.vercel.app/",
-    github: "https://github.com/StealthSilver/sgrids-lp",
-    figma:
-      "https://www.figma.com/design/HTVIDAbVfEn8CzWVvqVoMs/Sgrids?node-id=0-1&t=SsSC4rk4RVRXyaHK-1",
-  },
-  {
     title: "Spardha",
     description: "AI prep for competitive exams with practice, tests, and analytics",
     image: "/projects/spardha.png",
@@ -64,6 +54,36 @@ const PROJECT_RECORDS: ProjectBase[] = [
     figma:
       "https://www.figma.com/design/HTVIDAbVfEn8CzWVvqVoMs/Sgrids?node-id=0-1&t=SsSC4rk4RVRXyaHK-1",
   },
+  {
+    title: "Sol-X",
+    description: "A project management application",
+    image: "/projects/connectingdots.png", //
+    logo: "/project_logo/sol-X.svg",
+    live: "https://your-live-site.com", //
+    github: "https://github.com/StealthSilver/ConnectingDots",
+    figma: "https://figma.com/file/your-figma-link", //
+  },
+  {
+    title: "AlgoRhythm",
+    description: "A programming algorithm visualisation platform",
+    image: "/projects/algorhythm.png", //
+    logo: "/project_logo/algorhythm.svg",
+    darkLogo: "/project_logo/algorhythm-dark.svg",
+    live: "https://algo-rhythm-nine.vercel.app/", //
+    github: "https://github.com/StealthSilver/AlgoRhythm",
+    figma: "https://figma.com/file/your-figma-link", //
+  },
+  {
+    title: "Sgrids",
+    description: "Landing page for Renewables SAP application",
+    image: "/projects/sgrids.png",
+    logo: "/project_logo/sgrids.svg",
+    live: "https://sgrids.vercel.app/",
+    github: "https://github.com/StealthSilver/sgrids-lp",
+    figma:
+      "https://www.figma.com/design/HTVIDAbVfEn8CzWVvqVoMs/Sgrids?node-id=0-1&t=SsSC4rk4RVRXyaHK-1",
+  },
+ 
   {
     title: "MindPalace",
     description: "An organization and management application",
@@ -84,16 +104,6 @@ const PROJECT_RECORDS: ProjectBase[] = [
     figma: "https://figma.com/file/your-figma-link", //
   },
   {
-    title: "Sketch-It",
-    description: "A colloborative drawing application",
-    image: "/projects/sketchit.png", //
-    logo: "/project_logo/sketchit.svg",
-    live: "https://sketch-it-nine.vercel.app/", //
-    github: "https://github.com/StealthSilver/SketchIt",
-    figma: "https://figma.com/file/your-figma-link", //
-  },
-
-  {
     title: "Silver-UI",
     description: "A modern Ui component library",
     image: "/projects/silver-ui.png",
@@ -102,17 +112,25 @@ const PROJECT_RECORDS: ProjectBase[] = [
     github: "https://github.com/StealthSilver/Silver-UI",
     figma: "https://figma.com/file/your-figma-link", //
   },
-
   {
-    title: "Taskly",
-    description: "A task management application",
-    image: "/projects/taskly.png", //
-    logo: "/project_logo/taskly.svg",
-    live: "https://taskly-bay.vercel.app/", //
-    github: "https://github.com/StealthSilver/Taskly",
+    title: "Sketch-It",
+    description: "A colloborative drawing application",
+    image: "/projects/sketchit.png", //
+    logo: "/project_logo/sketchit.svg",
+    live: "https://sketch-it-nine.vercel.app/", //
+    github: "https://github.com/StealthSilver/SketchIt",
     figma: "https://figma.com/file/your-figma-link", //
   },
-
+  {
+    title: "InfinityX",
+    description: "Real time workflow mamagement applicaion",
+    image: "/projects/infinityx.png", //
+    logo: "/project_logo/infinityx.svg",
+    live: "https://infinity-x-landing.vercel.app/", //
+    github: "https://github.com/StealthSilver/InfinityX",
+    figma: "https://figma.com/file/your-figma-link", //
+  },
+  
   {
     title: "RiffinityAI",
     description: "An AI companion application with multiple models",
@@ -123,36 +141,6 @@ const PROJECT_RECORDS: ProjectBase[] = [
     github: "https://github.com/StealthSilver/Riffinity",
     figma: "https://figma.com/file/your-figma-link", //
   },
-
-  {
-    title: "InfinityX",
-    description: "Real time workflow mamagement applicaion",
-    image: "/projects/infinityx.png", //
-    logo: "/project_logo/infinityx.svg",
-    live: "https://infinity-x-landing.vercel.app/", //
-    github: "https://github.com/StealthSilver/InfinityX",
-    figma: "https://figma.com/file/your-figma-link", //
-  },
-  {
-    title: "AlgoRhythm",
-    description: "A programming algorithm visualisation platform",
-    image: "/projects/algorhythm.png", //
-    logo: "/project_logo/algorhythm.svg",
-    darkLogo: "/project_logo/algorhythm-dark.svg",
-    live: "https://algo-rhythm-nine.vercel.app/", //
-    github: "https://github.com/StealthSilver/AlgoRhythm",
-    figma: "https://figma.com/file/your-figma-link", //
-  },
-  {
-    title: "Alcaster",
-    description: "A blackcahin legacy archive platform",
-    image: "/projects/alcaster.png", //
-    logo: "/project_logo/alcaster.svg",
-    live: "https://alcaster.vercel.app/", //
-    github: "https://github.com/StealthSilver/Alcaster",
-    figma: "https://figma.com/file/your-figma-link", //
-  },
-
   {
     title: "ConnectRight",
     description: "A low latency video confrencing platforms",
@@ -161,18 +149,6 @@ const PROJECT_RECORDS: ProjectBase[] = [
     live: "https://connect-right.vercel.app/",
     github: "https://github.com/StealthSilver/ConnectRight",
     figma: "https://figma.com/file/your-figma-link", //
-  },
-
-  {
-    title: "Silver",
-    description: "A portfolio application in nextjs ",
-    image: "/projects/silver.png",
-    logo: "/project_logo/silver-l.svg",
-    darkLogo: "/project_logo/silver-dark.svg",
-    live: "https://silver-jet.vercel.app/",
-    github: "https://github.com/StealthSilver/Silver",
-    figma:
-      "https://www.figma.com/design/vX7gVhAgVACysF1aFNcCtj/Portfolio?node-id=36-541&t=zlVUk0IN29zpPcVg-1",
   },
   {
     title: "Intersecting Lines",
@@ -184,47 +160,6 @@ const PROJECT_RECORDS: ProjectBase[] = [
     figma:
       "https://www.figma.com/design/b00XL5lXg2hl2jUNbtePw9/Silver-s-Desk?node-id=0-1&t=MGYZvAoWbktNGfIE-1",
   },
-
-  {
-    title: "Form and Function",
-    description: "A modern and original design agency website",
-    image: "/projects/form&function.png",
-    logo: "/project_logo/formandfunction.svg",
-    lightLogo: "/project_logo/formandfunction-light.svg",
-    live: "https://form-function.vercel.app/",
-    github: "https://github.com/StealthSilver/Form-Function",
-    figma: "https://figma.com/file/your-figma-link", //
-  },
-  {
-    title: "BridgePay",
-    description: "An end to end payment gateway application",
-    image: "/projects/bridgepay.png", //
-    logo: "/project_logo/bridgepay.svg",
-    live: "https://bridge-pay-vve4.vercel.app/", // backend deploy
-    github: "https://github.com/StealthSilver/BridgePay",
-    figma: "https://figma.com/file/your-figma-link", //
-  },
-  {
-    title: "Meetmux",
-    description: "Landing page for a social media platform",
-    image: "/projects/metmux.png",
-    logo: "/project_logo/meetmux.png",
-    live: "https://meet-mux-xi.vercel.app/",
-    github: "https://github.com/StealthSilver/MeetMux",
-    figma: "https://figma.com/file/your-figma-link", //
-  },
-
-  {
-    title: "Prominent",
-    description: "Low Latency real time trading and investment application",
-    image: "/projects/prominent.png", //
-    logo: "/project_logo/promlogo.svg",
-    live: "https://prominent-eight.vercel.app/", // -> landing page
-    github: "https://github.com/StealthSilver/Prominent",
-    figma:
-      "https://www.figma.com/design/UhdHOIha7xWSdqZwHjCc7M/Prominent?node-id=1-2&t=37UrjNWrYqGqM5ym-1", //
-  },
-
   {
     title: "BinaryNetwork",
     description: "A professional social media platform",
@@ -244,7 +179,77 @@ const PROJECT_RECORDS: ProjectBase[] = [
     github: "https://github.com/StealthSilver/DevOrbit",
     figma: "https://figma.com/file/your-figma-link", //
   },
+  {
+    title: "Taskly",
+    description: "A task management application",
+    image: "/projects/taskly.png", //
+    logo: "/project_logo/taskly.svg",
+    live: "https://taskly-bay.vercel.app/", //
+    github: "https://github.com/StealthSilver/Taskly",
+    figma: "https://figma.com/file/your-figma-link", //
+  },
 
+  {
+    title: "Silver",
+    description: "A portfolio application in nextjs ",
+    image: "/projects/silver.png",
+    logo: "/project_logo/silver-l.svg",
+    darkLogo: "/project_logo/silver-dark.svg",
+    live: "https://silver-jet.vercel.app/",
+    github: "https://github.com/StealthSilver/Silver",
+    figma:
+      "https://www.figma.com/design/vX7gVhAgVACysF1aFNcCtj/Portfolio?node-id=36-541&t=zlVUk0IN29zpPcVg-1",
+  },
+
+ 
+
+  {
+    title: "Form and Function",
+    description: "A modern and original design agency website",
+    image: "/projects/form&function.png",
+    logo: "/project_logo/formandfunction.svg",
+    lightLogo: "/project_logo/formandfunction-light.svg",
+    live: "https://form-function.vercel.app/",
+    github: "https://github.com/StealthSilver/Form-Function",
+    figma: "https://figma.com/file/your-figma-link", //
+  },
+  {
+    title: "Alcaster",
+    description: "A blackcahin legacy archive platform",
+    image: "/projects/alcaster.png", //
+    logo: "/project_logo/alcaster.svg",
+    live: "https://alcaster.vercel.app/", //
+    github: "https://github.com/StealthSilver/Alcaster",
+    figma: "https://figma.com/file/your-figma-link", //
+  },
+  {
+    title: "BridgePay",
+    description: "An end to end payment gateway application",
+    image: "/projects/bridgepay.png", //
+    logo: "/project_logo/bridgepay.svg",
+    live: "https://bridge-pay-vve4.vercel.app/", // backend deploy
+    github: "https://github.com/StealthSilver/BridgePay",
+    figma: "https://figma.com/file/your-figma-link", //
+  },
+  {
+    title: "Prominent",
+    description: "Low Latency real time trading and investment application",
+    image: "/projects/prominent.png", //
+    logo: "/project_logo/promlogo.svg",
+    live: "https://prominent-eight.vercel.app/", // -> landing page
+    github: "https://github.com/StealthSilver/Prominent",
+    figma:
+      "https://www.figma.com/design/UhdHOIha7xWSdqZwHjCc7M/Prominent?node-id=1-2&t=37UrjNWrYqGqM5ym-1", //
+  },
+  {
+    title: "Meetmux",
+    description: "Landing page for a social media platform",
+    image: "/projects/metmux.png",
+    logo: "/project_logo/meetmux.png",
+    live: "https://meet-mux-xi.vercel.app/",
+    github: "https://github.com/StealthSilver/MeetMux",
+    figma: "https://figma.com/file/your-figma-link", //
+  },
   {
     title: "ConnectingDots",
     description: "A course selling application with LMS",
