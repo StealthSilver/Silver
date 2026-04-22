@@ -99,6 +99,7 @@ export default function Hero() {
                 text="Silver"
                 duration={0.3}
                 interactive
+                introSweepOnFirstLoad
                 onPrimaryAction={requestEnterImmersive}
               />
             </div>

@@ -16,12 +16,15 @@ export const TextHoverEffect = ({
   duration,
   interactive,
   onPrimaryAction,
+  introSweepOnFirstLoad,
 }: {
   text: string;
   duration?: number;
   /** When true, SILVER shows a ring cursor on hover and can activate immersion on click. */
   interactive?: boolean;
   onPrimaryAction?: () => void;
+  /** Plays a one-time left-to-right intro sweep on each page load. */
+  introSweepOnFirstLoad?: boolean;
 }) => {
   const displayText = text.toUpperCase();
   const uid = useId().replace(/:/g, "");
@@ -30,9 +33,11 @@ export const TextHoverEffect = ({
   const textMaskId = `textMask-${uid}`;
 
   const svgRef = useRef<SVGSVGElement>(null);
+  const textMeasureRef = useRef<SVGTextElement>(null);
   const [cursor, setCursor] = useState({ x: 0, y: 0 });
   const [maskPosition, setMaskPosition] = useState({ cx: "50%", cy: "50%" });
   const [hovered, setHovered] = useState(false);
+  const [introSweepRange, setIntroSweepRange] = useState({ startCx: 8, endCx: 92 });
 
   useEffect(() => {
     if (svgRef.current && cursor.x !== null && cursor.y !== null) {
@@ -45,6 +50,54 @@ export const TextHoverEffect = ({
       });
     }
   }, [cursor]);
+
+  useEffect(() => {
+    if (!introSweepOnFirstLoad) return;
+
+    const measureSweepRange = () => {
+      const textEl = textMeasureRef.current;
+      if (!textEl) return;
+
+      const bbox = textEl.getBBox();
+      if (!bbox.width) return;
+
+      const startCx = Math.max(0, (bbox.x / VIEW_W) * 100);
+      const endCx = Math.min(100, ((bbox.x + bbox.width) / VIEW_W) * 100);
+      setIntroSweepRange({ startCx, endCx });
+    };
+
+    measureSweepRange();
+    if (typeof document !== "undefined" && "fonts" in document) {
+      void (document as Document & { fonts: FontFaceSet }).fonts.ready.then(measureSweepRange);
+    }
+  }, [introSweepOnFirstLoad, displayText]);
+
+  useEffect(() => {
+    if (!introSweepOnFirstLoad) return;
+    if (typeof window === "undefined") return;
+
+    const totalMs = 950;
+    const { startCx, endCx } = introSweepRange;
+    const start = performance.now();
+    let frameId = 0;
+
+    if (interactive) setHovered(true);
+
+    const tick = (now: number) => {
+      const progress = Math.min((now - start) / totalMs, 1);
+      const cx = startCx + (endCx - startCx) * progress;
+      setMaskPosition({ cx: `${cx}%`, cy: "50%" });
+
+      if (progress < 1) {
+        frameId = window.requestAnimationFrame(tick);
+      } else {
+        if (interactive) setHovered(false);
+      }
+    };
+
+    frameId = window.requestAnimationFrame(tick);
+    return () => window.cancelAnimationFrame(frameId);
+  }, [introSweepOnFirstLoad, interactive, introSweepRange]);
 
   const handleKeyDown = (e: React.KeyboardEvent<SVGSVGElement>) => {
     if (!interactive || !onPrimaryAction) return;
@@ -119,6 +172,7 @@ export const TextHoverEffect = ({
       </defs>
 
       <text
+        ref={textMeasureRef}
         x="50%"
         y="50%"
         textAnchor="middle"

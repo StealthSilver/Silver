@@ -25,7 +25,7 @@ export const EXPERIENCES: ExperienceItem[] = [
   {
     company: "Adobe",
     position: "Software Engneer Intern",
-    duration: "Dec 2025 - Mar 2025",
+    duration: "Dec 2025 - Mar 2026",
     location: "Noida, India",
     link: "https://adobe.com",
     logo: "/companies/adobe.jpeg",
