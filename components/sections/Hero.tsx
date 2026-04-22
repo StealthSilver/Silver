@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useId, useState } from "react";
+import { useEffect, useId, useRef, useState } from "react";
 import Image from "next/image";
 import { Caveat } from "next/font/google";
 import { GeistSans } from "geist/font/sans";
@@ -24,11 +24,16 @@ const heroPencil = Caveat({
   display: "swap",
 });
 
+/** Full-bleed rules in the know-more dialog (offsets `p-4` / `sm:p-6`). */
+const KNOW_MORE_RULE =
+  "-mx-4 h-px w-[calc(100%+2rem)] shrink-0 bg-line sm:-mx-6 sm:w-[calc(100%+3rem)]" as const;
+
 export default function Hero() {
   const { requestEnterImmersive } = useImmersiveMode();
   const zoneArrowMarkerId = useId().replace(/:/g, "");
   const [isKnowMoreOpen, setIsKnowMoreOpen] = useState(false);
   const [showLongFlipLine, setShowLongFlipLine] = useState(false);
+  const bodyOverflowBeforeKnowMore = useRef<string | null>(null);
 
   useEffect(() => {
     const mq = window.matchMedia("(min-width: 640px)");
@@ -49,6 +54,23 @@ export default function Hero() {
 
     window.addEventListener("keydown", onKeyDown);
     return () => window.removeEventListener("keydown", onKeyDown);
+  }, [isKnowMoreOpen]);
+
+  useEffect(() => {
+    if (!isKnowMoreOpen) return;
+    bodyOverflowBeforeKnowMore.current = document.body.style.overflow;
+    const htmlOverflowBefore = document.documentElement.style.overflow;
+    document.body.style.overflow = "hidden";
+    document.documentElement.style.overflow = "hidden";
+    return () => {
+      if (bodyOverflowBeforeKnowMore.current != null) {
+        document.body.style.overflow = bodyOverflowBeforeKnowMore.current;
+        bodyOverflowBeforeKnowMore.current = null;
+      } else {
+        document.body.style.removeProperty("overflow");
+      }
+      document.documentElement.style.overflow = htmlOverflowBefore;
+    };
   }, [isKnowMoreOpen]);
 
   return (
@@ -187,60 +209,60 @@ export default function Hero() {
 
       {isKnowMoreOpen ? (
         <div
-          className="fixed inset-0 z-50 grid place-items-center bg-black/45 px-4 backdrop-blur-md"
+          className="fixed inset-0 z-50 grid place-items-center overflow-hidden overscroll-none bg-black/45 p-3 pt-[max(0.75rem,env(safe-area-inset-top))] pb-[max(0.75rem,env(safe-area-inset-bottom))] backdrop-blur-md sm:p-4"
           onClick={() => setIsKnowMoreOpen(false)}
           role="dialog"
           aria-modal="true"
           aria-labelledby="know-more-title"
         >
           <div
-            className="relative w-full max-w-[40rem] border border-line bg-background p-5 shadow-xl sm:p-6"
+            className="relative my-auto min-h-0 min-w-0 w-full max-w-[40rem] overflow-visible border border-line bg-background p-4 shadow-xl sm:p-6"
             onClick={(event) => event.stopPropagation()}
           >
-            <span
-              className="pointer-events-none absolute left-[-4.5px] top-[-3.5px] z-2 flex size-2 border bg-background"
-              style={{ borderColor: "var(--line)" }}
+            <div
+              className="pointer-events-none absolute top-[-3.5px] left-[-4.5px] z-2 flex size-2 border border-line bg-background"
               aria-hidden
             />
-            <span
-              className="pointer-events-none absolute right-[-4.5px] top-[-3.5px] z-2 flex size-2 border bg-background"
-              style={{ borderColor: "var(--line)" }}
+            <div
+              className="pointer-events-none absolute top-[-3.5px] right-[-4.5px] z-2 flex size-2 border border-line bg-background"
               aria-hidden
             />
-            <span
-              className="pointer-events-none absolute bottom-[-3.5px] left-[-4.5px] z-2 flex size-2 border bg-background"
-              style={{ borderColor: "var(--line)" }}
+            <div
+              className="pointer-events-none absolute bottom-[-3.5px] left-[-4.5px] z-2 flex size-2 border border-line bg-background"
               aria-hidden
             />
-            <span
-              className="pointer-events-none absolute bottom-[-3.5px] right-[-4.5px] z-2 flex size-2 border bg-background"
-              style={{ borderColor: "var(--line)" }}
+            <div
+              className="pointer-events-none absolute right-[-4.5px] bottom-[-3.5px] z-2 flex size-2 border border-line bg-background"
               aria-hidden
             />
 
-            <div className="mb-4 flex items-center justify-between border-b border-line pb-2">
+            <div className="mb-0 flex flex-col gap-3 pt-1 pb-3 sm:mb-0 sm:flex-row sm:items-baseline sm:justify-between sm:gap-4 sm:pb-2">
               <h3
                 id="know-more-title"
-                className={`${GeistSans.className} text-xl font-semibold tracking-tight text-foreground`}
+                className={`${GeistMono.className} min-w-0 flex-1 text-[15px] leading-snug text-foreground/90 sm:pr-2`}
               >
                 Since you have clicked my profile picture
               </h3>
               <button
                 type="button"
                 onClick={() => setIsKnowMoreOpen(false)}
-                className={`${GeistMono.className} text-[13px] uppercase tracking-[0.12em] text-muted-foreground transition-colors hover:text-foreground`}
+                className={`${GeistMono.className} shrink-0 self-end text-[13px] uppercase leading-none tracking-[0.12em] text-muted-foreground transition-colors hover:text-foreground sm:self-auto`}
                 aria-label="Close popup"
               >
                 Close
               </button>
             </div>
 
-            <div className={`${GeistMono.className} space-y-4 text-[14px] leading-relaxed text-muted-foreground`}>
+            <div className={`${KNOW_MORE_RULE} mb-4`} aria-hidden />
+
+            <div className={`${GeistMono.className} text-[14px] leading-relaxed text-muted-foreground`}>
               <blockquote className="border-l border-line pl-3 italic text-foreground/90">
-                <p>What is earth without art.</p>
+                <p>What is earth without art?</p>
                 <p>It&apos;s just a bare rock floating in space.</p>
                 <footer className="mt-1 text-muted-foreground">- Anonymous</footer>
               </blockquote>
+
+              <div className={`${KNOW_MORE_RULE} my-4`} aria-hidden />
 
               <div>
                 <p className="mb-1 text-foreground">Music</p>
@@ -250,11 +272,15 @@ export default function Hero() {
                 Avenged Sevenfold</p>
               </div>
 
+              <div className={`${KNOW_MORE_RULE} my-4`} aria-hidden />
+
               <div>
                 <p className="mb-1 text-foreground">Books</p>
                 <p>The Road — by Cormac McCarthy</p>
                 <p>A Fine Balance — by Rohinton Mistry</p>
               </div>
+
+              <div className={`${KNOW_MORE_RULE} my-4`} aria-hidden />
 
               <div>
                 <p className="mb-1 text-foreground">Movies</p>
@@ -264,11 +290,15 @@ export default function Hero() {
                 <p>Udaan</p>
               </div>
 
+              <div className={`${KNOW_MORE_RULE} my-4`} aria-hidden />
+
               <div>
                 <p className="mb-1 text-foreground">Actors I Admire</p>
                 <p>Irfan Khan</p>
                 <p>Christian Bale</p>
               </div>
+
+              <div className={`${KNOW_MORE_RULE} my-4`} aria-hidden />
 
               <div>
                 <p className="mb-1 text-foreground">Comedians</p>
