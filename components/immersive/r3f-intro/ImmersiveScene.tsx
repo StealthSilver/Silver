@@ -1413,19 +1413,25 @@ export default function ImmersiveScene() {
       );
     };
     let lastTouchY: number | null = null;
+    let lastTouchX: number | null = null;
     const onTouchStart = (e: TouchEvent) => {
+      lastTouchX = e.touches[0]?.clientX ?? null;
       lastTouchY = e.touches[0]?.clientY ?? null;
     };
     const onTouchMove = (e: TouchEvent) => {
-      if (!interactiveRef.current || lastTouchY == null) return;
+      if (!interactiveRef.current || lastTouchY == null || lastTouchX == null) return;
+      const x = e.touches[0]?.clientX ?? null;
       const y = e.touches[0]?.clientY ?? null;
-      if (y == null) return;
+      if (x == null || y == null) return;
+      const dx = lastTouchX - x;
       const dy = lastTouchY - y;
+      lastTouchX = x;
       lastTouchY = y;
       if (pickedRef.current !== null) return;
+      const dominantDelta = Math.abs(dx) > Math.abs(dy) ? dx : dy;
       scrollTargetRef.current = Math.max(
         0,
-        Math.min(1, scrollTargetRef.current + dy * 0.0006),
+        Math.min(1, scrollTargetRef.current + dominantDelta * 0.0006),
       );
     };
     window.addEventListener("wheel", onWheel, { passive: true });
@@ -1538,8 +1544,9 @@ const ZOOM_EASING = "cubic-bezier(0.22, 0.61, 0.36, 1)";
 const PANEL_INSET_TOP = 0.12;    // 12% from top
 const PANEL_INSET_SIDE = 0.05;   // 5% from left and right
 const PANEL_INSET_BOTTOM = 0;    // flush with bottom
-const PANEL_INSET_TOP_MOBILE = 0.08;
-const PANEL_INSET_SIDE_MOBILE = 0.03;
+const PANEL_INSET_TOP_MOBILE = 0.14;
+const PANEL_INSET_SIDE_MOBILE = 0.05;
+const PANEL_INSET_BOTTOM_MOBILE = 0.04;
 
 function FocusedProjectPage({
   project,
@@ -1619,10 +1626,11 @@ function FocusedProjectPage({
   const isMobile = viewport.w < 640;
   const insetTop = isMobile ? PANEL_INSET_TOP_MOBILE : PANEL_INSET_TOP;
   const insetSide = isMobile ? PANEL_INSET_SIDE_MOBILE : PANEL_INSET_SIDE;
+  const insetBottom = isMobile ? PANEL_INSET_BOTTOM_MOBILE : PANEL_INSET_BOTTOM;
   const panelLeft = viewport.w * insetSide;
   const panelTop = viewport.h * insetTop;
   const panelW = viewport.w * (1 - insetSide * 2);
-  const panelH = viewport.h * (1 - insetTop - PANEL_INSET_BOTTOM);
+  const panelH = viewport.h * (1 - insetTop - insetBottom);
   const scaleX = rect.width / panelW;
   const scaleY = rect.height / panelH;
   const tx = rect.left - panelLeft;
@@ -1633,7 +1641,7 @@ function FocusedProjectPage({
     top: `${insetTop * 100}%`,
     left: `${insetSide * 100}%`,
     right: `${insetSide * 100}%`,
-    bottom: 0,
+    bottom: `${insetBottom * 100}%`,
     width: "auto",
     height: "auto",
     transform: isOpen ? "translate(0px, 0px) scale(1, 1)" : compactTransform,
