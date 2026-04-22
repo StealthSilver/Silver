@@ -118,7 +118,7 @@ export default function Experience() {
                       <p className={`${GeistMono.className} mt-2 text-[13px] text-foreground`}>
                         {experience.position}
                       </p>
-                      <p className={`${GeistMono.className} mt-1 text-[12px] leading-relaxed text-muted-foreground sm:text-[13px]`}>
+                      <p className={`${GeistMono.className} mt-1 overflow-hidden text-ellipsis whitespace-nowrap text-[11px] leading-none text-muted-foreground sm:text-[13px]`}>
                         <span
                           dangerouslySetInnerHTML={{ __html: formatDurationMeta(experience.duration, experience.location) }}
                         />

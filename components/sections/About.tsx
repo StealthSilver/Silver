@@ -291,7 +291,7 @@ export default function About() {
               )}
             </span>
             <span
-              className={`${GeistMono.className} min-w-0 flex-1 text-[14px] text-foreground no-underline transition-all duration-200 ease-out group-hover:underline underline-offset-2`}
+              className={`${GeistMono.className} min-w-0 flex-1 text-[12px] text-foreground no-underline transition-all duration-200 ease-out group-hover:underline underline-offset-2 sm:text-[14px]`}
             >
               {label}
             </span>
