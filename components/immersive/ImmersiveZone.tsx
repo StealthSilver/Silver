@@ -1,7 +1,8 @@
 "use client";
 
-import { useEffect } from "react";
-import { Pause, Play } from "lucide-react";
+import { useEffect, useState } from "react";
+import { ArrowUpRight, Mail, Pause, Play, X } from "lucide-react";
+import { FaDiscord, FaLinkedin, FaXTwitter } from "react-icons/fa6";
 import { GeistSans } from "geist/font/sans";
 import { GeistMono } from "geist/font/mono";
 import { navLinkColor } from "@/lib/nav-link-color";
@@ -11,6 +12,35 @@ import ImmersiveScene from "@/components/immersive/r3f-intro/ImmersiveScene";
 const immersiveBorderColor = "rgba(168, 172, 186, 0.85)";
 const immersiveBackground = "#000000";
 
+type ContactLink = {
+  label: string;
+  href: string;
+  icon: React.ComponentType<{ className?: string; style?: React.CSSProperties }>;
+  color?: string;
+  themeAware?: boolean;
+};
+
+const contactLinks: ContactLink[] = [
+  { label: "X", href: "https://x.com/silver_srs", icon: FaXTwitter, themeAware: true },
+  {
+    label: "LinkedIn",
+    href: "https://www.linkedin.com/in/rajat-saraswat-0491a3259/",
+    icon: FaLinkedin,
+    color: "#0A66C2",
+  },
+  {
+    label: "Discord",
+    href: "https://discord.com/users/rajat_28969",
+    icon: FaDiscord,
+    color: "#5865F2",
+  },
+  {
+    label: "Mail",
+    href: "mailto:rajat.saraswat.work@gmail.com",
+    icon: Mail,
+  },
+];
+
 export default function ImmersiveZone() {
   const {
     requestExitImmersive,
@@ -19,6 +49,8 @@ export default function ImmersiveZone() {
     immersivePrevTrack,
     immersiveNextTrack,
   } = useImmersiveMode();
+
+  const [contactOpen, setContactOpen] = useState(false);
 
   // Clean up the body-level "hover tile" cursor flag whenever the immersive
   // zone unmounts — otherwise the hover cursor can stick around after exit.
@@ -30,6 +62,16 @@ export default function ImmersiveZone() {
     };
   }, []);
 
+  // Close the contact flyout on Escape for consistent keyboard UX.
+  useEffect(() => {
+    if (!contactOpen) return;
+    const onKey = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setContactOpen(false);
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [contactOpen]);
+
   return (
     <div
       className="immersive-cursor fixed inset-0 z-[40] overflow-hidden bg-black"
@@ -39,40 +81,109 @@ export default function ImmersiveZone() {
       <ImmersiveScene />
 
       <div className="pointer-events-auto absolute top-[max(0.65rem,env(safe-area-inset-top))] left-[max(0.65rem,env(safe-area-inset-left))] z-[50] sm:top-4 sm:left-4">
-        <div className="relative">
-          <a
-            href="mailto:rajat.saraswat.work@gmail.com"
-            className="inline-flex h-10 min-w-[9.5rem] cursor-pointer items-center justify-center rounded-none border bg-black px-4 shadow-sm transition-colors hover:bg-muted sm:px-5"
-            style={{ borderColor: immersiveBorderColor }}
-            aria-label="Contact Rajat"
-          >
-            <span
-              className={`${GeistMono.className} text-[14px] font-medium uppercase tracking-[0.14em]`}
-              style={{ color: navLinkColor }}
+        <div>
+          <div className="relative inline-block w-[9.5rem]">
+            <button
+              type="button"
+              onClick={() => setContactOpen((open) => !open)}
+              aria-expanded={contactOpen}
+              aria-controls="immersive-contact-flyout"
+              aria-label={contactOpen ? "Close contact options" : "Open contact options"}
+              className="inline-flex h-10 w-full cursor-pointer items-center justify-center rounded-none border bg-black px-4 shadow-sm transition-colors hover:bg-muted sm:px-5"
+              style={{ borderColor: immersiveBorderColor }}
             >
-              Contact
-            </span>
-          </a>
-          <span
-            aria-hidden
-            className="absolute top-[-3px] left-[-3px] size-1.5 border"
-            style={{ borderColor: immersiveBorderColor, backgroundColor: immersiveBackground }}
-          />
-          <span
-            aria-hidden
-            className="absolute top-[-3px] right-[-3px] size-1.5 border"
-            style={{ borderColor: immersiveBorderColor, backgroundColor: immersiveBackground }}
-          />
-          <span
-            aria-hidden
-            className="absolute bottom-[-3px] left-[-3px] size-1.5 border"
-            style={{ borderColor: immersiveBorderColor, backgroundColor: immersiveBackground }}
-          />
-          <span
-            aria-hidden
-            className="absolute right-[-3px] bottom-[-3px] size-1.5 border"
-            style={{ borderColor: immersiveBorderColor, backgroundColor: immersiveBackground }}
-          />
+              {contactOpen ? (
+                <X
+                  className="size-[1.05rem] transition-transform duration-200"
+                  strokeLinecap="square"
+                  strokeLinejoin="miter"
+                  style={{ color: navLinkColor }}
+                  aria-hidden
+                />
+              ) : (
+                <span
+                  className={`${GeistMono.className} text-[14px] font-medium uppercase tracking-[0.14em]`}
+                  style={{ color: navLinkColor }}
+                >
+                  Contact
+                </span>
+              )}
+            </button>
+            <span
+              aria-hidden
+              className="absolute top-[-3px] left-[-3px] size-1.5 border"
+              style={{ borderColor: immersiveBorderColor, backgroundColor: immersiveBackground }}
+            />
+            <span
+              aria-hidden
+              className="absolute top-[-3px] right-[-3px] size-1.5 border"
+              style={{ borderColor: immersiveBorderColor, backgroundColor: immersiveBackground }}
+            />
+            <span
+              aria-hidden
+              className="absolute bottom-[-3px] left-[-3px] size-1.5 border"
+              style={{ borderColor: immersiveBorderColor, backgroundColor: immersiveBackground }}
+            />
+            <span
+              aria-hidden
+              className="absolute right-[-3px] bottom-[-3px] size-1.5 border"
+              style={{ borderColor: immersiveBorderColor, backgroundColor: immersiveBackground }}
+            />
+          </div>
+
+          <div
+            id="immersive-contact-flyout"
+            className="mt-2 flex w-[9.5rem] flex-col gap-2"
+            aria-hidden={!contactOpen}
+          >
+            {contactLinks.map((item, index) => {
+              const { label, href, icon: Icon, color, themeAware } = item;
+              const iconColor = themeAware ? "#F3F4F6" : color ?? navLinkColor;
+              const openDelay = index * 55;
+              const closeDelay = (contactLinks.length - 1 - index) * 35;
+
+              return (
+                <a
+                  key={label}
+                  href={href}
+                  target={href.startsWith("mailto:") ? undefined : "_blank"}
+                  rel={href.startsWith("mailto:") ? undefined : "noopener noreferrer"}
+                  tabIndex={contactOpen ? 0 : -1}
+                  aria-label={label}
+                  className="group flex h-10 items-center gap-3 border bg-background px-3 transition-colors hover:bg-muted/20"
+                  style={{
+                    borderColor: immersiveBorderColor,
+                    backgroundColor: immersiveBackground,
+                    opacity: contactOpen ? 1 : 0,
+                    transform: contactOpen
+                      ? "translateY(0) scale(1)"
+                      : "translateY(-0.75rem) scale(0.96)",
+                    pointerEvents: contactOpen ? "auto" : "none",
+                    transition: `opacity 260ms ease ${contactOpen ? openDelay : closeDelay}ms, transform 320ms cubic-bezier(0.22, 1, 0.36, 1) ${contactOpen ? openDelay : closeDelay}ms`,
+                  }}
+                >
+                  <span
+                    className="inline-flex size-6 shrink-0 items-center justify-center border bg-muted/40"
+                    style={{ borderColor: immersiveBorderColor }}
+                    aria-hidden
+                  >
+                    <Icon className="size-3.5" style={{ color: iconColor }} />
+                  </span>
+                  <span
+                    className={`${GeistMono.className} min-w-0 flex-1 text-[13px] font-medium uppercase tracking-[0.12em] no-underline transition-all duration-200 ease-out group-hover:underline underline-offset-2`}
+                    style={{ color: navLinkColor }}
+                  >
+                    {label}
+                  </span>
+                  <ArrowUpRight
+                    className="size-3.5 shrink-0 transition-transform duration-200 ease-out group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
+                    style={{ color: navLinkColor }}
+                    aria-hidden
+                  />
+                </a>
+              );
+            })}
+          </div>
         </div>
       </div>
       <div className="pointer-events-auto absolute top-[max(0.65rem,env(safe-area-inset-top))] right-[max(0.65rem,env(safe-area-inset-right))] z-[50] inline-grid w-max max-w-[min(100vw-1.5rem,22rem)] grid-cols-1 gap-2 justify-items-stretch sm:top-4 sm:right-4">

@@ -23,6 +23,9 @@ export const IMMERSIVE_MUSIC_SRC = IMMERSIVE_TRACKS[0];
 
 const FADE_IN_MS = 3000;
 const FADE_OUT_MS = 2000;
+/** Output gain multiplier while a project page is zoomed open in immersion (ducked music). */
+const FOCUS_PAGE_DUCK_GAIN = 0.52;
+const FOCUS_DUCK_RAMP_MS = 480;
 
 export type ImmersiveSheet =
   | "none"
@@ -54,6 +57,11 @@ interface ImmersiveModeContextType {
    * (see `lib/music-motion.ts`).
    */
   getImmersiveAudio: () => HTMLAudioElement | null;
+  /**
+   * When `true`, immersion music is slightly ducked (fade + lower volume)
+   * for reading focused UI (e.g. zoomed project page). No-op if not immersive.
+   */
+  setImmersiveFocusPageOpen: (open: boolean) => void;
 }
 
 const ImmersiveModeContext = createContext<
@@ -80,6 +88,11 @@ export function ImmersiveModeProvider({ children }: { children: ReactNode }) {
   const audioCtxRef = useRef<AudioContext | null>(null);
   const analyserRef = useRef<AnalyserNode | null>(null);
   const mediaSourceRef = useRef<MediaElementAudioSourceNode | null>(null);
+  /** Logical volume (0..1) before focus-page ducking; output = base × duckGain. */
+  const baseVolumeRef = useRef(1);
+  const duckGainRef = useRef(1);
+  const duckTargetRef = useRef(1);
+  const duckAnimGenRef = useRef(0);
 
   useEffect(() => {
     pausedRef.current = immersiveMusicPaused;
@@ -95,43 +108,98 @@ export function ImmersiveModeProvider({ children }: { children: ReactNode }) {
 
   const clamp01 = (v: number) => (v < 0 ? 0 : v > 1 ? 1 : v);
 
-  const startFadeIn = useCallback((audio: HTMLAudioElement) => {
-    const gen = ++fadeGenRef.current;
-    audio.volume = 0;
-    const t0 = performance.now();
-    const step = (now: number) => {
-      if (fadeGenRef.current !== gen) return;
-      const t = clamp01((now - t0) / FADE_IN_MS);
-      const el = musicRef.current;
-      if (!el) return;
-      el.volume = clamp01(t);
-      if (t < 1) {
-        requestAnimationFrame(step);
-      }
-    };
-    requestAnimationFrame(step);
+  const applyImmersiveOutputVolume = useCallback(() => {
+    const el = musicRef.current;
+    if (!el) return;
+    el.volume = clamp01(baseVolumeRef.current * duckGainRef.current);
   }, []);
 
-  const startFadeOut = useCallback((audio: HTMLAudioElement) => {
-    const gen = ++fadeGenRef.current;
-    const v0 = clamp01(audio.volume);
+  const startDuckRamp = useCallback(() => {
+    const gen = ++duckAnimGenRef.current;
+    const from = duckGainRef.current;
+    const to = duckTargetRef.current;
     const t0 = performance.now();
     const step = (now: number) => {
-      if (fadeGenRef.current !== gen) return;
-      const t = clamp01((now - t0) / FADE_OUT_MS);
-      const el = musicRef.current;
-      if (!el) return;
-      el.volume = clamp01(v0 * (1 - t));
+      if (duckAnimGenRef.current !== gen) return;
+      const t = clamp01((now - t0) / FOCUS_DUCK_RAMP_MS);
+      const te = 1 - (1 - t) * (1 - t);
+      duckGainRef.current = from + (to - from) * te;
+      applyImmersiveOutputVolume();
       if (t < 1) {
         requestAnimationFrame(step);
         return;
       }
-      el.pause();
-      el.currentTime = 0;
-      el.volume = 1;
+      duckGainRef.current = to;
+      applyImmersiveOutputVolume();
     };
     requestAnimationFrame(step);
-  }, []);
+  }, [applyImmersiveOutputVolume]);
+
+  const resetFocusDuck = useCallback(() => {
+    duckAnimGenRef.current += 1;
+    duckTargetRef.current = 1;
+    duckGainRef.current = 1;
+    applyImmersiveOutputVolume();
+  }, [applyImmersiveOutputVolume]);
+
+  const setImmersiveFocusPageOpen = useCallback(
+    (open: boolean) => {
+      if (!isImmersive) return;
+      duckTargetRef.current = open ? FOCUS_PAGE_DUCK_GAIN : 1;
+      startDuckRamp();
+    },
+    [isImmersive, startDuckRamp],
+  );
+
+  const startFadeIn = useCallback(
+    (audio: HTMLAudioElement) => {
+      const gen = ++fadeGenRef.current;
+      baseVolumeRef.current = 0;
+      applyImmersiveOutputVolume();
+      const t0 = performance.now();
+      const step = (now: number) => {
+        if (fadeGenRef.current !== gen) return;
+        const t = clamp01((now - t0) / FADE_IN_MS);
+        const el = musicRef.current;
+        if (!el) return;
+        baseVolumeRef.current = clamp01(t);
+        applyImmersiveOutputVolume();
+        if (t < 1) {
+          requestAnimationFrame(step);
+        }
+      };
+      requestAnimationFrame(step);
+    },
+    [applyImmersiveOutputVolume],
+  );
+
+  const startFadeOut = useCallback(
+    (audio: HTMLAudioElement) => {
+      const gen = ++fadeGenRef.current;
+      const v0 = clamp01(baseVolumeRef.current);
+      const t0 = performance.now();
+      const step = (now: number) => {
+        if (fadeGenRef.current !== gen) return;
+        const t = clamp01((now - t0) / FADE_OUT_MS);
+        const el = musicRef.current;
+        if (!el) return;
+        baseVolumeRef.current = clamp01(v0 * (1 - t));
+        applyImmersiveOutputVolume();
+        if (t < 1) {
+          requestAnimationFrame(step);
+          return;
+        }
+        el.pause();
+        el.currentTime = 0;
+        baseVolumeRef.current = 1;
+        duckGainRef.current = 1;
+        duckTargetRef.current = 1;
+        applyImmersiveOutputVolume();
+      };
+      requestAnimationFrame(step);
+    },
+    [applyImmersiveOutputVolume],
+  );
 
   const ensureMusic = useCallback(() => {
     if (typeof window === "undefined") return null;
@@ -150,13 +218,14 @@ export function ImmersiveModeProvider({ children }: { children: ReactNode }) {
         el.src = IMMERSIVE_TRACKS[next];
         el.load();
         el.loop = false;
-        el.volume = 1;
+        baseVolumeRef.current = 1;
+        applyImmersiveOutputVolume();
         if (!pausedRef.current) void el.play().catch(() => {});
       });
       musicRef.current = a;
     }
     return musicRef.current;
-  }, []);
+  }, [applyImmersiveOutputVolume]);
 
   /**
    * Lazily create the Web Audio graph (MediaElementSource -> Analyser -> destination).
@@ -207,8 +276,9 @@ export function ImmersiveModeProvider({ children }: { children: ReactNode }) {
     if (!a) return;
     a.pause();
     a.currentTime = 0;
-    a.volume = 1;
-  }, [cancelFadeIn]);
+    baseVolumeRef.current = 1;
+    resetFocusDuck();
+  }, [cancelFadeIn, resetFocusDuck]);
 
   const requestEnterImmersive = useCallback(() => {
     if (sheet !== "none" || isImmersive) return;
@@ -227,7 +297,6 @@ export function ImmersiveModeProvider({ children }: { children: ReactNode }) {
       a.src = first;
       a.load();
     }
-    a.volume = 0;
     ensureAudioGraph(a);
     void a.play().catch(() => {});
     startFadeIn(a);
@@ -258,13 +327,14 @@ export function ImmersiveModeProvider({ children }: { children: ReactNode }) {
       cancelFadeIn();
       a.pause();
       a.currentTime = 0;
-      a.volume = 1;
+      baseVolumeRef.current = 1;
+      resetFocusDuck();
     }
     setImmersiveMusicPaused(false);
     trackIndexRef.current = 0;
     setImmersiveTrackIndex(0);
     setSheet("immersive-exit-cover");
-  }, [sheet, isImmersive, cancelFadeIn, startFadeOut]);
+  }, [sheet, isImmersive, cancelFadeIn, startFadeOut, resetFocusDuck]);
 
   const toggleImmersiveMusicPaused = useCallback(() => {
     if (!isImmersive) return;
@@ -272,7 +342,8 @@ export function ImmersiveModeProvider({ children }: { children: ReactNode }) {
     if (!a) return;
     setImmersiveMusicPaused((wasPaused) => {
       if (wasPaused) {
-        if (a.volume < 1) a.volume = 1;
+        baseVolumeRef.current = 1;
+        applyImmersiveOutputVolume();
         ensureAudioGraph(a);
         void a.play().catch(() => {});
         return false;
@@ -296,10 +367,17 @@ export function ImmersiveModeProvider({ children }: { children: ReactNode }) {
     a.src = IMMERSIVE_TRACKS[next];
     a.load();
     a.loop = false;
-    a.volume = 1;
+    baseVolumeRef.current = 1;
+    applyImmersiveOutputVolume();
     ensureAudioGraph(a);
     if (!pausedRef.current) void a.play().catch(() => {});
-  }, [isImmersive, ensureMusic, ensureAudioGraph, cancelFadeIn]);
+  }, [
+    isImmersive,
+    ensureMusic,
+    ensureAudioGraph,
+    cancelFadeIn,
+    applyImmersiveOutputVolume,
+  ]);
 
   const immersiveNextTrack = useCallback(() => {
     if (!isImmersive) return;
@@ -312,10 +390,17 @@ export function ImmersiveModeProvider({ children }: { children: ReactNode }) {
     a.src = IMMERSIVE_TRACKS[next];
     a.load();
     a.loop = false;
-    a.volume = 1;
+    baseVolumeRef.current = 1;
+    applyImmersiveOutputVolume();
     ensureAudioGraph(a);
     if (!pausedRef.current) void a.play().catch(() => {});
-  }, [isImmersive, ensureMusic, ensureAudioGraph, cancelFadeIn]);
+  }, [
+    isImmersive,
+    ensureMusic,
+    ensureAudioGraph,
+    cancelFadeIn,
+    applyImmersiveOutputVolume,
+  ]);
 
   const onExitCoverComplete = useCallback(() => {
     setIsImmersive(false);
@@ -332,6 +417,8 @@ export function ImmersiveModeProvider({ children }: { children: ReactNode }) {
       setImmersiveMusicPaused(false);
       trackIndexRef.current = 0;
       setImmersiveTrackIndex(0);
+      baseVolumeRef.current = 1;
+      resetFocusDuck();
       return;
     }
     const prev = document.body.style.overflow;
@@ -339,11 +426,15 @@ export function ImmersiveModeProvider({ children }: { children: ReactNode }) {
     return () => {
       document.body.style.overflow = prev;
     };
-  }, [isImmersive]);
+  }, [isImmersive, resetFocusDuck]);
 
   useEffect(() => {
     return () => {
       cancelFadeIn();
+      duckAnimGenRef.current += 1;
+      baseVolumeRef.current = 1;
+      duckTargetRef.current = 1;
+      duckGainRef.current = 1;
       const a = musicRef.current;
       if (a) {
         a.pause();
@@ -381,6 +472,7 @@ export function ImmersiveModeProvider({ children }: { children: ReactNode }) {
         onExitRevealComplete,
         getImmersiveAnalyser,
         getImmersiveAudio,
+        setImmersiveFocusPageOpen,
       }}
     >
       {children}

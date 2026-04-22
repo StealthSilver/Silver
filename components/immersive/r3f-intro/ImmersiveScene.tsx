@@ -349,19 +349,19 @@ function MusicSphere({
           // loudest hits. Gated so sub-threshold audio leaves the sphere
           // still (no jitter during whisper-quiet passages).
           float beatPush = uPulseLow > 0.04
-            ? uPulseLow * 0.72 + uBeat * 0.55
-            : uBeat * 0.22;
+            ? uPulseLow * 0.38 + uBeat * 0.28
+            : uBeat * 0.12;
           // Coarse time quantisation so the hash "rerolls" a few times a
           // second — cheap stand-in for per-frame CPU randomness.
           float tStepLow = floor(uTime * 6.0);
-          float randR = 0.5 + hash11(aPhase * 13.37 + tStepLow) * 1.1;
+          float randR = 0.5 + hash11(aPhase * 13.37 + tStepLow) * 0.7;
           float radialOffset = beatPush * randR * aResponsiveness;
 
           // High transient → small per-particle jitter; drops double down
           // with extra beat-driven scatter to sell the "hit".
           float jitterAmp = uPulseHigh > 0.05
-            ? uPulseHigh * 0.24 + uBeat * 0.12
-            : uBeat * 0.05;
+            ? uPulseHigh * 0.14 + uBeat * 0.07
+            : uBeat * 0.03;
           float tStepHi = floor(uTime * 30.0);
           vec3 jit = vec3(
             hash11(aPhase + 1.1 + tStepHi) - 0.5,
@@ -372,7 +372,7 @@ function MusicSphere({
           // Continuous shimmer — tiny radial breathing correlated with the
           // mid / high band, zero when audio is silent.
           float wig = sin(uTime * 4.2 + aPhase)
-            * (uHigh * 0.08 + uMid * 0.03 + uBeat * 0.06);
+            * (uHigh * 0.05 + uMid * 0.02 + uBeat * 0.035);
 
           vec3 pos = position + radial * radialOffset + jit + position * wig;
 
@@ -452,14 +452,14 @@ function MusicSphere({
     // visibly but the real punch is reserved for the cross-band beat
     // signal (simultaneous kick + crash). Gentle idle breathing keeps
     // the shape alive even between hits.
-    const idleBreath = 0.015 * Math.sin(state.clock.elapsedTime * 1.8);
+    const idleBreath = 0.012 * Math.sin(state.clock.elapsedTime * 1.8);
     const targetScale =
       (0.90 +
         idleBreath +
-        beat * 0.26 +
-        pulseLow * 0.16 +
-        pulseHigh * 0.07 +
-        bass * 0.05) * vis;
+        beat * 0.13 +
+        pulseLow * 0.08 +
+        pulseHigh * 0.035 +
+        bass * 0.025) * vis;
     const curScale = group.scale.x || 0.001;
     const scaleLerp = targetScale > curScale ? 0.32 : 0.10;
     group.scale.setScalar(lerp(curScale, targetScale, scaleLerp));
@@ -467,9 +467,9 @@ function MusicSphere({
     // Rotation is a mix of a steady drift (so the sphere always has gentle
     // life) and beat-driven spin that accelerates on drops.
     group.rotation.y +=
-      delta * (0.06 + pulseLow * 1.3 + pulseHigh * 0.1 + beat * 0.9);
-    group.rotation.x += delta * (0.02 + pulseHigh * 0.3 + beat * 0.32);
-    group.rotation.z += delta * (pulseLow * 0.22 - pulseHigh * 0.1);
+      delta * (0.06 + pulseLow * 0.65 + pulseHigh * 0.05 + beat * 0.45);
+    group.rotation.x += delta * (0.02 + pulseHigh * 0.15 + beat * 0.16);
+    group.rotation.z += delta * (pulseLow * 0.11 - pulseHigh * 0.05);
 
     // ---- push audio state to GPU -----------------------------------------
     const u = material.uniforms;
@@ -481,7 +481,7 @@ function MusicSphere({
     u.uPulseHigh.value = pulseHigh;
     u.uBeat.value = beat;
     u.uBaseSize.value =
-      0.12 + pulseLow * 0.09 + pulseHigh * 0.06 + bass * 0.03 + beat * 0.08;
+      0.12 + pulseLow * 0.04 + pulseHigh * 0.028 + bass * 0.015 + beat * 0.035;
     u.uOpacity.value = vis * (0.45 + pulseLow * 0.2 + beat * 0.18);
     // Match three.js' built-in point-size attenuation (render-height based).
     u.uScale.value = size.height * gl.getPixelRatio() * 0.5;
@@ -1359,6 +1359,7 @@ export default function ImmersiveScene() {
   const scrollTargetRef = useRef(0);
   const pickedRef = useRef<number | null>(null);
   const interactiveRef = useRef(false);
+  const { setImmersiveFocusPageOpen } = useImmersiveMode();
 
   // Keep ref + state in lock-step. The ref is read inside the r3f render
   // loop (cheap, no re-renders); the state drives the HTML overlay.
@@ -1374,6 +1375,11 @@ export default function ImmersiveScene() {
   useEffect(() => {
     interactiveRef.current = interactive;
   }, [interactive]);
+
+  useEffect(() => {
+    setImmersiveFocusPageOpen(picked !== null);
+    return () => setImmersiveFocusPageOpen(false);
+  }, [picked, setImmersiveFocusPageOpen]);
 
   // Wheel + touch driven scroll. Scroll (0..1) maps to a horizontal translate
   // of the page row so pages drift in from the right and exit left. While a
