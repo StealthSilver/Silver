@@ -43,6 +43,8 @@ interface ImmersiveModeContextType {
   onEnterRevealComplete: () => void;
   onExitCoverComplete: () => void;
   onExitRevealComplete: () => void;
+  /** Returns the live Web Audio analyser bound to the immersion music, or null. */
+  getImmersiveAnalyser: () => AnalyserNode | null;
 }
 
 const ImmersiveModeContext = createContext<
@@ -66,6 +68,9 @@ export function ImmersiveModeProvider({ children }: { children: ReactNode }) {
   const fadeGenRef = useRef(0);
   const pausedRef = useRef(false);
   const trackIndexRef = useRef(0);
+  const audioCtxRef = useRef<AudioContext | null>(null);
+  const analyserRef = useRef<AnalyserNode | null>(null);
+  const mediaSourceRef = useRef<MediaElementAudioSourceNode | null>(null);
 
   useEffect(() => {
     pausedRef.current = immersiveMusicPaused;
@@ -79,16 +84,18 @@ export function ImmersiveModeProvider({ children }: { children: ReactNode }) {
     fadeGenRef.current += 1;
   }, []);
 
+  const clamp01 = (v: number) => (v < 0 ? 0 : v > 1 ? 1 : v);
+
   const startFadeIn = useCallback((audio: HTMLAudioElement) => {
     const gen = ++fadeGenRef.current;
     audio.volume = 0;
     const t0 = performance.now();
     const step = (now: number) => {
       if (fadeGenRef.current !== gen) return;
-      const t = Math.min(1, (now - t0) / FADE_IN_MS);
+      const t = clamp01((now - t0) / FADE_IN_MS);
       const el = musicRef.current;
       if (!el) return;
-      el.volume = t;
+      el.volume = clamp01(t);
       if (t < 1) {
         requestAnimationFrame(step);
       }
@@ -98,14 +105,14 @@ export function ImmersiveModeProvider({ children }: { children: ReactNode }) {
 
   const startFadeOut = useCallback((audio: HTMLAudioElement) => {
     const gen = ++fadeGenRef.current;
-    const v0 = audio.volume;
+    const v0 = clamp01(audio.volume);
     const t0 = performance.now();
     const step = (now: number) => {
       if (fadeGenRef.current !== gen) return;
-      const t = Math.min(1, (now - t0) / FADE_OUT_MS);
+      const t = clamp01((now - t0) / FADE_OUT_MS);
       const el = musicRef.current;
       if (!el) return;
-      el.volume = v0 * (1 - t);
+      el.volume = clamp01(v0 * (1 - t));
       if (t < 1) {
         requestAnimationFrame(step);
         return;
@@ -123,10 +130,53 @@ export function ImmersiveModeProvider({ children }: { children: ReactNode }) {
       const a = new Audio(IMMERSIVE_TRACKS[0]);
       a.preload = "auto";
       a.loop = true;
+      a.crossOrigin = "anonymous";
       musicRef.current = a;
     }
     return musicRef.current;
   }, []);
+
+  /**
+   * Lazily create the Web Audio graph (MediaElementSource -> Analyser -> destination).
+   * Must be invoked in a user gesture so the AudioContext is allowed to start.
+   * Re-running is safe: the graph is created at most once per audio element.
+   */
+  const ensureAudioGraph = useCallback((audio: HTMLAudioElement) => {
+    if (typeof window === "undefined") return;
+    try {
+      if (!audioCtxRef.current) {
+        const AC =
+          window.AudioContext ||
+          (
+            window as typeof window & {
+              webkitAudioContext?: typeof AudioContext;
+            }
+          ).webkitAudioContext;
+        if (!AC) return;
+        audioCtxRef.current = new AC();
+      }
+      const ctx = audioCtxRef.current;
+      if (!ctx) return;
+      if (!mediaSourceRef.current) {
+        mediaSourceRef.current = ctx.createMediaElementSource(audio);
+      }
+      if (!analyserRef.current) {
+        const analyser = ctx.createAnalyser();
+        analyser.fftSize = 1024;
+        analyser.smoothingTimeConstant = 0.78;
+        mediaSourceRef.current.connect(analyser);
+        analyser.connect(ctx.destination);
+        analyserRef.current = analyser;
+      }
+      if (ctx.state === "suspended") {
+        void ctx.resume().catch(() => {});
+      }
+    } catch {
+      // Analyser is optional — swallow errors (e.g. duplicate source nodes on HMR).
+    }
+  }, []);
+
+  const getImmersiveAnalyser = useCallback(() => analyserRef.current, []);
 
   const stopMusic = useCallback(() => {
     cancelFadeIn();
@@ -155,10 +205,11 @@ export function ImmersiveModeProvider({ children }: { children: ReactNode }) {
       a.load();
     }
     a.volume = 0;
+    ensureAudioGraph(a);
     void a.play().catch(() => {});
     startFadeIn(a);
     setSheet("immersive-enter-cover");
-  }, [sheet, isImmersive, ensureMusic, cancelFadeIn, startFadeIn]);
+  }, [sheet, isImmersive, ensureMusic, ensureAudioGraph, cancelFadeIn, startFadeIn]);
 
   const onEnterCoverComplete = useCallback(() => {
     setIsImmersive(true);
@@ -199,6 +250,7 @@ export function ImmersiveModeProvider({ children }: { children: ReactNode }) {
     setImmersiveMusicPaused((wasPaused) => {
       if (wasPaused) {
         if (a.volume < 1) a.volume = 1;
+        ensureAudioGraph(a);
         void a.play().catch(() => {});
         return false;
       }
@@ -206,7 +258,7 @@ export function ImmersiveModeProvider({ children }: { children: ReactNode }) {
       a.pause();
       return true;
     });
-  }, [isImmersive, ensureMusic, cancelFadeIn]);
+  }, [isImmersive, ensureMusic, ensureAudioGraph, cancelFadeIn]);
 
   const immersivePrevTrack = useCallback(() => {
     if (!isImmersive) return;
@@ -222,8 +274,9 @@ export function ImmersiveModeProvider({ children }: { children: ReactNode }) {
     a.load();
     a.loop = true;
     a.volume = 1;
+    ensureAudioGraph(a);
     if (!pausedRef.current) void a.play().catch(() => {});
-  }, [isImmersive, ensureMusic, cancelFadeIn]);
+  }, [isImmersive, ensureMusic, ensureAudioGraph, cancelFadeIn]);
 
   const immersiveNextTrack = useCallback(() => {
     if (!isImmersive) return;
@@ -237,8 +290,9 @@ export function ImmersiveModeProvider({ children }: { children: ReactNode }) {
     a.load();
     a.loop = true;
     a.volume = 1;
+    ensureAudioGraph(a);
     if (!pausedRef.current) void a.play().catch(() => {});
-  }, [isImmersive, ensureMusic, cancelFadeIn]);
+  }, [isImmersive, ensureMusic, ensureAudioGraph, cancelFadeIn]);
 
   const onExitCoverComplete = useCallback(() => {
     setIsImmersive(false);
@@ -302,6 +356,7 @@ export function ImmersiveModeProvider({ children }: { children: ReactNode }) {
         onEnterRevealComplete,
         onExitCoverComplete,
         onExitRevealComplete,
+        getImmersiveAnalyser,
       }}
     >
       {children}

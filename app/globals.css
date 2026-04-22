@@ -255,3 +255,26 @@
     transform: translateY(-0.7px);
   }
 }
+
+/*
+ * Custom circular cursor for the complete immersive mode.
+ * A hollow silver ring replaces the system arrow across the entire
+ * immersive zone; interactive elements still get a subtly filled
+ * variant so hover affordance is preserved.
+ */
+.immersive-cursor,
+.immersive-cursor * {
+  cursor: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='28' height='28' viewBox='0 0 28 28'><circle cx='14' cy='14' r='9' fill='none' stroke='%23d9dce6' stroke-width='1.4' opacity='0.95'/><circle cx='14' cy='14' r='1.6' fill='%23d9dce6'/></svg>")
+      14 14,
+    auto;
+}
+
+.immersive-cursor a,
+.immersive-cursor button,
+.immersive-cursor [role="button"],
+body.immersive-hover-tile .immersive-cursor,
+body.immersive-hover-tile .immersive-cursor * {
+  cursor: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='28' height='28' viewBox='0 0 28 28'><circle cx='14' cy='14' r='9' fill='%23d9dce6' opacity='0.85'/></svg>")
+      14 14,
+    pointer;
+}

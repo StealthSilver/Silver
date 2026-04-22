@@ -1,10 +1,12 @@
 "use client";
 
+import { useEffect } from "react";
 import { Pause, Play } from "lucide-react";
 import { GeistSans } from "geist/font/sans";
 import { GeistMono } from "geist/font/mono";
 import { navLinkColor } from "@/lib/nav-link-color";
 import { useImmersiveMode } from "@/contexts/ImmersiveModeContext";
+import ImmersiveScene from "@/components/immersive/r3f-intro/ImmersiveScene";
 
 const immersiveBorderColor = "rgba(168, 172, 186, 0.85)";
 const immersiveBackground = "#000000";
@@ -18,12 +20,24 @@ export default function ImmersiveZone() {
     immersiveNextTrack,
   } = useImmersiveMode();
 
+  // Clean up the body-level "hover tile" cursor flag whenever the immersive
+  // zone unmounts — otherwise the hover cursor can stick around after exit.
+  useEffect(() => {
+    return () => {
+      if (typeof document !== "undefined") {
+        document.body.classList.remove("immersive-hover-tile");
+      }
+    };
+  }, []);
+
   return (
     <div
-      className="fixed inset-0 z-[40] overflow-hidden bg-black"
+      className="immersive-cursor fixed inset-0 z-[40] overflow-hidden bg-black"
       role="region"
       aria-label="Immersion zone"
     >
+      <ImmersiveScene />
+
       <div className="pointer-events-auto absolute top-[max(0.65rem,env(safe-area-inset-top))] left-[max(0.65rem,env(safe-area-inset-left))] z-[50] sm:top-4 sm:left-4">
         <div className="relative">
           <a
