@@ -1,132 +1,85 @@
 "use client";
 
-import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { ChevronDown, ChevronUp, Code } from "lucide-react";
-import { EXPERIENCES } from "../../data/experience.data";
+import Image from "next/image";
+import { GeistSans } from "geist/font/sans";
+import { GeistMono } from "geist/font/mono";
+import { EXPERIENCES } from "@/data/experience.data";
 
 export default function Experience() {
-  const [openIndex, setOpenIndex] = useState<number | null>(null);
-
   return (
-    <section
-      id="experience"
-      className="
-        relative px-4 sm:px-6 md:px-12 
-        py-10 sm:py-12 md:py-16 
-        mt-16 sm:mt-24 md:mt-32
-        overflow-x-hidden
-      "
-    >
-      <motion.h2
-        initial={{ opacity: 0, y: 40 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 1, delay: 0.3 }}
-        className="
-          text-2xl sm:text-3xl md:text-4xl 
-          flex items-center justify-center
-          text-gray-900 dark:text-gray-100 
-          mb-10 sm:mb-16
-        "
-      >
-        EXPERIENCE
-      </motion.h2>
-
-      <div className="max-w-5xl mx-auto flex flex-col gap-6 sm:gap-8">
-        {EXPERIENCES.map((exp, index) => (
-          <motion.div
-            key={index}
-            initial={{ opacity: 0, y: 40 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: index * 0.2 }}
-            className="
-              p-4 sm:p-6 
-              rounded-2xl border border-gray-300/30 dark:border-gray-700/50 
-              hover:shadow-lg transition-all duration-300
-            "
-          >
-            <div className="flex justify-between items-center">
-              <a
-                href={exp.link}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="
-                  text-xl sm:text-2xl font-bold 
-                  text-gray-900 dark:text-gray-100 
-                  cursor-pointer
-                "
-              >
-                {exp.company}
-              </a>
-            </div>
-
-            <div
-              onClick={() => setOpenIndex(openIndex === index ? null : index)}
-              className="
-                mt-3 cursor-pointer 
-                flex justify-between items-center 
-                p-2 sm:p-3 font-mono rounded-lg 
-                hover:bg-gray-100 dark:hover:bg-gray-700/70 
-                transition-colors w-full
-              "
-            >
-              <div className="flex flex-col">
-                <div className="flex items-center gap-2">
-                  <Code
-                    size={18}
-                    className="text-gray-700 dark:text-gray-300"
-                  />
-                  <p className="text-base sm:text-lg font-semibold text-gray-800 dark:text-gray-200">
-                    {exp.position}
+    <section id="experience" className="relative px-4 pb-3 pt-5 sm:px-6 sm:pt-6">
+      <div className="px-1 pb-2 pt-1 sm:pt-1.5">
+        <h2
+          className={`${GeistSans.className} text-[22px] font-semibold leading-tight tracking-tight text-foreground sm:text-[24px]`}
+        >
+          Experience
+        </h2>
+        <div
+          aria-hidden
+          className="relative left-1/2 mt-1.5 h-px w-screen max-w-none -translate-x-1/2 bg-line sm:mt-2"
+        />
+        <div className="mt-2.5 space-y-4 sm:mt-3 sm:space-y-5">
+          {EXPERIENCES.map((experience) => (
+            <article key={`${experience.company}-${experience.position}-${experience.duration}`} className="pt-1">
+              <div className="flex flex-wrap items-start justify-between gap-x-4 gap-y-1">
+                <div className="min-w-0">
+                  <div className="flex items-center gap-3">
+                    <span
+                      className="mr-0.5 inline-flex size-8 shrink-0 items-center justify-center border border-line bg-muted/40 text-muted-foreground"
+                      aria-hidden
+                    >
+                      <Image
+                        src={experience.logo}
+                        alt={`${experience.company} logo`}
+                        width={16}
+                        height={16}
+                        className="size-4 object-contain"
+                      />
+                    </span>
+                    <div className="flex items-center gap-2">
+                      <a
+                        href={experience.link}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className={`${GeistSans.className} text-[17px] font-semibold tracking-tight text-foreground underline-offset-2 hover:underline`}
+                      >
+                        {experience.company}
+                      </a>
+                      {experience.company === "Eleken" ? (
+                        <span
+                          className="inline-flex size-2 rounded-full bg-blue-500 animate-pulse"
+                          aria-label="Currently working here"
+                          title="Currently working here"
+                        />
+                      ) : null}
+                    </div>
+                  </div>
+                  <p className={`${GeistMono.className} mt-1 text-[13px] text-muted-foreground`}>
+                    {experience.position}
                   </p>
                 </div>
-                <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-400">
-                  {exp.duration} | {exp.location}
+                <p
+                  className={`${GeistMono.className} text-right text-[12px] leading-relaxed text-muted-foreground sm:text-[13px]`}
+                >
+                  {experience.duration}
+                  <br />
+                  {experience.location}
                 </p>
               </div>
-
-              <button
-                onClick={() => setOpenIndex(openIndex === index ? null : index)}
-                className="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
+              <ul
+                className={`${GeistMono.className} mt-3 list-disc space-y-1.5 pl-4 text-[13px] leading-relaxed text-muted-foreground`}
               >
-                {openIndex === index ? (
-                  <ChevronUp
-                    size={20}
-                    className="text-gray-800 dark:text-gray-200"
-                  />
-                ) : (
-                  <ChevronDown
-                    size={20}
-                    className="text-gray-800 dark:text-gray-200"
-                  />
-                )}
-              </button>
-            </div>
-
-            <AnimatePresence initial={false}>
-              {openIndex === index && (
-                <motion.ul
-                  key="content"
-                  initial={{ opacity: 0, height: 0 }}
-                  animate={{ opacity: 1, height: "auto" }}
-                  exit={{ opacity: 0, height: 0 }}
-                  transition={{ duration: 0.4, ease: "easeInOut" }}
-                  className="
-                    mt-3 sm:mt-4 
-                    list-disc list-outside pl-4 sm:pl-6 
-                    font-mono text-sm sm:text-base 
-                    text-gray-700 dark:text-gray-300 
-                    space-y-2 overflow-hidden
-                  "
-                >
-                  {exp.details.map((point, i) => (
-                    <li key={i} dangerouslySetInnerHTML={{ __html: point }} />
-                  ))}
-                </motion.ul>
-              )}
-            </AnimatePresence>
-          </motion.div>
-        ))}
+                {experience.details.map((detail, index) => (
+                  <li key={`${experience.company}-detail-${index}`} dangerouslySetInnerHTML={{ __html: detail }} />
+                ))}
+              </ul>
+              <div
+                aria-hidden
+                className="relative left-1/2 mt-4 h-px w-screen max-w-none -translate-x-1/2 bg-line"
+              />
+            </article>
+          ))}
+        </div>
       </div>
     </section>
   );
