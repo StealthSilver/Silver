@@ -47,6 +47,13 @@ interface ImmersiveModeContextType {
   onExitRevealComplete: () => void;
   /** Returns the live Web Audio analyser bound to the immersion music, or null. */
   getImmersiveAnalyser: () => AnalyserNode | null;
+  /**
+   * Returns the underlying immersion `<audio>` element, or null if one
+   * has not been created yet. Consumers use this to read `currentTime`
+   * and `paused` so visuals can lock onto the exact playback position
+   * (see `lib/music-motion.ts`).
+   */
+  getImmersiveAudio: () => HTMLAudioElement | null;
 }
 
 const ImmersiveModeContext = createContext<
@@ -192,6 +199,7 @@ export function ImmersiveModeProvider({ children }: { children: ReactNode }) {
   }, []);
 
   const getImmersiveAnalyser = useCallback(() => analyserRef.current, []);
+  const getImmersiveAudio = useCallback(() => musicRef.current, []);
 
   const stopMusic = useCallback(() => {
     cancelFadeIn();
@@ -372,6 +380,7 @@ export function ImmersiveModeProvider({ children }: { children: ReactNode }) {
         onExitCoverComplete,
         onExitRevealComplete,
         getImmersiveAnalyser,
+        getImmersiveAudio,
       }}
     >
       {children}

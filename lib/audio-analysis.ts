@@ -1,13 +1,22 @@
 /**
- * Real-time audio "deconstruction" for the immersion experience.
+ * Audio "deconstruction" for the immersion experience.
  *
- * The immersion music is piped through an AnalyserNode created in
- * `ImmersiveModeContext`. Each render frame we pull the current FFT magnitudes,
- * split them into low / mid / high bands, and expose transient ("beat") signals
- * for the lows and the highs separately — the low-transient drives kick-drum
- * thump, the high-transient drives cymbal/hi-hat sizzle, and a combined
- * `beat` signal spikes hard on full-spectrum drops so visuals can do a
- * one-shot "slam" on the biggest hits.
+ * There are two data sources:
+ *
+ *   1. The **live AnalyserNode** created in `ImmersiveModeContext`. Cheap
+ *      but noisy and browser-dependent — kept around as a fallback when
+ *      pre-baked motion is unavailable.
+ *   2. **Pre-baked motion timelines** produced offline by
+ *      `scripts/analyze-music.mjs`. Each of the five immersion tracks is
+ *      decoded, FFT'd and band-summed into per-frame sub/bass/mid/high
+ *      energies at ~60fps; at runtime we sample the timeline by the
+ *      audio element's `currentTime` so beat drops land on the exact
+ *      sample they were baked for. This is what drives the sphere in
+ *      production — see {@link analyseMotionFrame}.
+ *
+ * In both cases the raw band values are fed through the same transient /
+ * beat-drop detector so the downstream visuals don't need to know which
+ * source is active.
  *
  * Everything here is pure + synchronous so it can run safely inside a
  * `useFrame` callback without allocating.
@@ -92,20 +101,7 @@ export function analyseFrame(
   state: AudioBandState,
 ): AudioEnergy {
   if (!analyser) {
-    state.pulseLow *= 0.88;
-    state.pulseHigh *= 0.82;
-    state.beat *= 0.85;
-    state.energy *= 0.9;
-    return {
-      sub: 0,
-      bass: 0,
-      mid: 0,
-      high: 0,
-      pulseLow: state.pulseLow,
-      pulseHigh: state.pulseHigh,
-      beat: state.beat,
-      energy: state.energy,
-    };
+    return decayToRest(state);
   }
 
   const buf = state.freqBuffer;
@@ -150,9 +146,23 @@ export function analyseFrame(
   }
   const high = hCount > 0 ? hSum / hCount / 255 : 0;
 
-  // --- Slow-moving baselines → anything above them is a transient ------
-  // Slightly faster baseline update (0.88/0.12) makes drops register bigger
-  // against the average before it catches up.
+  return deriveEnergy(sub, bass, mid, high, state);
+}
+
+/**
+ * Shared transient / pulse / beat pipeline. Factored out so both the live
+ * FFT path and the offline-motion path produce identically-shaped output.
+ */
+function deriveEnergy(
+  sub: number,
+  bass: number,
+  mid: number,
+  high: number,
+  state: AudioBandState,
+): AudioEnergy {
+  // Slow-moving baselines → anything above them is a transient. Slightly
+  // faster baseline update (0.88/0.12) makes drops register bigger against
+  // the average before it catches up.
   state.subAvg = state.subAvg * 0.9 + sub * 0.1;
   state.bassAvg = state.bassAvg * 0.9 + bass * 0.1;
   state.midAvg = state.midAvg * 0.9 + mid * 0.1;
@@ -165,12 +175,14 @@ export function analyseFrame(
   const transientLow = Math.max(0, bass - state.bassAvg * 1.02);
   const transientHigh = Math.max(0, high - state.highAvg * 1.06);
 
-  // Persistent pulse with exponential decay — higher gain than before so
-  // each hit punches harder, and decay tuned so the sphere/fire relax back
-  // quickly between beats (snappier = more "percussive").
+  // Persistent pulse with exponential decay — each hit punches hard and
+  // then relaxes so the sphere is snappy / percussive between beats.
   const lowGain = 5.2;
   const highGain = 4.6;
-  state.pulseLow = Math.max(state.pulseLow * 0.82, (transientLow + transientSub * 0.6) * lowGain);
+  state.pulseLow = Math.max(
+    state.pulseLow * 0.82,
+    (transientLow + transientSub * 0.6) * lowGain,
+  );
   state.pulseHigh = Math.max(state.pulseHigh * 0.78, transientHigh * highGain);
 
   // Beat-drop detection: a simultaneous low + high hit (kick + crash) gets
@@ -181,7 +193,7 @@ export function analyseFrame(
     transientLow * 6.0 +
     transientSub * 4.0 +
     transientHigh * 2.0 +
-    transientLow * transientHigh * 12.0; // cross-term explodes on drops
+    transientLow * transientHigh * 12.0;
   state.beat = Math.max(state.beat * 0.78, rawBeat);
   if (state.beat > state.beatPeak) {
     state.beatPeak = state.beat;
@@ -190,7 +202,6 @@ export function analyseFrame(
   }
   const beatNorm = state.beat / state.beatPeak;
 
-  // Smoothed overall energy — useful for slow ambient changes.
   const rawEnergy = bass * 0.5 + mid * 0.25 + high * 0.25;
   state.energy = state.energy * 0.85 + rawEnergy * 0.15;
 
@@ -204,4 +215,67 @@ export function analyseFrame(
     beat: beatNorm,
     energy: state.energy,
   };
+}
+
+/**
+ * Decay the running pulses smoothly back to zero. Shared by the null-
+ * analyser branch and the paused-playback branch so the sphere always
+ * eases to rest the same way.
+ */
+function decayToRest(state: AudioBandState): AudioEnergy {
+  state.pulseLow *= 0.88;
+  state.pulseHigh *= 0.82;
+  state.beat *= 0.85;
+  state.energy *= 0.9;
+  return {
+    sub: 0,
+    bass: 0,
+    mid: 0,
+    high: 0,
+    pulseLow: state.pulseLow,
+    pulseHigh: state.pulseHigh,
+    beat: state.beat,
+    energy: state.energy,
+  };
+}
+
+/**
+ * Motion-timeline path. Reads pre-baked band energies at the given
+ * playback time and feeds them through the same transient/beat pipeline
+ * as the live analyser. When `playing` is false (the user paused the
+ * track) or `motion` is missing we smoothly decay the running pulses so
+ * the sphere eases back to a gentle resting state instead of freezing
+ * mid-hit.
+ */
+export function analyseMotionFrame(
+  motion: {
+    fps: number;
+    sub: number[];
+    bass: number[];
+    mid: number[];
+    high: number[];
+  } | null,
+  currentTime: number,
+  playing: boolean,
+  state: AudioBandState,
+): AudioEnergy {
+  if (!motion || !playing) {
+    return decayToRest(state);
+  }
+
+  const frame = currentTime * motion.fps;
+  const maxIdx = motion.sub.length - 1;
+  if (maxIdx < 0) {
+    return decayToRest(state);
+  }
+  const clamped = Math.max(0, Math.min(maxIdx, frame));
+  const i = Math.floor(clamped);
+  const f = clamped - i;
+  const j = Math.min(maxIdx, i + 1);
+  const sub = motion.sub[i] * (1 - f) + motion.sub[j] * f;
+  const bass = motion.bass[i] * (1 - f) + motion.bass[j] * f;
+  const mid = motion.mid[i] * (1 - f) + motion.mid[j] * f;
+  const high = motion.high[i] * (1 - f) + motion.high[j] * f;
+
+  return deriveEnergy(sub, bass, mid, high, state);
 }

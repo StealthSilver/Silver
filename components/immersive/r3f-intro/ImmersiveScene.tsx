@@ -20,12 +20,22 @@ import { GeistMono } from "geist/font/mono";
 import { GeistSans } from "geist/font/sans";
 import * as THREE from "three";
 import { PROJECTS, type Project } from "@/data/project.data";
-import { useImmersiveMode } from "@/contexts/ImmersiveModeContext";
+import {
+  IMMERSIVE_TRACKS,
+  useImmersiveMode,
+} from "@/contexts/ImmersiveModeContext";
 import {
   analyseFrame,
+  analyseMotionFrame,
   createAudioBandState,
   type AudioBandState,
 } from "@/lib/audio-analysis";
+import {
+  getMotionData,
+  loadMotionData,
+  motionUrlForTrack,
+  type MotionData,
+} from "@/lib/music-motion";
 /* ========================================================================== */
 /*  CONSTANTS                                                                 */
 /* ========================================================================== */
@@ -172,6 +182,8 @@ function makeEmberTexture(): THREE.Texture {
 }
 
 type AnalyserGetter = () => AnalyserNode | null;
+type AudioGetter = () => HTMLAudioElement | null;
+type MotionGetter = () => MotionData | null;
 
 // Sphere geometry: slightly smaller sphere pushed further down so only its
 // upper dome peeks over the bottom edge of the viewport — reads like a
@@ -188,13 +200,26 @@ const SPHERE_CENTER_Y = -4.15;
 const SPHERE_PARTICLE_COUNT = 4200;
 
 /**
- * Fiery particle sphere that sits half-below the viewport like a bonfire
- * horizon. Reacts in multiple channels to the music analysed via
- * `lib/audio-analysis`:
+ * Silvery particle sphere that sits half-below the viewport. Reacts in
+ * multiple channels to the music, each channel sourced in priority order:
+ *
+ *   1. **Pre-baked motion timeline** for the current track (primary). The
+ *      offline analyser (`scripts/analyze-music.mjs`) has already decoded
+ *      the mp3, run an FFT and stored per-frame band energies, so the
+ *      sphere reacts on the *exact* sample where each beat drop lands
+ *      rather than whatever the live analyser guesses this frame. We
+ *      sample the timeline by the audio element's `currentTime`.
+ *   2. **Live AnalyserNode** (fallback). Only used if the motion JSON
+ *      failed to load.
+ *   3. **Silent decay** when the user pauses the track — pulses ease back
+ *      to zero so the sphere smoothly comes to rest and resumes on play.
+ *
+ * Visual channels:
  *   - `pulseLow`  (kick / bass)  → radial outward punch + sphere scale-up
  *   - `pulseHigh` (hats / cymbal) → randomized jitter + brightness flare
  *   - `bass`                     → overall warm glow + ambient light
  *   - `mid` / `high`             → rotation speed + color drift toward hot
+ *   - `beat` (combined drop)     → outsized slam on the loudest hits
  *
  * The per-particle animation runs entirely in a custom `ShaderMaterial` —
  * audio values + time are pushed as uniforms, and the vertex shader derives
@@ -207,9 +232,13 @@ const SPHERE_PARTICLE_COUNT = 4200;
  */
 function MusicSphere({
   getAnalyser,
+  getAudio,
+  getMotion,
   visibleRef,
 }: {
   getAnalyser: AnalyserGetter;
+  getAudio: AudioGetter;
+  getMotion: MotionGetter;
   visibleRef: React.MutableRefObject<boolean>;
 }) {
   const groupRef = useRef<THREE.Group>(null);
@@ -315,21 +344,24 @@ function MusicSphere({
         void main() {
           vec3 radial = normalize(position);
 
-          // Bass transient → radial outward puff. Gated the same way as the
-          // old CPU code so sub-threshold audio leaves the sphere still.
+          // Bass transient → radial outward puff; beat-drops add a big
+          // extra slam so the sphere audibly "explodes" outward on the
+          // loudest hits. Gated so sub-threshold audio leaves the sphere
+          // still (no jitter during whisper-quiet passages).
           float beatPush = uPulseLow > 0.04
-            ? uPulseLow * 0.55 + uBeat * 0.28
-            : uBeat * 0.12;
+            ? uPulseLow * 0.72 + uBeat * 0.55
+            : uBeat * 0.22;
           // Coarse time quantisation so the hash "rerolls" a few times a
           // second — cheap stand-in for per-frame CPU randomness.
           float tStepLow = floor(uTime * 6.0);
           float randR = 0.5 + hash11(aPhase * 13.37 + tStepLow) * 1.1;
           float radialOffset = beatPush * randR * aResponsiveness;
 
-          // High transient → small per-particle jitter.
+          // High transient → small per-particle jitter; drops double down
+          // with extra beat-driven scatter to sell the "hit".
           float jitterAmp = uPulseHigh > 0.05
-            ? uPulseHigh * 0.18 + uBeat * 0.06
-            : 0.0;
+            ? uPulseHigh * 0.24 + uBeat * 0.12
+            : uBeat * 0.05;
           float tStepHi = floor(uTime * 30.0);
           vec3 jit = vec3(
             hash11(aPhase + 1.1 + tStepHi) - 0.5,
@@ -396,22 +428,48 @@ function MusicSphere({
     if (!group.visible) return;
 
     // ---- audio "deconstruction" ------------------------------------------
-    const energy = analyseFrame(getAnalyser(), audioStateRef.current);
+    // Primary source: pre-baked motion timeline for the current track,
+    // sampled by `audio.currentTime` so the sphere is perfectly synced to
+    // the music. Falls back to the live analyser if the motion JSON isn't
+    // loaded, and decays to rest when the user pauses.
+    const audio = getAudio();
+    const motion = getMotion();
+    const playing = !!audio && !audio.paused && !audio.ended;
+    const energy =
+      motion || !audio
+        ? analyseMotionFrame(
+            motion,
+            audio?.currentTime ?? 0,
+            playing && !!motion,
+            audioStateRef.current,
+          )
+        : analyseFrame(playing ? getAnalyser() : null, audioStateRef.current);
     const { bass, mid, high, pulseLow, pulseHigh, beat } = energy;
     const hit = pulseLow + pulseHigh * 0.6;
 
     // ---- whole-sphere transforms -----------------------------------------
-    // Beat-driven but toned down — the sphere reacts with small
-    // breathing-style pulses rather than large expansion/contraction.
+    // Beat drops slam the sphere outward; smaller hits still breathe
+    // visibly but the real punch is reserved for the cross-band beat
+    // signal (simultaneous kick + crash). Gentle idle breathing keeps
+    // the shape alive even between hits.
+    const idleBreath = 0.015 * Math.sin(state.clock.elapsedTime * 1.8);
     const targetScale =
-      (0.92 + beat * 0.14 + pulseLow * 0.09 + pulseHigh * 0.05 + bass * 0.04) * vis;
+      (0.90 +
+        idleBreath +
+        beat * 0.26 +
+        pulseLow * 0.16 +
+        pulseHigh * 0.07 +
+        bass * 0.05) * vis;
     const curScale = group.scale.x || 0.001;
-    const scaleLerp = targetScale > curScale ? 0.25 : 0.12;
+    const scaleLerp = targetScale > curScale ? 0.32 : 0.10;
     group.scale.setScalar(lerp(curScale, targetScale, scaleLerp));
 
-    group.rotation.y += delta * (pulseLow * 0.9 + pulseHigh * 0.08 + beat * 0.45);
-    group.rotation.x += delta * (pulseHigh * 0.2 + beat * 0.18);
-    group.rotation.z += delta * (pulseLow * 0.18 - pulseHigh * 0.08);
+    // Rotation is a mix of a steady drift (so the sphere always has gentle
+    // life) and beat-driven spin that accelerates on drops.
+    group.rotation.y +=
+      delta * (0.06 + pulseLow * 1.3 + pulseHigh * 0.1 + beat * 0.9);
+    group.rotation.x += delta * (0.02 + pulseHigh * 0.3 + beat * 0.32);
+    group.rotation.z += delta * (pulseLow * 0.22 - pulseHigh * 0.1);
 
     // ---- push audio state to GPU -----------------------------------------
     const u = material.uniforms;
@@ -850,9 +908,44 @@ function Scene({
   const gl = useThree((s) => s.gl);
   const size = useThree((s) => s.size);
 
-  const { getImmersiveAnalyser } = useImmersiveMode();
+  const { getImmersiveAnalyser, getImmersiveAudio, immersiveTrackIndex } =
+    useImmersiveMode();
   // MusicSphere follows the interactive flag (pages already horizontal).
   const sphereVisibleRef = useRef(false);
+
+  // Motion data source. The ref is mutated whenever the track changes so
+  // the useFrame closure always reads the current timeline without needing
+  // to re-subscribe. We also prefetch the adjacent tracks so prev/next
+  // switches are instant.
+  const motionRef = useRef<MotionData | null>(null);
+  useEffect(() => {
+    const current = IMMERSIVE_TRACKS[immersiveTrackIndex];
+    if (!current) return;
+    const url = motionUrlForTrack(current);
+    const cached = getMotionData(url);
+    motionRef.current = cached;
+
+    let cancelled = false;
+    if (!cached) {
+      void loadMotionData(url).then((data) => {
+        if (cancelled) return;
+        motionRef.current = data;
+      });
+    }
+
+    // Warm the cache for neighbouring tracks so user-initiated prev/next
+    // switches swap timelines with no fetch stall.
+    const n = IMMERSIVE_TRACKS.length;
+    const next = IMMERSIVE_TRACKS[(immersiveTrackIndex + 1) % n];
+    const prev = IMMERSIVE_TRACKS[(immersiveTrackIndex - 1 + n) % n];
+    if (next) void loadMotionData(motionUrlForTrack(next));
+    if (prev) void loadMotionData(motionUrlForTrack(prev));
+
+    return () => {
+      cancelled = true;
+    };
+  }, [immersiveTrackIndex]);
+  const getMotion = useCallback(() => motionRef.current, []);
 
   /* ---- refs ---- */
   const sparksRef = useRef<THREE.Points>(null);
@@ -1247,6 +1340,8 @@ function Scene({
       {/* ---- music-reactive silver sphere (appears once pages are horizontal) ---- */}
       <MusicSphere
         getAnalyser={getImmersiveAnalyser}
+        getAudio={getImmersiveAudio}
+        getMotion={getMotion}
         visibleRef={sphereVisibleRef}
       />
     </>
