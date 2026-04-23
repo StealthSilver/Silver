@@ -104,6 +104,27 @@ export default async function ProjectPage({ params }: PageProps) {
             priority
           />
         </div>
+        {project.story || project.storyPoints?.length ? (
+          <div className="mt-5 space-y-4">
+            {project.story ? (
+              <p className={`${GeistMono.className} text-[12px] leading-8 text-muted-foreground sm:text-[13px]`}>
+                {project.story}
+              </p>
+            ) : null}
+            {project.storyPoints?.length ? (
+              <div className="space-y-2">
+                <h2 className={`${GeistSans.className} text-[14px] font-semibold text-foreground sm:text-[15px]`}>
+                  Case Study Highlights
+                </h2>
+                <ul className={`${GeistMono.className} list-disc space-y-2 pl-5 text-[12px] leading-7 text-muted-foreground sm:text-[13px]`}>
+                  {project.storyPoints.map((point) => (
+                    <li key={point}>{point}</li>
+                  ))}
+                </ul>
+              </div>
+            ) : null}
+          </div>
+        ) : null}
       </div>
     </section>
   );

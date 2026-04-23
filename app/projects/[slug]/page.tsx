@@ -37,6 +37,23 @@ export default async function ProjectDetailPage({ params }: PageProps) {
             priority
           />
         </div>
+        {project.story || project.storyPoints?.length ? (
+          <div className="mb-8 space-y-4">
+            {project.story ? (
+              <p className="text-sm leading-8 text-muted-foreground">{project.story}</p>
+            ) : null}
+            {project.storyPoints?.length ? (
+              <div className="space-y-2">
+                <h2 className="text-base font-semibold text-foreground">Case Study Highlights</h2>
+                <ul className="list-disc space-y-2 pl-5 text-sm leading-7 text-muted-foreground">
+                  {project.storyPoints.map((point) => (
+                    <li key={point}>{point}</li>
+                  ))}
+                </ul>
+              </div>
+            ) : null}
+          </div>
+        ) : null}
 
         <div className="flex flex-wrap gap-3">
           {project.live ? (

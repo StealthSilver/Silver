@@ -1,6 +1,8 @@
 export type ProjectBase = {
   title: string;
   description: string;
+  story?: string;
+  storyPoints?: string[];
   image: string;
   logo: string;
   lightLogo?: string;
@@ -134,6 +136,15 @@ const PROJECT_RECORDS: ProjectBase[] = [
   {
     title: "RiffinityAI",
     description: "An AI companion application with multiple models",
+    story:
+      "RiffinityAI started from a practical problem I kept facing while testing large language models: every model produced different responses, but comparing them required jumping between tools and tabs. I wanted a single AI chatbot workspace that brings all available models together so users can interact, compare, and decide faster without losing context. I built it with a clean chat-first flow, fast model switching, and response layouts designed for side-by-side evaluation. The goal was not just to chat with AI, but to help users confidently choose the best answer by seeing quality differences clearly. As I iterated, I focused heavily on conversational UX and interaction quality to make the platform feel responsive, readable, and engaging. The result is a model-comparison system that improves trust in outputs and increases user satisfiability through richer interaction with AI models.",
+    storyPoints: [
+      "Problem: Comparing responses across models was slow, fragmented, and hard to evaluate.",
+      "Approach: Built one AI chatbot interface that includes all available models in a single flow.",
+      "Build focus: Fast model switching, consistent prompt context, and clear response readability.",
+      "Core value: Users can compare model depth, tone, and relevance side-by-side before deciding.",
+      "Impact: Better decision confidence and higher user satisfiability through deeper AI interaction.",
+    ],
     image: "/projects/riffinity.png",
     logo: "/project_logo/riffinity.svg",
     lightLogo: "/project_logo/riffinity-light.svg",

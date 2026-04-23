@@ -1743,7 +1743,6 @@ function FocusedProjectPage({
               priority
             />
           </div>
-
           {/* project name */}
           <h1
             className={`${GeistMono.className} text-center text-xl font-semibold tracking-[0.06em] text-neutral-100 uppercase sm:text-4xl sm:tracking-[0.08em]`}
