@@ -4,6 +4,7 @@ export type ProjectBase = {
   story?: string;
   storyPoints?: string[];
   image: string;
+  lightImage?: string;
   logo: string;
   lightLogo?: string;
   darkLogo?: string;
@@ -174,6 +175,7 @@ const PROJECT_RECORDS: ProjectBase[] = [
       "Outcome: A minimal, easy-to-read surface that keeps attention on the writing while staying simple to extend with new pieces.",
     ],
     image: "/projects/blog.png",
+    lightImage: "/projects/blog-light.png",
     logo: "/project_logo/intersectinglines.svg",
     live: "https://intersecting-lines.vercel.app/",
     github: "https://github.com/StealthSilver/Intersecting-Lines",

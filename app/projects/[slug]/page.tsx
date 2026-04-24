@@ -28,14 +28,35 @@ export default async function ProjectDetailPage({ params }: PageProps) {
         <p className="mb-8 text-muted-foreground">{project.description}</p>
 
         <div className="relative mb-10 aspect-video w-full overflow-hidden rounded-lg border border-line bg-muted">
-          <Image
-            src={project.image}
-            alt={project.title}
-            fill
-            className="object-cover"
-            sizes="(max-width: 768px) 100vw, 42rem"
-            priority
-          />
+          {project.lightImage ? (
+            <>
+              <Image
+                src={project.lightImage}
+                alt={project.title}
+                fill
+                className="object-cover dark:hidden"
+                sizes="(max-width: 768px) 100vw, 42rem"
+                priority
+              />
+              <Image
+                src={project.image}
+                alt={project.title}
+                fill
+                className="hidden object-cover dark:block"
+                sizes="(max-width: 768px) 100vw, 42rem"
+                priority
+              />
+            </>
+          ) : (
+            <Image
+              src={project.image}
+              alt={project.title}
+              fill
+              className="object-cover"
+              sizes="(max-width: 768px) 100vw, 42rem"
+              priority
+            />
+          )}
         </div>
         {project.story || project.storyPoints?.length ? (
           <div className="mb-8 space-y-4">

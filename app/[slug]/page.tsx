@@ -95,14 +95,35 @@ export default async function ProjectPage({ params }: PageProps) {
         </p>
 
         <div className="relative mt-5 aspect-video w-full overflow-hidden border border-line bg-muted/30">
-          <Image
-            src={project.image}
-            alt={`${project.title} preview`}
-            fill
-            className="object-cover"
-            sizes="(max-width: 768px) 100vw, 768px"
-            priority
-          />
+          {project.lightImage ? (
+            <>
+              <Image
+                src={project.lightImage}
+                alt={`${project.title} preview`}
+                fill
+                className="object-cover dark:hidden"
+                sizes="(max-width: 768px) 100vw, 768px"
+                priority
+              />
+              <Image
+                src={project.image}
+                alt={`${project.title} preview`}
+                fill
+                className="hidden object-cover dark:block"
+                sizes="(max-width: 768px) 100vw, 768px"
+                priority
+              />
+            </>
+          ) : (
+            <Image
+              src={project.image}
+              alt={`${project.title} preview`}
+              fill
+              className="object-cover"
+              sizes="(max-width: 768px) 100vw, 768px"
+              priority
+            />
+          )}
         </div>
         {project.story || project.storyPoints?.length ? (
           <div className="mt-5 space-y-4">
