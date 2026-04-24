@@ -1,6 +1,19 @@
+export const PROJECT_TAGS = [
+  "AI/ML",
+  "FullStack",
+  "Frontend",
+  "Backend",
+  "Mobile",
+  "Game",
+  "Web3",
+] as const;
+
+export type ProjectTag = (typeof PROJECT_TAGS)[number];
+
 export type ProjectBase = {
   title: string;
   description: string;
+  tags: ProjectTag[];
   story?: string;
   storyPoints?: string[];
   image: string;
@@ -30,6 +43,7 @@ const PROJECT_RECORDS: ProjectBase[] = [
   {
     title: "MeshSpire",
     description: "A peer to peer learning app for students",
+    tags: ["FullStack"],
     image: "/projects/meshspire.png",
     logo: "/project_logo/meshspire.svg",
     live: "https://dev.dg4uqajhampr9.amplifyapp.com/",
@@ -40,6 +54,7 @@ const PROJECT_RECORDS: ProjectBase[] = [
   {
     title: "Verdan",
     description: "A plantation management and monitoring platform",
+    tags: ["FullStack", "Mobile"],
     image: "/projects/verdan.png",
     logo: "/project_logo/verdan.svg",
     live: "https://verdan-main.vercel.app/",
@@ -50,6 +65,7 @@ const PROJECT_RECORDS: ProjectBase[] = [
   {
     title: "Spardha",
     description: "AI prep for competitive exams with practice, tests, and analytics",
+    tags: ["AI/ML", "FullStack"],
     image: "/projects/spardha.png",
     logo: "/project_logo/spardha.svg",
     live: "https://spardha-topaz.vercel.app/",
@@ -60,6 +76,7 @@ const PROJECT_RECORDS: ProjectBase[] = [
   {
     title: "Sol-X",
     description: "A project management application",
+    tags: ["FullStack", "Mobile"],
     image: "/projects/connectingdots.png", //
     logo: "/project_logo/sol-X.svg",
     live: "https://your-live-site.com", //
@@ -69,6 +86,7 @@ const PROJECT_RECORDS: ProjectBase[] = [
   {
     title: "AlgoRhythm",
     description: "A programming algorithm visualisation platform",
+    tags: ["FullStack"],
     image: "/projects/algorhythm.png", //
     logo: "/project_logo/algorhythm.svg",
     darkLogo: "/project_logo/algorhythm-dark.svg",
@@ -88,6 +106,7 @@ const PROJECT_RECORDS: ProjectBase[] = [
       "Discoverability: Applied semantic structure and SEO so titles, descriptions, and content could rank and share cleanly after launch.",
       "Outcome: The organization adopted the new landing page; the work balanced marketing narrative, visual design, and frontend engineering.",
     ],
+    tags: ["Frontend"],
     image: "/projects/sgrids.png",
     lightImage: "/projects/sgrids-light.png",
     logo: "/project_logo/sgrids.svg",
@@ -100,6 +119,7 @@ const PROJECT_RECORDS: ProjectBase[] = [
   {
     title: "MindPalace",
     description: "An organization and management application",
+    tags: ["FullStack"],
     image: "/projects/mindpalace.png", //
     logo: "/project_logo/mplogo.svg",
     live: "https://mind-palace-eight.vercel.app/", //
@@ -110,6 +130,7 @@ const PROJECT_RECORDS: ProjectBase[] = [
   {
     title: "GameZone",
     description: "A zone for classical games",
+    tags: ["FullStack", "Mobile", "Game"],
     image: "/projects/gamezone.png", //
     logo: "/project_logo/game.svg",
     live: "https://game-zone-bay-xi.vercel.app/", //
@@ -119,6 +140,7 @@ const PROJECT_RECORDS: ProjectBase[] = [
   {
     title: "Silver-UI",
     description: "A modern Ui component library",
+    tags: ["Frontend"],
     image: "/projects/silver-ui.png",
     logo: "/project_logo/silverui.svg",
     live: "https://silver-ui.vercel.app/",
@@ -128,6 +150,7 @@ const PROJECT_RECORDS: ProjectBase[] = [
   {
     title: "Sketch-It",
     description: "A colloborative drawing application",
+    tags: ["FullStack"],
     image: "/projects/sketchit.png", //
     logo: "/project_logo/sketchit.svg",
     live: "https://sketch-it-nine.vercel.app/", //
@@ -137,6 +160,7 @@ const PROJECT_RECORDS: ProjectBase[] = [
   {
     title: "InfinityX",
     description: "Real time workflow mamagement applicaion",
+    tags: ["FullStack", "AI/ML"],
     image: "/projects/infinityx.png", //
     logo: "/project_logo/infinityx.svg",
     live: "https://infinity-x-landing.vercel.app/", //
@@ -156,6 +180,7 @@ const PROJECT_RECORDS: ProjectBase[] = [
       "Core value: Users can compare model depth, tone, and relevance side-by-side before deciding.",
       "Impact: Better decision confidence and higher user satisfiability through deeper AI interaction.",
     ],
+    tags: ["AI/ML", "FullStack"],
     image: "/projects/riffinity.png",
     logo: "/project_logo/riffinity.svg",
     lightLogo: "/project_logo/riffinity-light.svg",
@@ -166,6 +191,7 @@ const PROJECT_RECORDS: ProjectBase[] = [
   {
     title: "ConnectRight",
     description: "A low latency video confrencing platforms",
+    tags: ["FullStack", "Backend"],
     image: "/projects/connectright.png",
     logo: "/project_logo/cr.svg",
     live: "https://connect-right.vercel.app/",
@@ -184,6 +210,7 @@ const PROJECT_RECORDS: ProjectBase[] = [
       "Author workflow: Content ships from markdown files, so contributors add or edit pieces by writing markdown without a heavy publishing flow.",
       "Outcome: A minimal, easy-to-read surface that keeps attention on the writing while staying simple to extend with new pieces.",
     ],
+    tags: ["Frontend", "FullStack"],
     image: "/projects/blog.png",
     lightImage: "/projects/blog-light.png",
     logo: "/project_logo/intersectinglines.svg",
@@ -195,6 +222,7 @@ const PROJECT_RECORDS: ProjectBase[] = [
   {
     title: "BinaryNetwork",
     description: "A professional social media platform",
+    tags: ["FullStack"],
     image: "/projects/binarynetwork.png", //
     logo: "/project_logo/binarynetwork.svg",
     live: "https://binary-network.vercel.app/", // landing page
@@ -205,6 +233,7 @@ const PROJECT_RECORDS: ProjectBase[] = [
   {
     title: "DevOrbit",
     description: "Application for deploying and editing codebase",
+    tags: ["FullStack", "Backend", "AI/ML"],
     image: "/projects/devorbit.png", //
     logo: "/project_logo/devorbit.svg",
     live: "https://your-live-site.com", //
@@ -214,6 +243,7 @@ const PROJECT_RECORDS: ProjectBase[] = [
   {
     title: "Taskly",
     description: "A task management application",
+    tags: ["FullStack", "Mobile"],
     image: "/projects/taskly.png", //
     logo: "/project_logo/taskly.svg",
     live: "https://taskly-bay.vercel.app/", //
@@ -224,6 +254,7 @@ const PROJECT_RECORDS: ProjectBase[] = [
   {
     title: "Silver",
     description: "A portfolio application in nextjs ",
+    tags: ["Frontend"],
     image: "/projects/silver.png",
     logo: "/project_logo/silver-l.svg",
     darkLogo: "/project_logo/silver-dark.svg",
@@ -238,6 +269,7 @@ const PROJECT_RECORDS: ProjectBase[] = [
   {
     title: "Form and Function",
     description: "A modern and original design agency website",
+    tags: ["Frontend"],
     image: "/projects/form&function.png",
     logo: "/project_logo/formandfunction.svg",
     lightLogo: "/project_logo/formandfunction-light.svg",
@@ -248,6 +280,7 @@ const PROJECT_RECORDS: ProjectBase[] = [
   {
     title: "Alcaster",
     description: "A blackcahin legacy archive platform",
+    tags: ["FullStack", "Backend", "Web3"],
     image: "/projects/alcaster.png", //
     logo: "/project_logo/alcaster.svg",
     live: "https://alcaster.vercel.app/", //
@@ -257,6 +290,7 @@ const PROJECT_RECORDS: ProjectBase[] = [
   {
     title: "BridgePay",
     description: "An end to end payment gateway application",
+    tags: ["Backend"],
     image: "/projects/bridgepay.png", //
     logo: "/project_logo/bridgepay.svg",
     live: "https://bridge-pay-vve4.vercel.app/", // backend deploy
@@ -266,6 +300,7 @@ const PROJECT_RECORDS: ProjectBase[] = [
   {
     title: "Prominent",
     description: "Low Latency real time trading and investment application",
+    tags: ["Backend"],
     image: "/projects/prominent.png", //
     logo: "/project_logo/promlogo.svg",
     live: "https://prominent-eight.vercel.app/", // -> landing page
@@ -276,6 +311,7 @@ const PROJECT_RECORDS: ProjectBase[] = [
   {
     title: "Meetmux",
     description: "Landing page for a social media platform",
+    tags: ["Frontend"],
     image: "/projects/metmux.png",
     logo: "/project_logo/meetmux.png",
     live: "https://meet-mux-xi.vercel.app/",
@@ -285,6 +321,7 @@ const PROJECT_RECORDS: ProjectBase[] = [
   {
     title: "ConnectingDots",
     description: "A course selling application with LMS",
+    tags: ["FullStack"],
     image: "/projects/connectingdots.png", //
     logo: "/project_logo/sol-X.svg",
     live: "https://your-live-site.com", //
