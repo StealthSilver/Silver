@@ -164,6 +164,15 @@ const PROJECT_RECORDS: ProjectBase[] = [
   {
     title: "Intersecting Lines",
     description: "A blog page for stories, poems and essays",
+    story:
+      "Intersecting Lines grew from wanting a place on the web that treated reading as the main event, not engagement metrics. I imagined a reader-first site where someone could arrive, settle in, and spend time with literature: short stories, poems, book reviews, and essays, all in one calm feed. Generic likes and dislikes never felt right for that kind of work, so I replaced them with reactions that actually name a feeling—Hopeful, Wisper, Warmth—so readers can respond to a piece in a way that matches how writing lands emotionally. The interface stays clean and minimal on purpose: generous type, plenty of space, and nothing that competes with the words on the page. Behind the scenes, publishing stays simple: new work is just content in a markdown file, so adding a story or a review stays as straightforward as writing, without fighting the CMS.",
+    storyPoints: [
+      "Problem: Most blogs optimize for clicks and shallow signals; literature deserves a quieter, more respectful reading experience.",
+      "Approach: Designed a reader-first layout with typography and spacing tuned for long-form reading across stories, poems, reviews, and essays.",
+      "Differentiation: Swapped binary like/dislike for meaningful reactions (Hopeful, Wisper, Warmth) so feedback reflects mood, not just approval.",
+      "Author workflow: Content ships from markdown files, so contributors add or edit pieces by writing markdown without a heavy publishing flow.",
+      "Outcome: A minimal, easy-to-read surface that keeps attention on the writing while staying simple to extend with new pieces.",
+    ],
     image: "/projects/blog.png",
     logo: "/project_logo/intersectinglines.svg",
     live: "https://intersecting-lines.vercel.app/",
