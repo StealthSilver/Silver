@@ -79,7 +79,17 @@ const PROJECT_RECORDS: ProjectBase[] = [
   {
     title: "Sgrids",
     description: "Landing page for Renewables SAP application",
+    story:
+      "I created this for Smart Grid Analytics while the company was going through a full redesign. The goal was a flagship public face that felt enterprise-credible but still alive on the screen, so I built a page full of relevant animations and motion that reinforce the product story instead of distracting from it. That turned into a complete enterprise redesign of the landing experience: structure, visuals, and narrative aligned for a technical B2B audience. I implemented it in Next.js with modern design principles—clear hierarchy, generous spacing, fast-feeling interactions—and I owned SEO so the new site could be discovered and understood by search engines. Smart Grid Analytics adopted the new landing page for production. The project took a lot of thought and iteration; it felt more like a creative process—brand, story, and craft—than a straight coding journey, and that is what made the outcome feel earned.",
+    storyPoints: [
+      "Context: Smart Grid Analytics was redesigning; the public site needed to match a maturing product and instill trust with enterprise visitors.",
+      "Creative: Designed motion and section-level animation that supports the renewables and analytics narrative without undermining a serious B2B tone.",
+      "Build: Shipped the landing in Next.js with a modern layout system, responsive behavior, and performance-minded implementation.",
+      "Discoverability: Applied semantic structure and SEO so titles, descriptions, and content could rank and share cleanly after launch.",
+      "Outcome: The organization adopted the new landing page; the work balanced marketing narrative, visual design, and frontend engineering.",
+    ],
     image: "/projects/sgrids.png",
+    lightImage: "/projects/sgrids-light.png",
     logo: "/project_logo/sgrids.svg",
     live: "https://sgrids.vercel.app/",
     github: "https://github.com/StealthSilver/sgrids-lp",
