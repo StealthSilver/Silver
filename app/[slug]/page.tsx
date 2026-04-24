@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import { GeistMono } from "geist/font/mono";
 import { GeistSans } from "geist/font/sans";
 import { ArrowUpRight, Figma, Github } from "lucide-react";
+import { ProjectTagList } from "@/components/ProjectTagList";
 import { PROJECTS, getProjectBySlug } from "@/data/project.data";
 
 type PageProps = {
@@ -85,9 +86,11 @@ export default async function ProjectPage({ params }: PageProps) {
           </div>
         </div>
 
+        <ProjectTagList tags={project.tags} className="mt-3" />
+
         <div
           aria-hidden
-          className="relative left-1/2 mt-2 h-px w-screen max-w-none -translate-x-1/2 bg-line"
+          className="relative left-1/2 mt-3 h-px w-screen max-w-none -translate-x-1/2 bg-line"
         />
 
         <p className={`${GeistMono.className} mt-4 text-[13px] leading-relaxed text-muted-foreground sm:text-[14px]`}>

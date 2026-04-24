@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { ProjectTagList } from "@/components/ProjectTagList";
 import { getProjectBySlug } from "@/data/project.data";
 
 type PageProps = {
@@ -25,6 +26,7 @@ export default async function ProjectDetailPage({ params }: PageProps) {
         <h1 className="mb-3 text-2xl font-semibold tracking-tight sm:text-3xl">
           {project.title}
         </h1>
+        <ProjectTagList tags={project.tags} className="mb-5" />
         <p className="mb-8 text-muted-foreground">{project.description}</p>
 
         <div className="relative mb-10 aspect-video w-full overflow-hidden rounded-lg border border-line bg-muted">
