@@ -166,7 +166,11 @@ export default function Hero() {
               />
               <span
                 aria-hidden
-                className={`${GeistMono.className} absolute inset-0 grid place-items-center bg-black/55 text-[14px] uppercase tracking-[0.14em] text-white opacity-0 transition-opacity duration-200 group-hover:opacity-100 group-focus-visible:opacity-100`}
+                className="pointer-events-none absolute inset-0 z-[1] rounded-full bg-background/30 dark:bg-background/40"
+              />
+              <span
+                aria-hidden
+                className={`${GeistMono.className} absolute inset-0 z-[2] grid place-items-center bg-black/55 text-[14px] uppercase tracking-[0.14em] text-white opacity-0 transition-opacity duration-200 group-hover:opacity-100 group-focus-visible:opacity-100`}
               >
                 KNOW ME
               </span>
