@@ -214,6 +214,7 @@ const PROJECT_RECORDS: ProjectBase[] = [
     image: "/projects/blog.png",
     lightImage: "/projects/blog-light.png",
     logo: "/project_logo/intersectinglines.svg",
+    darkLogo: "/project_logo/intersectinglines-dark.svg",
     live: "https://intersecting-lines.vercel.app/",
     github: "https://github.com/StealthSilver/Intersecting-Lines",
     figma:
