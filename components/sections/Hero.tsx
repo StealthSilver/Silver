@@ -24,9 +24,9 @@ const heroPencil = Caveat({
   display: "swap",
 });
 
-/** Full-bleed rules in the know-more dialog (offsets `p-4` / `sm:p-6`). */
+/** Full-bleed rules in the know-more dialog (offsets `p-3` / `sm:p-6`). */
 const KNOW_MORE_RULE =
-  "-mx-4 h-px w-[calc(100%+2rem)] shrink-0 bg-line sm:-mx-6 sm:w-[calc(100%+3rem)]" as const;
+  "-mx-3 h-px w-[calc(100%+1.5rem)] shrink-0 bg-line sm:-mx-6 sm:w-[calc(100%+3rem)]" as const;
 
 export default function Hero() {
   const { requestEnterImmersive } = useImmersiveMode();
@@ -213,14 +213,14 @@ export default function Hero() {
 
       {isKnowMoreOpen ? (
         <div
-          className="fixed inset-0 z-50 grid place-items-center overflow-hidden overscroll-none bg-black/45 p-3 pt-[max(0.75rem,env(safe-area-inset-top))] pb-[max(0.75rem,env(safe-area-inset-bottom))] backdrop-blur-md sm:p-4"
+          className="fixed inset-0 z-50 grid place-items-center overflow-hidden overscroll-none bg-black/45 p-2 pt-[max(0.5rem,env(safe-area-inset-top))] pb-[max(0.5rem,env(safe-area-inset-bottom))] backdrop-blur-md sm:p-4 sm:pt-[max(0.75rem,env(safe-area-inset-top))] sm:pb-[max(0.75rem,env(safe-area-inset-bottom))]"
           onClick={() => setIsKnowMoreOpen(false)}
           role="dialog"
           aria-modal="true"
           aria-labelledby="know-more-title"
         >
           <div
-            className="relative my-auto min-h-0 min-w-0 w-full max-w-[40rem] overflow-visible border border-line bg-background p-4 shadow-xl sm:p-6"
+            className="relative my-auto min-h-0 min-w-0 w-full max-w-[40rem] overflow-hidden border border-line bg-background p-3 shadow-xl sm:p-6"
             onClick={(event) => event.stopPropagation()}
           >
             <div
@@ -240,72 +240,74 @@ export default function Hero() {
               aria-hidden
             />
 
-            <div className="mb-0 flex flex-col gap-3 pt-1 pb-3 sm:mb-0 sm:flex-row sm:items-baseline sm:justify-between sm:gap-4 sm:pb-2">
+            <div className="mb-0 flex flex-col gap-2 pt-0.5 pb-2 sm:mb-0 sm:flex-row sm:items-baseline sm:justify-between sm:gap-4 sm:pt-1 sm:pb-2">
               <h3
                 id="know-more-title"
-                className={`${GeistMono.className} min-w-0 flex-1 text-[15px] leading-snug text-foreground/90 sm:pr-2`}
+                className={`${GeistMono.className} min-w-0 flex-1 text-[13px] leading-snug text-foreground/90 sm:text-[15px] sm:pr-2`}
               >
                 Since you have clicked my profile picture
               </h3>
               <button
                 type="button"
                 onClick={() => setIsKnowMoreOpen(false)}
-                className={`${GeistMono.className} shrink-0 self-end text-[13px] uppercase leading-none tracking-[0.12em] text-muted-foreground transition-colors hover:text-foreground sm:self-auto`}
+                className={`${GeistMono.className} shrink-0 self-end text-[11px] uppercase leading-none tracking-[0.12em] text-muted-foreground transition-colors hover:text-foreground sm:self-auto sm:text-[13px]`}
                 aria-label="Close popup"
               >
                 Close
               </button>
             </div>
 
-            <div className={`${KNOW_MORE_RULE} mb-4`} aria-hidden />
+            <div className={`${KNOW_MORE_RULE} mb-3 sm:mb-4`} aria-hidden />
 
-            <div className={`${GeistMono.className} text-[14px] leading-relaxed text-muted-foreground`}>
-              <blockquote className="border-l border-line pl-3 italic text-foreground/90">
+            <div
+              className={`${GeistMono.className} min-w-0 break-words text-[12px] leading-relaxed text-muted-foreground sm:text-[14px]`}
+            >
+              <blockquote className="border-l border-line pl-2.5 italic text-foreground/90 sm:pl-3">
                 <p>What is earth without art?</p>
                 <p>It&apos;s just a bare rock floating in space.</p>
                 <footer className="mt-1 text-muted-foreground">- Anonymous</footer>
               </blockquote>
 
-              <div className={`${KNOW_MORE_RULE} my-4`} aria-hidden />
+              <div className={`${KNOW_MORE_RULE} my-3 sm:my-4`} aria-hidden />
 
               <div>
-                <p className="mb-1 text-foreground">Music</p>
+                <p className="mb-0.5 text-foreground sm:mb-1">Music</p>
                 <p>Linkin Park</p>
                 <p>R.E.M.</p>
                 <p>
                 Avenged Sevenfold</p>
               </div>
 
-              <div className={`${KNOW_MORE_RULE} my-4`} aria-hidden />
+              <div className={`${KNOW_MORE_RULE} my-3 sm:my-4`} aria-hidden />
 
               <div>
-                <p className="mb-1 text-foreground">Books</p>
+                <p className="mb-0.5 text-foreground sm:mb-1">Books</p>
                 <p>The Road — by Cormac McCarthy</p>
                 <p>A Fine Balance — by Rohinton Mistry</p>
               </div>
 
-              <div className={`${KNOW_MORE_RULE} my-4`} aria-hidden />
+              <div className={`${KNOW_MORE_RULE} my-3 sm:my-4`} aria-hidden />
 
               <div>
-                <p className="mb-1 text-foreground">Movies</p>
+                <p className="mb-0.5 text-foreground sm:mb-1">Movies</p>
                 <p>The Prestige</p>
                 <p>Phantom Thread</p>
                 <p>Moneyball</p>
                 <p>Udaan</p>
               </div>
 
-              <div className={`${KNOW_MORE_RULE} my-4`} aria-hidden />
+              <div className={`${KNOW_MORE_RULE} my-3 sm:my-4`} aria-hidden />
 
               <div>
-                <p className="mb-1 text-foreground">Actors I Admire</p>
+                <p className="mb-0.5 text-foreground sm:mb-1">Actors I Admire</p>
                 <p>Irfan Khan</p>
                 <p>Christian Bale</p>
               </div>
 
-              <div className={`${KNOW_MORE_RULE} my-4`} aria-hidden />
+              <div className={`${KNOW_MORE_RULE} my-3 sm:my-4`} aria-hidden />
 
               <div>
-                <p className="mb-1 text-foreground">Comedians</p>
+                <p className="mb-0.5 text-foreground sm:mb-1">Comedians</p>
                 <p>Bo Burnham</p>
                 <p>Kanan Gill</p>
               </div>
