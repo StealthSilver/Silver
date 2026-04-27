@@ -90,7 +90,7 @@ const PROJECT_RECORDS: ProjectBase[] = [
     image: "/projects/algorhythm.png", //
     logo: "/project_logo/algorhythm.svg",
     darkLogo: "/project_logo/algorhythm-dark.svg",
-    live: "https://algo-rhythm-nine.vercel.app/", //
+    live: "https://algorhythm-main.vercel.app/", //
     github: "https://github.com/StealthSilver/AlgoRhythm",
     figma: "https://figma.com/file/your-figma-link", //
   },
