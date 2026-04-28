@@ -131,10 +131,10 @@ const PROJECT_RECORDS: ProjectBase[] = [
       "Philosophy: Consistency over volume—publish in small, useful pieces that compound into a durable learning library.",
     ],
     tags: ["FullStack"],
-    image: "/project_logo/connectingdots.png",
+    image: "/projects/connectingdots.png",
     logo: "/icons/cdlight.png",
-    lightLogo: "/icons/cdlight.png",
-    darkLogo: "/icons/cddark.png",
+    lightLogo: "/project_logo/cdlight.png",
+    darkLogo: "/project_logo/cddark.png",
     live: "https://connecting-dots-theta.vercel.app/", //
     github: "https://github.com/StealthSilver/ConnectingDots",
     figma: "https://figma.com/file/your-figma-link", //
