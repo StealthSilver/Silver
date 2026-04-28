@@ -77,11 +77,11 @@ const PROJECT_RECORDS: ProjectBase[] = [
     title: "Sol-X",
     description: "A project management application",
     tags: ["FullStack", "Mobile"],
-    image: "/projects/connectingdots.png", //
-    logo: "/icons/cdlight.png",
-    lightLogo: "/icons/cdlight.png",
-    darkLogo: "/icons/cddark.png",
-    live: "https://your-live-site.com", //
+    image: "/projects/Sol-X.png",
+    logo: "/project_logo/sol-X.svg",
+    lightLogo: "/project_logo/sol-X.svg",
+    darkLogo: "/project_logo/sol-X.svg",
+    live: "https://sol-x-eta.vercel.app/",
     github: "https://github.com/StealthSilver/ConnectingDots",
     figma: "https://figma.com/file/your-figma-link", //
   },
