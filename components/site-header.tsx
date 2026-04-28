@@ -1,6 +1,12 @@
 "use client";
 
-import { useState, useEffect, useId, useRef } from "react";
+import {
+  useState,
+  useEffect,
+  useId,
+  useRef,
+  type CSSProperties,
+} from "react";
 import { Github, Menu, X } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -24,6 +30,40 @@ const mobileMenuTransition = {
   duration: 0.38,
   ease: mobileMenuEase,
 } as const;
+
+function NavPrimaryLink({
+  href,
+  label,
+  className,
+  style,
+  onClick,
+}: {
+  href: string;
+  label: string;
+  className?: string;
+  style?: CSSProperties;
+  onClick?: () => void;
+}) {
+  if (href.endsWith(".pdf")) {
+    return (
+      <a
+        href={href}
+        target="_blank"
+        rel="noopener noreferrer"
+        className={className}
+        style={style}
+        onClick={onClick}
+      >
+        {label}
+      </a>
+    );
+  }
+  return (
+    <Link href={href} className={className} style={style} onClick={onClick}>
+      {label}
+    </Link>
+  );
+}
 
 export function SiteHeader() {
   const [mounted, setMounted] = useState(false);
@@ -107,17 +147,13 @@ export function SiteHeader() {
                 aria-label="Primary"
               >
                 {navItems.map(({ href, label }) => (
-                  <Link
+                  <NavPrimaryLink
                     key={href}
                     href={href}
+                    label={label}
                     className="shrink-0 transition-opacity hover:opacity-80"
                     style={{ color: navLinkColor }}
-                    {...(href.endsWith(".pdf")
-                      ? { target: "_blank", rel: "noopener noreferrer" }
-                      : {})}
-                  >
-                    {label}
-                  </Link>
+                  />
                 ))}
               </nav>
             </div>
@@ -207,21 +243,17 @@ export function SiteHeader() {
             >
               <nav className="flex flex-col" aria-label="Primary">
                 {navItems.map(({ href, label }, index) => (
-                  <Link
+                  <NavPrimaryLink
                     key={href}
                     href={href}
+                    label={label}
                     onClick={() => setMobileOpen(false)}
                     className={cn(
                       "block px-4 py-3.5 transition-[background-color,color] hover:bg-muted/80 active:bg-muted",
                       index < navItems.length - 1 && "border-b border-line",
                     )}
                     style={{ color: navLinkColor }}
-                    {...(href.endsWith(".pdf")
-                      ? { target: "_blank", rel: "noopener noreferrer" }
-                      : {})}
-                  >
-                    {label}
-                  </Link>
+                  />
                 ))}
               </nav>
 
