@@ -16,7 +16,7 @@ const navItems = [
   { href: "/#experience", label: "Experience" },
   { href: "/#projects", label: "Projects" },
   { href: "/#education", label: "Education" },
-  { href: "/api/resume", label: "Resume" },
+  { href: "/Resume_A.pdf", label: "Resume" },
 ] as const;
 
 const mobileMenuEase = [0.16, 1, 0.3, 1] as const;
