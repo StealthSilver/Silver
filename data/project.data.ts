@@ -78,7 +78,9 @@ const PROJECT_RECORDS: ProjectBase[] = [
     description: "A project management application",
     tags: ["FullStack", "Mobile"],
     image: "/projects/connectingdots.png", //
-    logo: "/project_logo/sol-X.svg",
+    logo: "/icons/cdlight.png",
+    lightLogo: "/icons/cdlight.png",
+    darkLogo: "/icons/cddark.png",
     live: "https://your-live-site.com", //
     github: "https://github.com/StealthSilver/ConnectingDots",
     figma: "https://figma.com/file/your-figma-link", //
@@ -114,6 +116,28 @@ const PROJECT_RECORDS: ProjectBase[] = [
     github: "https://github.com/StealthSilver/sgrids-lp",
     figma:
       "https://www.figma.com/design/HTVIDAbVfEn8CzWVvqVoMs/Sgrids?node-id=0-1&t=SsSC4rk4RVRXyaHK-1",
+  },
+  
+  {
+    title: "ConnectingDots",
+    description: "A page for sharing and discovering content",
+    story:
+      "Connecting Dots is the written companion to my YouTube channel—the place where ideas can settle into words when a video title, a comment thread, or a short post doesn’t give a topic enough room to breathe. I built it as a quiet, durable home for what I learn: long-form blogs and notes when something needs depth, and eventually structured courses when it helps to learn step by step. The channel starts the conversation; this site is the slower, written half of that story.\n\nThe guiding principle is simple: connect what you learn. Instead of treating learning like a pile of disconnected tutorials, Connecting Dots is organized around progression—foundations into core skills, into projects, into job-ready confidence. It’s built for learners who mean it: people who want clarity, not noise; direction, not doomscrolling.\n\nI’m not trying to ship a flood of posts overnight. This project is a commitment in small pieces over time: show up, write clearly, and add what is useful as I go. If that sounds like your pace too, I’m glad you’re here.",
+    storyPoints: [
+      "Goal: Create a calm, long-form home for ideas that need more depth than video formats allow.",
+      "Product framing: A written companion to the channel—blogs and notes today, structured step-by-step courses over time.",
+      "Information architecture: Designed around learning progression (Foundations → Core Skills → Projects → Job Ready) to reduce guesswork.",
+      "Content focus: In-depth blogs, DSA pattern notes, AI/ML notebooks, problem sets, and an in-browser code playground for hands-on practice.",
+      "Philosophy: Consistency over volume—publish in small, useful pieces that compound into a durable learning library.",
+    ],
+    tags: ["FullStack"],
+    image: "/project_logo/connectingdots.png",
+    logo: "/icons/cdlight.png",
+    lightLogo: "/icons/cdlight.png",
+    darkLogo: "/icons/cddark.png",
+    live: "https://connecting-dots-theta.vercel.app/", //
+    github: "https://github.com/StealthSilver/ConnectingDots",
+    figma: "https://figma.com/file/your-figma-link", //
   },
  
   {
@@ -318,17 +342,7 @@ const PROJECT_RECORDS: ProjectBase[] = [
     live: "https://meet-mux-xi.vercel.app/",
     github: "https://github.com/StealthSilver/MeetMux",
     figma: "https://figma.com/file/your-figma-link", //
-  },
-  {
-    title: "ConnectingDots",
-    description: "A course selling application with LMS",
-    tags: ["FullStack"],
-    image: "/projects/connectingdots.png", //
-    logo: "/project_logo/sol-X.svg",
-    live: "https://your-live-site.com", //
-    github: "https://github.com/StealthSilver/ConnectingDots",
-    figma: "https://figma.com/file/your-figma-link", //
-  },
+  }
 ];
 
 export const PROJECTS: Project[] = PROJECT_RECORDS.map((p, i) => ({
