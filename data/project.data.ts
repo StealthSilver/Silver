@@ -65,6 +65,16 @@ const PROJECT_RECORDS: ProjectBase[] = [
   {
     title: "Spardha",
     description: "AI prep for competitive exams with practice, tests, and analytics",
+    story:
+      "Spardha is exam prep built the way students actually study for tests like JEE—not endless random dumps, but structured flows from subject to chapter to question across Physics, Chemistry, and Math. The experience is designed around a daily rhythm: calendar-based daily practice, timed full mocks that rehearse real exam pressure, and analytics that show where accuracy drops so revision targets weak spots instead of guesswork. A competitive leaderboard blends accuracy, volume, streaks, and score with near–real-time refresh, filters, and personal rank and percentile so progress feels tangible. On the engineering side, JWT auth, a REST API, and persisted user and stats models connect the marketing site, study app, and rankings into one coherent product. The public face is a dedicated Next.js landing with a scroll-driven “day inside Spardha” story and careful visual polish—positioning Spardha as a serious exam-prep brand, not a CRUD tutorial.",
+    storyPoints: [
+      "Structured JEE-style prep: Subject → chapter → question flows for Physics, Chemistry, and Math so learners drill the syllabus in an order that matches competitive study, not random question dumps.",
+      "Daily rhythm and assessments: Calendar-based daily practice (DPPs) and full mock tests with a timed interface so users build habit and rehearse exam pressure, not only casual browsing.",
+      "Performance analytics: Dashboards and charts for accuracy, attempts, and subject-level breakdown so students see where they lose marks and can focus revision.",
+      "Competitive leaderboard: Rankings from multiple signals—accuracy, volume, streaks, score—with near–real-time refresh, filters, and personal rank/percentile so prep feels measurable and motivating.",
+      "Full-stack product shape: JWT auth, REST API, and persisted user/stats models tie the marketing site, study app, and rankings into one product rather than a static demo page.",
+      "Distinctive marketing: A Next.js landing with a scroll-driven “day inside Spardha” story and strong visual polish, positioning the project as a serious exam-prep brand.",
+    ],
     tags: ["AI/ML", "FullStack"],
     image: "/projects/spardha.png",
     logo: "/project_logo/spardha.svg",
