@@ -187,7 +187,8 @@ const PROJECT_RECORDS: ProjectBase[] = [
     description: "A modern Ui component library",
     tags: ["Frontend"],
     image: "/projects/silver-ui.png",
-    logo: "/project_logo/silverui.svg",
+    logo: "/project_logo/silverui-l.svg",
+    darkLogo: "/project_logo/silverui-d.svg",
     live: "https://silver-ui.vercel.app/",
     github: "https://github.com/StealthSilver/Silver-UI",
     figma: "https://figma.com/file/your-figma-link", //
@@ -317,8 +318,7 @@ const PROJECT_RECORDS: ProjectBase[] = [
     description: "A modern and original design agency website",
     tags: ["Frontend"],
     image: "/projects/form&function.png",
-    logo: "/project_logo/formandfunction.svg",
-    lightLogo: "/project_logo/formandfunction-light.svg",
+    logo: "/project_logo/fandf.svg",
     live: "https://form-function.vercel.app/",
     github: "https://github.com/StealthSilver/Form-Function",
     figma: "https://figma.com/file/your-figma-link", //
