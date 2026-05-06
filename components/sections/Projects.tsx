@@ -7,21 +7,31 @@ import { ArrowUpRight, Check, ChevronDown, FileText } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useTheme } from "next-themes";
-import { PROJECTS, PROJECT_TAGS, type ProjectTag } from "@/data/project.data";
+import {
+  FEATURED_PROJECTS,
+  PROJECTS,
+  PROJECT_TAGS,
+  type ProjectTag,
+} from "@/data/project.data";
+
+type ProjectFilterMode = "featured" | "all" | "tags";
 
 export default function Projects() {
   const [showAllProjects, setShowAllProjects] = useState(false);
   const [mounted, setMounted] = useState(false);
   const [sortOpen, setSortOpen] = useState(false);
+  const [filterMode, setFilterMode] = useState<ProjectFilterMode>("featured");
   const [selectedTags, setSelectedTags] = useState<ProjectTag[]>([]);
   const sortPanelRef = useRef<HTMLDivElement>(null);
   const { resolvedTheme } = useTheme();
   const initialVisibleProjects = 5;
 
   const filteredProjects = useMemo(() => {
+    if (filterMode === "featured") return FEATURED_PROJECTS;
+    if (filterMode === "all") return PROJECTS;
     if (selectedTags.length === 0) return PROJECTS;
     return PROJECTS.filter((p) => p.tags.some((t) => selectedTags.includes(t)));
-  }, [selectedTags]);
+  }, [filterMode, selectedTags]);
 
   const hasHiddenProjects = filteredProjects.length > initialVisibleProjects;
   const primaryProjects = filteredProjects.slice(0, initialVisibleProjects);
@@ -33,7 +43,7 @@ export default function Projects() {
 
   useEffect(() => {
     setShowAllProjects(false);
-  }, [selectedTags]);
+  }, [filterMode, selectedTags]);
 
   useEffect(() => {
     if (!sortOpen) return;
@@ -45,10 +55,17 @@ export default function Projects() {
   }, [sortOpen]);
 
   function toggleTag(tag: ProjectTag) {
+    setFilterMode("tags");
     setSelectedTags((prev) => (prev.includes(tag) ? prev.filter((t) => t !== tag) : [...prev, tag]));
   }
 
+  function selectFeatured() {
+    setFilterMode("featured");
+    setSelectedTags([]);
+  }
+
   function selectAll() {
+    setFilterMode("all");
     setSelectedTags([]);
   }
 
@@ -129,9 +146,16 @@ export default function Projects() {
     );
   };
 
-  const isAllSelected = selectedTags.length === 0;
+  const isFeaturedSelected = filterMode === "featured";
+  const isAllSelected = filterMode === "all";
   const sortLabel =
-    selectedTags.length === 0 ? "Sort" : `Sort (${selectedTags.length})`;
+    filterMode === "featured"
+      ? "Featured"
+      : filterMode === "all"
+        ? "All"
+        : selectedTags.length === 0
+          ? "Sort"
+          : `Sort (${selectedTags.length})`;
 
   return (
     <section id="projects" className="relative px-4 pb-3 ">
@@ -174,6 +198,18 @@ export default function Projects() {
                   <button
                     type="button"
                     role="option"
+                    aria-selected={isFeaturedSelected}
+                    onClick={() => selectFeatured()}
+                    className={`${GeistMono.className} flex w-full items-center gap-2 px-3 py-2 text-left text-[12px] text-foreground hover:bg-muted/50 sm:text-[13px]`}
+                  >
+                    <span className="flex size-4 shrink-0 items-center justify-center border border-line bg-muted/30">
+                      {isFeaturedSelected ? <Check className="size-3" strokeWidth={2.5} aria-hidden /> : null}
+                    </span>
+                    Featured
+                  </button>
+                  <button
+                    type="button"
+                    role="option"
                     aria-selected={isAllSelected}
                     onClick={() => selectAll()}
                     className={`${GeistMono.className} flex w-full items-center gap-2 px-3 py-2 text-left text-[12px] text-foreground hover:bg-muted/50 sm:text-[13px]`}
@@ -185,7 +221,7 @@ export default function Projects() {
                   </button>
                   <div aria-hidden className="mx-2 my-1 h-px bg-line" />
                   {PROJECT_TAGS.map((tag) => {
-                    const checked = selectedTags.includes(tag);
+                    const checked = filterMode === "tags" && selectedTags.includes(tag);
                     return (
                       <button
                         key={tag}

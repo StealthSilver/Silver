@@ -107,6 +107,17 @@ const PROJECT_RECORDS: ProjectBase[] = [
     figma: "https://figma.com/file/your-figma-link", //
   },
   {
+    title: "Sagar",
+    description: "A portfolio website for a brand manager",
+    tags: ["FullStack"],
+    image: "/projects/sagar.png", //
+    logo: "/project_logo/sagar.svg",
+    darkLogo: "/project_logo/sagar.svg",
+    live: "https://sagar-surfer.vercel.app/", //
+    github: "https://github.com/StealthSilver/Sagar",
+    figma: "https://figma.com/file/your-figma-link", //
+  },
+  {
     title: "Sgrids",
     description: "Landing page for Renewables SAP application",
     story:
@@ -360,6 +371,27 @@ export const PROJECTS: Project[] = PROJECT_RECORDS.map((p, i) => ({
   id: `project-${i + 1}`,
   slug: slugify(p.title),
 }));
+
+/** Display order for the Projects section “Featured” filter (project slugs). */
+export const FEATURED_PROJECT_SLUGS = [
+  "silver-ui",
+  "sgrids",
+  "connectingdots",
+  "verdan",
+  "sol-x",
+  "silver",
+  "intersecting-lines",
+  "form-and-function",
+  "meshspire",
+  "sagar",
+] as const;
+
+export const FEATURED_PROJECTS: Project[] = (() => {
+  const bySlug = new Map(PROJECTS.map((p) => [p.slug, p]));
+  return FEATURED_PROJECT_SLUGS.map((slug) => bySlug.get(slug)).filter(
+    (p): p is Project => p !== undefined,
+  );
+})();
 
 export function getProjectBySlug(slug: string): Project | undefined {
   return PROJECTS.find((p) => p.slug === slug);
