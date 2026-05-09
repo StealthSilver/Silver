@@ -36,7 +36,7 @@ const GITHUB_PROFILE_URL = "https://github.com/StealthSilver";
 
 const aboutItems = [
   { id: "role", icon: BriefcaseBusiness, type: "role" as const },
-  { id: "founder", icon: Rocket, value: "Founder @Cluster" },
+  { id: "founder", icon: Rocket, type: "founder" as const },
   { id: "location", icon: MapPin, type: "location" as const },
   { id: "phone", icon: Phone, type: "phone" as const, value: "+91 8533922485" },
   { id: "email", icon: Mail, type: "email" as const, value: "saraswatrajat12@gmail.com" },
@@ -221,6 +221,20 @@ export default function About() {
                   >
                     silver.com
                   </a>
+                ) : null}
+
+                {type === "founder" ? (
+                  <>
+                    Founder{" "}
+                    <a
+                      href="https://silver-studio-gamma.vercel.app/"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="no-underline hover:underline underline-offset-2 transition-all duration-200 ease-out"
+                    >
+                      @Silver-Studios
+                    </a>
+                  </>
                 ) : null}
 
                 {!type ? value : null}
