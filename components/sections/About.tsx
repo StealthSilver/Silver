@@ -40,7 +40,7 @@ const aboutItems = [
   { id: "location", icon: MapPin, type: "location" as const },
   { id: "phone", icon: Phone, type: "phone" as const, value: "+91 8533922485" },
   { id: "email", icon: Mail, type: "email" as const, value: "saraswatrajat12@gmail.com" },
-  { id: "website", icon: Globe, type: "website" as const, value: "silver.com" },
+  { id: "website", icon: Globe, type: "website" as const, value: "silverstudios.art" },
   { id: "pronouns", icon: UserRound, value: "he/him" },
 ] as const;
 
@@ -214,12 +214,12 @@ export default function About() {
 
                 {type === "website" ? (
                   <a
-                    href="https://silver.com"
+                    href="https://silverstudios.art/"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="no-underline hover:underline underline-offset-2 transition-all duration-200 ease-out"
                   >
-                    silver.com
+                    silverstudios.art
                   </a>
                 ) : null}
 
@@ -227,7 +227,7 @@ export default function About() {
                   <>
                     Founder{" "}
                     <a
-                      href="https://silver-studio-gamma.vercel.app/"
+                      href="https://silverstudios.art/"
                       target="_blank"
                       rel="noopener noreferrer"
                       className="no-underline hover:underline underline-offset-2 transition-all duration-200 ease-out"
