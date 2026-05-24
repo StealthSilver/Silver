@@ -2,33 +2,34 @@
 
 import { useEffect, useState } from "react";
 
+function readThemeFromDom(): "light" | "dark" {
+  if (typeof document === "undefined") return "light";
+  return document.documentElement.classList.contains("dark") ? "dark" : "light";
+}
+
 export default function ThemeHeadIcons() {
-  const [mounted, setMounted] = useState(false);
   const [theme, setTheme] = useState<"light" | "dark">("light");
 
   useEffect(() => {
-    setMounted(true);
-
-    const html = document.documentElement;
-
-    setTheme(html.classList.contains("dark") ? "dark" : "light");
+    setTheme(readThemeFromDom());
 
     const observer = new MutationObserver(() => {
-      setTheme(html.classList.contains("dark") ? "dark" : "light");
+      setTheme(readThemeFromDom());
     });
 
-    observer.observe(html, { attributes: true, attributeFilter: ["class"] });
+    observer.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ["class"],
+    });
     return () => observer.disconnect();
   }, []);
-
-  if (!mounted) return null;
 
   const icon = theme === "dark" ? "/icon_d.svg" : "/icon.svg";
 
   return (
     <>
       <link rel="icon" href={icon} />
-      <link rel="apple-touch-icon" href={icon} />
+      <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     </>
   );
 }

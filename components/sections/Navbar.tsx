@@ -8,11 +8,12 @@ import ThemeToggle from "../ui/ThemeToggle";
 import { useTheme } from "next-themes";
 import { useImmersiveMode } from "../../contexts/ImmersiveModeContext";
 import { cn } from "@/lib/utils";
+import { getBrandLogoSrc } from "@/lib/brand-logo";
 
 export default function Navbar() {
   const [mounted, setMounted] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
-  const { theme } = useTheme();
+  const { resolvedTheme } = useTheme();
   const { isImmersive, requestExitImmersive } = useImmersiveMode();
 
   useEffect(() => setMounted(true), []);
@@ -28,18 +29,13 @@ export default function Navbar() {
             aria-label="Home"
           >
             <motion.img
-              key={mounted ? theme : "default"}
-              src={
-                !mounted
-                  ? "/logo2.svg"
-                  : theme === "dark"
-                    ? "/logo.svg"
-                    : "/logo2.svg"
-              }
+              key={mounted ? resolvedTheme : "default"}
+              src={getBrandLogoSrc(resolvedTheme, mounted)}
               alt="Silver icon"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.3 }}
+              width={42}
+              height={43}
+              initial={false}
+              className="block h-8 w-auto"
             />
           </Link>
 

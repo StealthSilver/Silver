@@ -39,34 +39,38 @@ const cinzel = Cinzel({
 export const metadata: Metadata = {
   metadataBase: new URL(SITE.url),
   title: {
-    default: `Silver - Software Engineer`,
+    default: "Silver — Software Engineer",
     template: `%s | ${SITE.name}`,
   },
   description: SITE.description,
+  applicationName: SITE.name,
   openGraph: {
-    title: SITE.name,
+    title: "Silver — Software Engineer",
     description: SITE.description,
     url: SITE.url,
     siteName: SITE.name,
-    images: [
-      {
-        url: SITE.ogImage,
-        width: 1200,
-        height: 630,
-        alt: SITE.name,
-      },
-    ],
+    locale: "en_US",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
+    title: "Silver — Software Engineer",
+    description: SITE.description,
     creator: SITE.twitterHandle,
-    images: [SITE.ogImage],
   },
   icons: {
-    icon: "/icon.svg",
-    apple: "/icon.svg",
+    icon: [
+      { url: "/icon.svg", type: "image/svg+xml" },
+      {
+        url: "/icon_d.svg",
+        type: "image/svg+xml",
+        media: "(prefers-color-scheme: dark)",
+      },
+    ],
+    apple: [{ url: "/apple-touch-icon.png", sizes: "180x180", type: "image/png" }],
+    shortcut: "/icon.svg",
   },
+  manifest: "/site.webmanifest",
 };
 
 export default function RootLayout({

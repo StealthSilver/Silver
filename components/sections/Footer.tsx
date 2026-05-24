@@ -4,9 +4,10 @@ import { motion } from "framer-motion";
 import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
 import { Github, Linkedin, Twitter, Mail } from "lucide-react";
+import { getBrandLogoSrc } from "@/lib/brand-logo";
 
 export default function Footer() {
-  const { theme } = useTheme();
+  const { resolvedTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
   useEffect(() => setMounted(true), []);
 
@@ -28,21 +29,13 @@ export default function Footer() {
         "
       >
         <motion.img
-          key={mounted ? theme : "default"}
-          src={
-            !mounted
-              ? "/logo_light.svg"
-              : theme === "dark"
-                ? "/logo_dark.svg"
-                : "/logo_light.svg"
-          }
+          key={mounted ? resolvedTheme : "default"}
+          src={getBrandLogoSrc(resolvedTheme, mounted)}
           alt="Silver logo"
           width={140}
           height={140}
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.3 }}
-          className="mt-6 sm:mt-10 w-32 sm:w-40 h-auto"
+          initial={false}
+          className="mt-6 sm:mt-10 h-auto w-32 sm:w-40"
         />
 
         <div className="flex flex-wrap justify-center gap-6 sm:gap-10 mt-6 mb-6">

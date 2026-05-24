@@ -17,6 +17,7 @@ import { useTheme } from "next-themes";
 import { useImmersiveMode } from "@/contexts/ImmersiveModeContext";
 import { cn } from "@/lib/utils";
 import { navLinkColor } from "@/lib/nav-link-color";
+import { getBrandLogoSrc } from "@/lib/brand-logo";
 
 const navItems = [
   { href: "/#experience", label: "Experience" },
@@ -71,7 +72,7 @@ export function SiteHeader() {
   const mobileNavId = useId();
   const bodyOverflowBeforeMenu = useRef<string | null>(null);
   const pathname = usePathname();
-  const { theme } = useTheme();
+  const { resolvedTheme } = useTheme();
   const { isImmersive } = useImmersiveMode();
 
   useEffect(() => setMounted(true), []);
@@ -124,18 +125,13 @@ export function SiteHeader() {
                 aria-label="Home"
               >
                 <motion.img
-                  key={mounted ? theme : "default"}
-                  src={
-                    !mounted
-                      ? "/logo2.svg"
-                      : theme === "dark"
-                        ? "/logo.svg"
-                        : "/logo2.svg"
-                  }
+                  key={mounted ? resolvedTheme : "default"}
+                  src={getBrandLogoSrc(resolvedTheme, mounted)}
                   alt="Silver icon"
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ duration: 0.3 }}
+                  width={42}
+                  height={43}
+                  initial={false}
+                  className="block h-6 w-auto"
                 />
               </Link>
 

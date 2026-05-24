@@ -1,8 +1,12 @@
+const siteUrl =
+  process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, "") ??
+  "https://silver-jet.vercel.app";
+
 export const SITE = {
-  name: "Silver Portfolio",
+  name: "Silver",
   description:
     "Full-stack software engineer specializing in modern web development.",
-  url: "https://example.com",
+  url: siteUrl,
   ogImage: "/og-img.png",
-  twitterHandle: "https://x.com/Rajat_0409",
+  twitterHandle: "@silver_srs",
 };
