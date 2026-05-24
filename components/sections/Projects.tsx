@@ -20,7 +20,7 @@ export default function Projects() {
   const [showAllProjects, setShowAllProjects] = useState(false);
   const [mounted, setMounted] = useState(false);
   const [sortOpen, setSortOpen] = useState(false);
-  const [filterMode, setFilterMode] = useState<ProjectFilterMode>("featured");
+  const [filterMode, setFilterMode] = useState<ProjectFilterMode>("all");
   const [selectedTags, setSelectedTags] = useState<ProjectTag[]>([]);
   const sortPanelRef = useRef<HTMLDivElement>(null);
   const { resolvedTheme } = useTheme();

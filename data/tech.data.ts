@@ -300,4 +300,25 @@ export const TECH_STACK: TechStack[] = [
     categories: ["Tools", "Design"],
     lightIcon: "Figma-Light.svg",
   },
+  {
+    key: "claude",
+    title: "Claude",
+    href: "https://claude.ai/",
+    categories: ["Tools", "AI"],
+    lightIcon: "Claude-Light.svg",
+  },
+  {
+    key: "chatgpt",
+    title: "Chat GPT",
+    href: "https://chatgpt.com/",
+    categories: ["Tools", "AI"],
+    lightIcon: "ChatGPT-Light.svg",
+  },
+  {
+    key: "cursor",
+    title: "Cursor",
+    href: "https://cursor.com/",
+    categories: ["Tools", "AI"],
+    lightIcon: "Cursor-Light.svg",
+  },
 ];

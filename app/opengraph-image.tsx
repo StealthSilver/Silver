@@ -22,7 +22,6 @@ export default async function OpenGraphImage() {
           background: "#09090b",
         }}
       >
-        {/* eslint-disable-next-line @next/next/no-img-element */}
         <img src={logoSrc} width={280} height={287} alt="" />
       </div>
     ),

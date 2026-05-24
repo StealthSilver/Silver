@@ -41,6 +41,26 @@ function slugify(title: string): string {
 
 const PROJECT_RECORDS: ProjectBase[] = [
   {
+    title: "Silver Studios",
+    description: "Web design & development for startups and brands.",
+    story:
+      "Silver Studios is the studio practice behind how I ship client-facing web work: luminous, restrained interfaces for startups and established brands that need to look as considered as they perform. The public site is built to stand out without shouting—clear narrative, layouts that hold on real devices, and a quiet interface so the offer stays up front. Engagements follow a deliberate process from first conversation through launch, so goals, audience, and constraints are aligned before pixels move. Discovery clarifies what success means together; direction shapes positioning, milestones, and the story the product needs to tell; design translates strategy into type, motion, and UI you can stress-test; development delivers performant, accessible interfaces with clean architecture; deployment covers performance and SEO basics with a calm handoff. The result is marketing sites and landing pages where design, performance, and perception work as one system—not three afterthoughts.",
+    storyPoints: [
+      "Discovery: Clarify goals, audience, constraints, and what success means together before scope hardens.",
+      "Direction: Shape positioning, milestones, and the narrative your product needs to tell on the web.",
+      "Design: Translate strategy into layouts, typography, motion, and UI you can stress-test with stakeholders.",
+      "Development: Build performant, accessible interfaces with clean architecture that scales as the product grows.",
+      "Deployment: Launch with performance and SEO fundamentals covered, plus handoff built for calm releases.",
+      "Positioning: Built to stand out—modern websites and landing pages for teams that care about design, performance, and perception.",
+    ],
+    tags: ["Frontend"],
+    image: "/projects/silver_studios.png",
+    logo: "/project_logo/silverui-l.svg",
+    lightLogo: "/project_logo/silverui-l.svg",
+    darkLogo: "/project_logo/silverui-d.svg",
+    live: "https://silverstudios.art/",
+  },
+  {
     title: "MeshSpire",
     description: "A peer to peer learning app for students",
     tags: ["FullStack"],
@@ -314,16 +334,6 @@ const PROJECT_RECORDS: ProjectBase[] = [
  
 
   {
-    title: "Form and Function",
-    description: "A modern and original design agency website",
-    tags: ["Frontend"],
-    image: "/projects/form&function.png",
-    logo: "/project_logo/fandf.svg",
-    live: "https://form-function.vercel.app/",
-    github: "https://github.com/StealthSilver/Form-Function",
-    figma: "https://figma.com/file/your-figma-link", //
-  },
-  {
     title: "Alcaster",
     description: "A blackcahin legacy archive platform",
     tags: ["FullStack", "Backend", "Web3"],
@@ -354,16 +364,6 @@ const PROJECT_RECORDS: ProjectBase[] = [
     figma:
       "https://www.figma.com/design/UhdHOIha7xWSdqZwHjCc7M/Prominent?node-id=1-2&t=37UrjNWrYqGqM5ym-1", //
   },
-  {
-    title: "Meetmux",
-    description: "Landing page for a social media platform",
-    tags: ["Frontend"],
-    image: "/projects/metmux.png",
-    logo: "/project_logo/meetmux.png",
-    live: "https://meet-mux-xi.vercel.app/",
-    github: "https://github.com/StealthSilver/MeetMux",
-    figma: "https://figma.com/file/your-figma-link", //
-  }
 ];
 
 export const PROJECTS: Project[] = PROJECT_RECORDS.map((p, i) => ({
@@ -374,6 +374,7 @@ export const PROJECTS: Project[] = PROJECT_RECORDS.map((p, i) => ({
 
 /** Display order for the Projects section “Featured” filter (project slugs). */
 export const FEATURED_PROJECT_SLUGS = [
+  "silver-studios",
   "silver-ui",
   "sgrids",
   "connectingdots",
@@ -381,7 +382,6 @@ export const FEATURED_PROJECT_SLUGS = [
   "sol-x",
   "silver",
   "intersecting-lines",
-  "form-and-function",
   "meshspire",
   "sagar",
 ] as const;
