@@ -83,6 +83,18 @@ const PROJECT_RECORDS: ProjectBase[] = [
       "https://www.figma.com/design/hB3sQuOb3ztReunlyvGiEN/VERDAN?node-id=0-1&t=OitKgQLjk7bXnfYA-1",
   },
   {
+    title: "Sol-X",
+    description: "A project management application",
+    tags: ["FullStack", "Mobile"],
+    image: "/projects/Sol-X.png",
+    logo: "/project_logo/sol-X.svg",
+    lightLogo: "/project_logo/sol-X.svg",
+    darkLogo: "/project_logo/sol-X.svg",
+    live: "https://sol-x-eta.vercel.app/",
+    github: "https://github.com/StealthSilver/ConnectingDots",
+    figma: "https://figma.com/file/your-figma-link", //
+  },
+  {
     title: "Spardha",
     description: "AI prep for competitive exams with practice, tests, and analytics",
     story:
@@ -124,27 +136,14 @@ const PROJECT_RECORDS: ProjectBase[] = [
     figma: "https://figma.com/file/your-figma-link", //
   },
   {
-    title: "Sol-X",
-    description: "A project management application",
-    tags: ["FullStack", "Mobile"],
-    image: "/projects/Sol-X.png",
-    logo: "/project_logo/sol-X.svg",
-    lightLogo: "/project_logo/sol-X.svg",
-    darkLogo: "/project_logo/sol-X.svg",
-    live: "https://sol-x-eta.vercel.app/",
-    github: "https://github.com/StealthSilver/ConnectingDots",
-    figma: "https://figma.com/file/your-figma-link", //
-  },
-  
-  {
-    title: "Sagar",
-    description: "A portfolio website for a brand manager",
-    tags: ["FullStack"],
-    image: "/projects/sagar.png", //
-    logo: "/project_logo/sagar.svg",
-    darkLogo: "/project_logo/sagar.svg",
-    live: "https://sagar-surfer.vercel.app/", //
-    github: "https://github.com/StealthSilver/Sagar",
+    title: "Silver-UI",
+    description: "A modern Ui component library",
+    tags: ["Frontend"],
+    image: "/projects/silver-ui.png",
+    logo: "/project_logo/silverui-l.svg",
+    darkLogo: "/project_logo/silverui-d.svg",
+    live: "https://silver-ui.vercel.app/",
+    github: "https://github.com/StealthSilver/Silver-UI",
     figma: "https://figma.com/file/your-figma-link", //
   },
   {
@@ -169,6 +168,20 @@ const PROJECT_RECORDS: ProjectBase[] = [
       "https://www.figma.com/design/HTVIDAbVfEn8CzWVvqVoMs/Sgrids?node-id=0-1&t=SsSC4rk4RVRXyaHK-1",
   },
   
+  
+  {
+    title: "Sagar",
+    description: "A portfolio website for a brand manager",
+    tags: ["FullStack"],
+    image: "/projects/sagar.png", //
+    logo: "/project_logo/sagar.svg",
+    darkLogo: "/project_logo/sagar.svg",
+    live: "https://sagar-surfer.vercel.app/", //
+    github: "https://github.com/StealthSilver/Sagar",
+    figma: "https://figma.com/file/your-figma-link", //
+  },
+  
+  
   {
     title: "ConnectingDots",
     description: "A page for sharing and discovering content",
@@ -190,6 +203,21 @@ const PROJECT_RECORDS: ProjectBase[] = [
     github: "https://github.com/StealthSilver/ConnectingDots",
     figma: "https://figma.com/file/your-figma-link", //
   },
+
+  {
+    title: "Silver",
+    description: "A portfolio application in nextjs ",
+    tags: ["Frontend"],
+    image: "/projects/silver.png",
+    logo: "/project_logo/silver-l.svg",
+    darkLogo: "/project_logo/silver-dark.svg",
+    live: "https://silver-jet.vercel.app/",
+    github: "https://github.com/StealthSilver/Silver",
+    figma:
+      "https://www.figma.com/design/vX7gVhAgVACysF1aFNcCtj/Portfolio?node-id=36-541&t=zlVUk0IN29zpPcVg-1",
+  },
+
+ 
  
   {
     title: "MindPalace",
@@ -213,16 +241,28 @@ const PROJECT_RECORDS: ProjectBase[] = [
     figma: "https://figma.com/file/your-figma-link", //
   },
   {
-    title: "Silver-UI",
-    description: "A modern Ui component library",
-    tags: ["Frontend"],
-    image: "/projects/silver-ui.png",
-    logo: "/project_logo/silverui-l.svg",
-    darkLogo: "/project_logo/silverui-d.svg",
-    live: "https://silver-ui.vercel.app/",
-    github: "https://github.com/StealthSilver/Silver-UI",
-    figma: "https://figma.com/file/your-figma-link", //
+    title: "Intersecting Lines",
+    description: "A blog page for stories, poems and essays",
+    story:
+      "Intersecting Lines grew from wanting a place on the web that treated reading as the main event, not engagement metrics. I imagined a reader-first site where someone could arrive, settle in, and spend time with literature: short stories, poems, book reviews, and essays, all in one calm feed. Generic likes and dislikes never felt right for that kind of work, so I replaced them with reactions that actually name a feeling—Hopeful, Wisper, Warmth—so readers can respond to a piece in a way that matches how writing lands emotionally. The interface stays clean and minimal on purpose: generous type, plenty of space, and nothing that competes with the words on the page. Behind the scenes, publishing stays simple: new work is just content in a markdown file, so adding a story or a review stays as straightforward as writing, without fighting the CMS.",
+    storyPoints: [
+      "Problem: Most blogs optimize for clicks and shallow signals; literature deserves a quieter, more respectful reading experience.",
+      "Approach: Designed a reader-first layout with typography and spacing tuned for long-form reading across stories, poems, reviews, and essays.",
+      "Differentiation: Swapped binary like/dislike for meaningful reactions (Hopeful, Wisper, Warmth) so feedback reflects mood, not just approval.",
+      "Author workflow: Content ships from markdown files, so contributors add or edit pieces by writing markdown without a heavy publishing flow.",
+      "Outcome: A minimal, easy-to-read surface that keeps attention on the writing while staying simple to extend with new pieces.",
+    ],
+    tags: ["Frontend", "FullStack"],
+    image: "/projects/blog.png",
+    lightImage: "/projects/blog-light.png",
+    logo: "/project_logo/intersectinglines.svg",
+    darkLogo: "/project_logo/intersectinglines-dark.svg",
+    live: "https://intersecting-lines.vercel.app/",
+    github: "https://github.com/StealthSilver/Intersecting-Lines",
+    figma:
+      "https://www.figma.com/design/b00XL5lXg2hl2jUNbtePw9/Silver-s-Desk?node-id=0-1&t=MGYZvAoWbktNGfIE-1",
   },
+ 
   {
     title: "Sketch-It",
     description: "A colloborative drawing application",
@@ -274,28 +314,7 @@ const PROJECT_RECORDS: ProjectBase[] = [
     github: "https://github.com/StealthSilver/ConnectRight",
     figma: "https://figma.com/file/your-figma-link", //
   },
-  {
-    title: "Intersecting Lines",
-    description: "A blog page for stories, poems and essays",
-    story:
-      "Intersecting Lines grew from wanting a place on the web that treated reading as the main event, not engagement metrics. I imagined a reader-first site where someone could arrive, settle in, and spend time with literature: short stories, poems, book reviews, and essays, all in one calm feed. Generic likes and dislikes never felt right for that kind of work, so I replaced them with reactions that actually name a feeling—Hopeful, Wisper, Warmth—so readers can respond to a piece in a way that matches how writing lands emotionally. The interface stays clean and minimal on purpose: generous type, plenty of space, and nothing that competes with the words on the page. Behind the scenes, publishing stays simple: new work is just content in a markdown file, so adding a story or a review stays as straightforward as writing, without fighting the CMS.",
-    storyPoints: [
-      "Problem: Most blogs optimize for clicks and shallow signals; literature deserves a quieter, more respectful reading experience.",
-      "Approach: Designed a reader-first layout with typography and spacing tuned for long-form reading across stories, poems, reviews, and essays.",
-      "Differentiation: Swapped binary like/dislike for meaningful reactions (Hopeful, Wisper, Warmth) so feedback reflects mood, not just approval.",
-      "Author workflow: Content ships from markdown files, so contributors add or edit pieces by writing markdown without a heavy publishing flow.",
-      "Outcome: A minimal, easy-to-read surface that keeps attention on the writing while staying simple to extend with new pieces.",
-    ],
-    tags: ["Frontend", "FullStack"],
-    image: "/projects/blog.png",
-    lightImage: "/projects/blog-light.png",
-    logo: "/project_logo/intersectinglines.svg",
-    darkLogo: "/project_logo/intersectinglines-dark.svg",
-    live: "https://intersecting-lines.vercel.app/",
-    github: "https://github.com/StealthSilver/Intersecting-Lines",
-    figma:
-      "https://www.figma.com/design/b00XL5lXg2hl2jUNbtePw9/Silver-s-Desk?node-id=0-1&t=MGYZvAoWbktNGfIE-1",
-  },
+  
   {
     title: "BinaryNetwork",
     description: "A professional social media platform",
@@ -328,20 +347,7 @@ const PROJECT_RECORDS: ProjectBase[] = [
     figma: "https://figma.com/file/your-figma-link", //
   },
 
-  {
-    title: "Silver",
-    description: "A portfolio application in nextjs ",
-    tags: ["Frontend"],
-    image: "/projects/silver.png",
-    logo: "/project_logo/silver-l.svg",
-    darkLogo: "/project_logo/silver-dark.svg",
-    live: "https://silver-jet.vercel.app/",
-    github: "https://github.com/StealthSilver/Silver",
-    figma:
-      "https://www.figma.com/design/vX7gVhAgVACysF1aFNcCtj/Portfolio?node-id=36-541&t=zlVUk0IN29zpPcVg-1",
-  },
-
- 
+  
 
   {
     title: "Alcaster",
