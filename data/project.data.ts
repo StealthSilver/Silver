@@ -104,6 +104,26 @@ const PROJECT_RECORDS: ProjectBase[] = [
       "https://www.figma.com/design/HTVIDAbVfEn8CzWVvqVoMs/Sgrids?node-id=0-1&t=SsSC4rk4RVRXyaHK-1",
   },
   {
+    title: "AlgoRhythm",
+    description: "A programming algorithm visualisation platform",
+    story:
+      "I had wanted for a long time to build something that could ease the journey of learning data structures and algorithms—the part of computer science that often feels abstract on the page and only clicks once you have seen it move. Reading pseudocode and memorizing steps never felt like enough for me; I kept wishing there was a calmer way to watch a list sort, a tree rebalance, or a graph traverse without jumping between static diagrams and scattered videos. I found that visualizing algorithms made them far easier to understand: when you can see pointers shift, values swap, and complexity accumulate step by step, the logic stops being a formula and starts feeling like a story you can follow. AlgoRhythm grew from that insight. It is a full-stack platform built to turn classic DSA topics into interactive visual lessons—so learners can slow down, replay a step, and build intuition before they worry about interview tricks. The goal was never to replace practice problems, but to shorten the gap between confusion and clarity, and to make the learning path feel less intimidating from the first concept onward.",
+    storyPoints: [
+      "Motivation: Wanted a dedicated tool to make data structures and algorithms easier to learn—not only to study, but to genuinely understand.",
+      "Insight: Visualization turned abstract steps into something tangible; watching algorithms run made patterns and tradeoffs much clearer.",
+      "Product: Built AlgoRhythm as an interactive platform where learners explore algorithms step by step instead of relying on static notes alone.",
+      "Experience: Designed flows for replaying, pacing, and observing state changes so each topic can be absorbed at the learner's speed.",
+      "Outcome: A learning-focused product that lowers the barrier to DSA and helps intuition come before memorization.",
+    ],
+    tags: ["FullStack"],
+    image: "/projects/algorhythm.png", //
+    logo: "/project_logo/algorhythm.svg",
+    darkLogo: "/project_logo/algorhythm-dark.svg",
+    live: "https://algorhythm-main.vercel.app/", //
+    github: "https://github.com/StealthSilver/AlgoRhythm",
+    figma: "https://figma.com/file/your-figma-link", //
+  },
+  {
     title: "Sol-X",
     description: "A project management application",
     tags: ["FullStack", "Mobile"],
@@ -115,17 +135,7 @@ const PROJECT_RECORDS: ProjectBase[] = [
     github: "https://github.com/StealthSilver/ConnectingDots",
     figma: "https://figma.com/file/your-figma-link", //
   },
-  {
-    title: "AlgoRhythm",
-    description: "A programming algorithm visualisation platform",
-    tags: ["FullStack"],
-    image: "/projects/algorhythm.png", //
-    logo: "/project_logo/algorhythm.svg",
-    darkLogo: "/project_logo/algorhythm-dark.svg",
-    live: "https://algorhythm-main.vercel.app/", //
-    github: "https://github.com/StealthSilver/AlgoRhythm",
-    figma: "https://figma.com/file/your-figma-link", //
-  },
+  
   {
     title: "Sagar",
     description: "A portfolio website for a brand manager",
