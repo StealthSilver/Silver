@@ -66,7 +66,7 @@ const PROJECT_RECORDS: ProjectBase[] = [
     tags: ["FullStack"],
     image: "/projects/meshspire.png",
     logo: "/project_logo/meshspire.svg",
-    live: "https://dev.dg4uqajhampr9.amplifyapp.com/",
+    live: "https://meshspire-landing.vercel.app",
     github: "https://github.com/StealthSilver/MeshSpire-lp",
     figma:
       "https://www.figma.com/design/fkprR8ZCbDezgeWweqLc6X/MS-landing?node-id=0-1&t=gscDeXAEkqGmTJlM-1",
