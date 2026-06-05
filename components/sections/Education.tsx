@@ -7,18 +7,6 @@ import { GeistMono } from "geist/font/mono";
 import { ChevronDown, ChevronUp, GraduationCap } from "lucide-react";
 import { EDUCATION } from "@/data/education.data";
 
-function formatEducationMeta(duration: string, location: string) {
-  const [rawStart, rawEnd] = duration.split("-").map((part) => part.trim());
-  const startYear = Number(rawStart);
-  const endYear = Number(rawEnd);
-
-  if (!Number.isNaN(startYear) && !Number.isNaN(endYear) && endYear >= startYear) {
-    return `${location} | ${duration} | ${endYear - startYear}y`;
-  }
-
-  return `${location} | ${duration}`;
-}
-
 export default function Education() {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
 
@@ -80,7 +68,7 @@ export default function Education() {
                     >
                       <p className={`${GeistMono.className} mt-2 text-[13px] text-foreground`}>{edu.position}</p>
                       <p className={`${GeistMono.className} mt-1 text-[12px] leading-relaxed text-muted-foreground sm:text-[13px]`}>
-                        {formatEducationMeta(edu.duration, edu.location)}
+                        {edu.location}
                       </p>
                     </button>
                   </div>

@@ -11,7 +11,7 @@ export const EDUCATION: EducationItem[] = [
   {
     company: "Indian Institute of Technology Madras",
     position: "BTech - Computer Science",
-    duration: "2022 - 2026",
+    duration: "",
     location: "Chennai",
     link: "https://www.iitm.ac.in/",
     details: [
@@ -23,7 +23,7 @@ export const EDUCATION: EducationItem[] = [
   {
     company: "Indian Institute of Technology Madras",
     position: "BS - Data Science",
-    duration: "2024 - 2028",
+    duration: "",
     location: "Online",
     link: "https://study.iitm.ac.in/ds/",
     details: [

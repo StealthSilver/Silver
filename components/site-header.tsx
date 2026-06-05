@@ -7,7 +7,7 @@ import {
   useRef,
   type CSSProperties,
 } from "react";
-import { Github, Menu, X } from "lucide-react";
+import { ArrowUpRight, Github, Menu, X } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { AnimatePresence, motion } from "framer-motion";
@@ -19,11 +19,13 @@ import { cn } from "@/lib/utils";
 import { navLinkColor } from "@/lib/nav-link-color";
 import { getBrandLogoSrc } from "@/lib/brand-logo";
 
+const BLOG_URL = "https://connecting-dots-theta.vercel.app/";
+
 const navItems = [
   { href: "/#experience", label: "Experience" },
   { href: "/#projects", label: "Projects" },
   { href: "/#education", label: "Education" },
-  { href: "/Resume_A.pdf", label: "Resume" },
+  { href: BLOG_URL, label: "Blog", external: true },
 ] as const;
 
 const mobileMenuEase = [0.16, 1, 0.3, 1] as const;
@@ -35,27 +37,33 @@ const mobileMenuTransition = {
 function NavPrimaryLink({
   href,
   label,
+  external,
   className,
   style,
   onClick,
 }: {
   href: string;
   label: string;
+  external?: boolean;
   className?: string;
   style?: CSSProperties;
   onClick?: () => void;
 }) {
-  if (href.endsWith(".pdf")) {
+  if (external) {
     return (
       <a
         href={href}
         target="_blank"
         rel="noopener noreferrer"
-        className={className}
+        className={cn("group inline-flex items-center gap-1", className)}
         style={style}
         onClick={onClick}
       >
         {label}
+        <ArrowUpRight
+          className="size-3.5 opacity-0 transition-all duration-200 ease-out group-hover:opacity-100 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-focus-visible:opacity-100 group-focus-visible:-translate-y-0.5 group-focus-visible:translate-x-0.5"
+          aria-hidden
+        />
       </a>
     );
   }
@@ -142,11 +150,12 @@ export function SiteHeader() {
                 )}
                 aria-label="Primary"
               >
-                {navItems.map(({ href, label }) => (
+                {navItems.map(({ href, label, ...item }) => (
                   <NavPrimaryLink
                     key={href}
                     href={href}
                     label={label}
+                    external={"external" in item ? item.external : undefined}
                     className="shrink-0 transition-opacity hover:opacity-80"
                     style={{ color: navLinkColor }}
                   />
@@ -238,11 +247,12 @@ export function SiteHeader() {
               )}
             >
               <nav className="flex flex-col" aria-label="Primary">
-                {navItems.map(({ href, label }, index) => (
+                {navItems.map(({ href, label, ...item }, index) => (
                   <NavPrimaryLink
                     key={href}
                     href={href}
                     label={label}
+                    external={"external" in item ? item.external : undefined}
                     onClick={() => setMobileOpen(false)}
                     className={cn(
                       "block px-4 py-3.5 transition-[background-color,color] hover:bg-muted/80 active:bg-muted",
