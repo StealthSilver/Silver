@@ -19,7 +19,7 @@ import { cn } from "@/lib/utils";
 import { navLinkColor } from "@/lib/nav-link-color";
 import { getBrandLogoSrc } from "@/lib/brand-logo";
 
-const BLOG_URL = "https://connecting-dots-theta.vercel.app/";
+const BLOG_URL = "https://connecting-dots-main.vercel.app/";
 
 const navItems = [
   { href: "/#experience", label: "Experience" },
